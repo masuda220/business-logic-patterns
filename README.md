@@ -5,6 +5,9 @@
 - 額、数量、日付などを扱う基本的な値オブジェクトに焦点を合わせる
 - 設計パターンは、ソースコードとして表現する
 
+wikiページ 
+https://github.com/masuda220/business-logic-patterns/wiki
+
 ## 対象とする範囲
 現在の対象範囲は、以下の通り
 
