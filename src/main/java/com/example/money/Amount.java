@@ -28,6 +28,13 @@ public class Amount {
         return new Amount(result);
     }
 
+    public Amount divideExact(int divisor) {
+        Amount reminder = remainder(divisor);
+        if (reminder.value != 0)
+            throw new ArithmeticException();
+        return divide(divisor);
+    }
+
     public Amount[] divideAndRemainder(int divisor) {
         Amount[] result = {
                 divide(divisor),
@@ -36,15 +43,17 @@ public class Amount {
         return result;
     }
 
+    public boolean isEqualTo(Amount other) {
+        return this.value == other.value;
+    }
+
     Amount divide(int divisor) {
-        BigDecimal dividend = new BigDecimal(this.value);
-        BigDecimal result = dividend.divide(new BigDecimal(divisor), 0, BigDecimal.ROUND_DOWN);
-        return new Amount(result.longValue());
+        long result = this.value / divisor;
+        return new Amount(result);
     }
 
     Amount remainder(int divisor) {
-        BigDecimal dividend = new BigDecimal(this.value);
-        BigDecimal result = dividend.remainder(new BigDecimal(divisor));
-        return new Amount(result.longValue());
+        Amount quotient = divide(divisor);
+        return subtract(quotient.multiply(divisor));
     }
 }
