@@ -29,10 +29,8 @@ public class Amount {
     }
 
     public Amount divideExact(int divisor) {
-        Amount reminder = remainder(divisor);
-        if (reminder.value != 0)
-            throw new ArithmeticException();
-        return divide(divisor);
+        if (value % divisor == 0) return divide(divisor);
+        throw new ArithmeticException();
     }
 
     public Amount[] divideAndRemainder(int divisor) {
@@ -44,16 +42,14 @@ public class Amount {
     }
 
     public boolean isEqualTo(Amount other) {
-        return this.value == other.value;
+        return value == other.value;
     }
 
     Amount divide(int divisor) {
-        long result = this.value / divisor;
-        return new Amount(result);
+        return new Amount(value / divisor);
     }
 
     Amount remainder(int divisor) {
-        Amount quotient = divide(divisor);
-        return subtract(quotient.multiply(divisor));
+        return new Amount(value % divisor);
     }
 }
