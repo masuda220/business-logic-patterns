@@ -46,11 +46,7 @@ class QuantityTest {
         Quantity one = new Quantity(3, new BoxUnit(piece));
         Quantity other = new Quantity(50, new PieceUnit());
 
-        Quantity expected = new Quantity(5, new BoxUnit(piece));
-        Quantity actual = one.add(other);
-
-        assertEquals(expected.value, actual.value, "3箱(*20ピース) + 50ピース = 5箱");
-        assertEquals(expected.unit.getClass(), actual.unit.getClass(), "単位 = 箱");
+        assertThrows(IllegalArgumentException.class, () -> one.add(other), "加算時のピース・箱変換 → 例外");
     }
 
     @Test
@@ -67,11 +63,30 @@ class QuantityTest {
     }
 
     @Test
-    void addOverflow() {
+    void addDifferentUnitBoxes() {
+        int pieceOne = 20;
+        Quantity one = new Quantity(1, new BoxUnit(pieceOne));
+        int pieceOther = 24;
+        Quantity other = new Quantity(3, new BoxUnit(pieceOther));
+
+        assertThrows(IllegalArgumentException.class, () -> one.add(other), "異なる単位の箱の加算で例外");
+    }
+
+    @Test
+    void addPieceOverflow() {
         Quantity max = new Quantity(Integer.MAX_VALUE, new PieceUnit());
         Quantity other = new Quantity(1, new PieceUnit());
 
-        assertThrows(ArithmeticException.class, () -> max.add(other), "加算オーバーフロー");
+        assertThrows(ArithmeticException.class, () -> max.add(other), "ピースの加算オーバーフロー");
+    }
+
+    @Test
+    void addBoxOverflow() {
+        int piece = 24;
+        Quantity max = new Quantity(Integer.MAX_VALUE, new BoxUnit(piece));
+        Quantity other = new Quantity(1, new BoxUnit(piece));
+
+        assertThrows(ArithmeticException.class, () -> max.add(other), "箱の加算オーバーフロー");
     }
 
     @Test
@@ -105,11 +120,7 @@ class QuantityTest {
         Quantity one = new Quantity(3, new BoxUnit(piece));
         Quantity other = new Quantity(22, new PieceUnit());
 
-        Quantity expected = new Quantity(2, new BoxUnit(piece));
-        Quantity actual = one.subtract(other);
-
-        assertEquals(expected.value, actual.value, "3箱(*20ピース) - 22ピース = 2箱");
-        assertEquals(expected.unit.getClass(), actual.unit.getClass(), "単位 = 箱");
+        assertThrows(IllegalArgumentException.class, () -> one.subtract(other), "減算時のピース・箱変換 → 例外");
     }
 
     @Test
@@ -124,13 +135,32 @@ class QuantityTest {
         assertEquals(expected.value, actual.value, "5箱 - 3箱 = 2箱");
         assertEquals(expected.unit.getClass(), actual.unit.getClass(), "単位 = 箱");
     }
+    
+    @Test
+    void subtractDifferentUnitBoxes() {
+        int pieceOne = 20;
+        Quantity one = new Quantity(1, new BoxUnit(pieceOne));
+        int pieceOther = 24;
+        Quantity other = new Quantity(3, new BoxUnit(pieceOther));
+
+        assertThrows(IllegalArgumentException.class, () -> one.subtract(other), "異なる単位の箱の減算で例外");
+    }
 
     @Test
-    void subtractOverflow() {
+    void subtractPieceOverflow() {
         Quantity max = new Quantity(Integer.MIN_VALUE, new PieceUnit());
         Quantity other = new Quantity(1, new PieceUnit());
 
-        assertThrows(ArithmeticException.class, () -> max.subtract(other), "減算オーバーフロー");
+        assertThrows(ArithmeticException.class, () -> max.subtract(other), "ピースの減算オーバーフロー");
+    }
+
+    @Test
+    void subtractBoxOverflow() {
+        int piece = 24;
+        Quantity max = new Quantity(Integer.MIN_VALUE, new BoxUnit(piece));
+        Quantity other = new Quantity(1, new BoxUnit(piece));
+
+        assertThrows(ArithmeticException.class, () -> max.subtract(other), "箱の減算オーバーフロー");
     }
 
     @Test

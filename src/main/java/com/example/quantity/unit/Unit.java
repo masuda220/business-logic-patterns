@@ -12,7 +12,7 @@ public interface Unit {
     }
 
     default boolean isEqualTo(Unit other) {
-        return this.getClass() == other.getClass();
+        return this.getClass() == other.getClass() && piece() == other.piece();
     }
 
 }
