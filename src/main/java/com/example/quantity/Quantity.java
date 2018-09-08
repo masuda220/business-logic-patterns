@@ -16,12 +16,12 @@ public class Quantity {
     }
 
     public Quantity add(Quantity other) {
-        int result = Math.addExact(value, opedand(other));
+        int result = Math.addExact(value, toSameUnit(other));
         return new Quantity(result, unit);
     }
 
     public Quantity subtract(Quantity other) {
-        int result = Math.subtractExact(value, opedand(other));
+        int result = Math.subtractExact(value, toSameUnit(other));
         return new Quantity(result, unit);
     }
 
@@ -30,13 +30,13 @@ public class Quantity {
         return new Quantity(result, unit);
     }
 
-    private int opedand(Quantity quantity) {
+    private int toSameUnit(Quantity quantity) {
         if (unit.isEqualTo(quantity.unit))
             return quantity.value;
         else if (unit.isPiece())
             return Math.multiplyExact(quantity.value, quantity.unit.piece());
-        else
-            return Math.floorDiv(quantity.value, unit.piece());
+
+        throw new IllegalArgumentException();
     }
 
     @Override
