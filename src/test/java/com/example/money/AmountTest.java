@@ -103,4 +103,48 @@ class AmountTest {
         assertTrue(one.isEqualTo(otherOne), "同値");
         assertFalse(one.isEqualTo(two), "異なる値");
     }
+
+    @Test()
+    void isGreaterThan() {
+        Amount one = new Amount(1);
+        Amount two = new Amount(2);
+        Amount three = new Amount(3);
+        Amount otherTwo = new Amount(2);
+        assertTrue(two.isGreaterThan(one), "2 は 1 より大きい");
+        assertFalse(two.isGreaterThan(otherTwo), "2 は 2 より大きくない");
+        assertFalse(two.isGreaterThan(three), "2 は 3 より大きくない");
+    }
+
+    @Test()
+    void isGreaterOrEqualTo() {
+        Amount one = new Amount(1);
+        Amount two = new Amount(2);
+        Amount three = new Amount(3);
+        Amount otherTwo = new Amount(2);
+        assertTrue(two.isGreaterOrEqualTo(one), "2 は 1 以上である");
+        assertTrue(two.isGreaterOrEqualTo(otherTwo), "2 は 2 以上である");
+        assertFalse(two.isGreaterOrEqualTo(three), "2 は 3 以上ではない");
+    }
+
+    @Test()
+    void isLessThan() {
+        Amount one = new Amount(1);
+        Amount two = new Amount(2);
+        Amount three = new Amount(3);
+        Amount otherTwo = new Amount(2);
+        assertFalse(two.isLessThan(one), "2 は 1 より小さくない");
+        assertFalse(two.isLessThan(otherTwo), "2 は 2 より小さくない");
+        assertTrue(two.isLessThan(three), "2 は 3 より小さい");
+    }
+
+    @Test()
+    void isLessOrEqualTo() {
+        Amount one = new Amount(1);
+        Amount two = new Amount(2);
+        Amount three = new Amount(3);
+        Amount otherTwo = new Amount(2);
+        assertFalse(two.isLessOrEqualTo(one), "2 は 1 以下ではなし");
+        assertTrue(two.isLessOrEqualTo(otherTwo), "2 は 2 以下である");
+        assertTrue(two.isLessOrEqualTo(three), "2 は 3 以下である");
+    }
 }

@@ -1,7 +1,5 @@
 package com.example.money;
 
-import java.math.BigDecimal;
-
 /**
  * 金額を扱う
  */
@@ -43,6 +41,22 @@ public class Amount {
 
     public boolean isEqualTo(Amount other) {
         return value == other.value;
+    }
+
+    public boolean isGreaterThan(Amount other) {
+        return value > other.value;
+    }
+
+    public boolean isGreaterOrEqualTo(Amount other) {
+        return value >= other.value;
+    }
+
+    public boolean isLessThan(Amount other) {
+        return value < other.value;
+    }
+
+    public boolean isLessOrEqualTo(Amount other) {
+        return value <= other.value;
     }
 
     Amount divide(int divisor) {
