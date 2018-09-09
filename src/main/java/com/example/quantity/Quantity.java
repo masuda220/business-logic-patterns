@@ -30,7 +30,7 @@ public class Quantity {
         return new Quantity(result, unit);
     }
 
-    private int toSameUnit(Quantity quantity) {
+    public int toSameUnit(Quantity quantity) {
         if (unit.isEqualTo(quantity.unit))
             return quantity.value;
         else if (unit.isPiece())
@@ -43,4 +43,5 @@ public class Quantity {
     public String toString() {
         return String.format("%d", value);
     }
+
 }
