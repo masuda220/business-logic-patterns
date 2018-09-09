@@ -2,9 +2,49 @@ package com.example.money;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AmountTest {
+
+    @Test()
+    void fromByArray() {
+        Amount actual = Amount.from(
+                new Amount(1),
+                new Amount(2),
+                new Amount(3),
+                new Amount(4)
+        );
+        assertEquals(new Amount(10).value, actual.value, "1, 2, 3, 4 => 10");
+    }
+
+    @Test()
+    void fromByNoArray() {
+        Amount actual = Amount.from();
+        assertEquals(new Amount(0).value, actual.value, "配列0 => 0");
+    }
+
+    @Test()
+    void fromByCollection() {
+        Collection<Amount> amounts = Arrays.asList(
+                new Amount(1),
+                new Amount(2),
+                new Amount(3),
+                new Amount(4)
+        );
+        Amount actual = Amount.from(amounts);
+        assertEquals(new Amount(10).value, actual.value, "1, 2, 3, 4 => 10");
+    }
+
+
+    @Test()
+    void fromByNoCollection() {
+        Collection<Amount> amounts = Arrays.asList();
+        Amount actual = Amount.from(amounts);
+        assertEquals(new Amount(0).value, actual.value, "要素0 のリスト => 0");
+    }
 
     @Test()
     void add() {
@@ -21,6 +61,44 @@ class AmountTest {
         Amount max = new Amount(Long.MAX_VALUE);
         Amount one = new Amount(1);
         assertThrows(ArithmeticException.class, () -> max.add(one),"加算オーバーフロー");
+    }
+
+    @Test()
+    void addAllByArray() {
+        Amount one = new Amount(1);
+        Amount actual = one.addAll(
+                new Amount(2),
+                new Amount(3),
+                new Amount(4)
+        );
+        assertEquals(new Amount(10).value, actual.value, "1 + (2 + 3 + 4) = 10");
+    }
+
+    @Test()
+    void addAllByNoArray() {
+        Amount one = new Amount(1);
+        Amount actual = one.addAll();
+        assertEquals(new Amount(1).value, actual.value, "1 + ( 配列0 ) = 1");
+    }
+
+    @Test()
+    void addAllByCollection() {
+        Amount one = new Amount(1);
+        Collection<Amount> addends = Arrays.asList(
+                new Amount(2),
+                new Amount(3),
+                new Amount(4)
+        );
+        Amount actual = one.addAll(addends);
+        assertEquals(new Amount(10).value, actual.value, "1 + (2 + 3 + 4) = 10");
+    }
+
+    @Test()
+    void addAllByNoCollection() {
+        Amount one = new Amount(1);
+        Collection<Amount> addends = Arrays.asList();
+        Amount actual = one.addAll(addends);
+        assertEquals(new Amount(1).value, actual.value, "1 + ( リスト内の要素0 ) = 1");
     }
 
     @Test()

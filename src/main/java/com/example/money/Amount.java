@@ -1,5 +1,8 @@
 package com.example.money;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 /**
  * 金額を扱う
  */
@@ -11,9 +14,25 @@ public class Amount {
         this.value = value;
     }
 
+    public static Amount from(Amount... amounts) {
+        return new Amount(0).addAll(amounts);
+    }
+
+    public static Amount from(Collection<Amount> amounts) {
+        return new Amount(0).addAll(amounts);
+    }
+
     public Amount add(Amount other) {
         long result = Math.addExact(value, other.value);
         return new Amount(result);
+    }
+
+    public Amount addAll(Amount... amounts) {
+        return addAll(Arrays.asList(amounts));
+    }
+
+    public Amount addAll(Collection<Amount> amounts) {
+        return amounts.stream().reduce(this, (amount1, amount2) -> amount1.add(amount2));
     }
 
     public Amount subtract(Amount other) {
