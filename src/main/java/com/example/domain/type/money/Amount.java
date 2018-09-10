@@ -32,7 +32,9 @@ public class Amount {
     }
 
     public Amount addAll(Collection<Amount> amounts) {
-        return amounts.stream().reduce(this, (amount1, amount2) -> amount1.add(amount2));
+        Amount total = this;
+        for (Amount amount : amounts) total = total.add(amount);
+        return total;
     }
 
     public Amount subtract(Amount other) {
