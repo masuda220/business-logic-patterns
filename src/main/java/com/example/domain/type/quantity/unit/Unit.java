@@ -1,4 +1,4 @@
-package com.example.quantity.unit;
+package com.example.domain.type.quantity.unit;
 
 /**
  * 単位

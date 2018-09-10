@@ -1,4 +1,4 @@
-package com.example.money;
+package com.example.domain.type.money;
 
 import java.util.Arrays;
 import java.util.Collection;

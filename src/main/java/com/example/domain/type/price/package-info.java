@@ -1,4 +1,4 @@
 /**
  * 合計金額を扱う値オブジェクト
  */
-package com.example.price;
+package com.example.domain.type.price;

@@ -1,4 +1,4 @@
-package com.example.money;
+package com.example.domain.type.money;
 
 import org.junit.jupiter.api.Test;
 
