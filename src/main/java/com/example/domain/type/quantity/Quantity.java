@@ -1,6 +1,6 @@
-package com.example.quantity;
+package com.example.domain.type.quantity;
 
-import com.example.quantity.unit.Unit;
+import com.example.domain.type.quantity.unit.Unit;
 
 /**
  * 数量を扱う

@@ -1,8 +1,8 @@
-package com.example.price;
+package com.example.domain.type.price;
 
-import com.example.money.Amount;
-import com.example.quantity.Quantity;
-import com.example.quantity.unit.Unit;
+import com.example.domain.type.money.Amount;
+import com.example.domain.type.quantity.Quantity;
+import com.example.domain.type.quantity.unit.Unit;
 
 /**
  * 合計金額を扱う

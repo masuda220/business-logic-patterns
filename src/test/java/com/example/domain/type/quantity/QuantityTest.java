@@ -1,11 +1,11 @@
-package com.example.quantity;
+package com.example.domain.type.quantity;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.quantity.unit.BoxUnit;
-import com.example.quantity.unit.PieceUnit;
+import com.example.domain.type.quantity.unit.BoxUnit;
+import com.example.domain.type.quantity.unit.PieceUnit;
 
 class QuantityTest {
 

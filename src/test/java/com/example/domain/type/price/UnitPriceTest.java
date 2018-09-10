@@ -1,13 +1,13 @@
-package com.example.price;
+package com.example.domain.type.price;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.money.Amount;
-import com.example.quantity.Quantity;
-import com.example.quantity.unit.BoxUnit;
-import com.example.quantity.unit.PieceUnit;
+import com.example.domain.type.money.Amount;
+import com.example.domain.type.quantity.Quantity;
+import com.example.domain.type.quantity.unit.BoxUnit;
+import com.example.domain.type.quantity.unit.PieceUnit;
 
 class UnitPriceTest {
 
