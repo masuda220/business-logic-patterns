@@ -1,52 +1,55 @@
 package com.example.domain.type.money;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class AmountTest {
 
-    @Test()
+    @Test
+    @DisplayName("配列の合計")
     void fromByArray() {
         Amount actual = Amount.from(
                 new Amount(1),
                 new Amount(2),
                 new Amount(3),
-                new Amount(4)
-        );
+                new Amount(4));
         assertEquals(new Amount(10).value, actual.value, "1, 2, 3, 4 => 10");
     }
 
-    @Test()
+    @Test
+    @DisplayName("要素数0の配列")
     void fromByNoArray() {
         Amount actual = Amount.from();
-        assertEquals(new Amount(0).value, actual.value, "配列0 => 0");
+        assertEquals(new Amount(0).value, actual.value);
     }
 
-    @Test()
+    @Test
+    @DisplayName("リストの合計")
     void fromByCollection() {
         Collection<Amount> amounts = Arrays.asList(
                 new Amount(1),
                 new Amount(2),
                 new Amount(3),
-                new Amount(4)
-        );
+                new Amount(4));
         Amount actual = Amount.from(amounts);
         assertEquals(new Amount(10).value, actual.value, "1, 2, 3, 4 => 10");
     }
 
-
-    @Test()
+    @Test
+    @DisplayName("要素数0のリスト")
     void fromByNoCollection() {
         Collection<Amount> amounts = Arrays.asList();
         Amount actual = Amount.from(amounts);
-        assertEquals(new Amount(0).value, actual.value, "要素0 のリスト => 0");
+        assertEquals(new Amount(0).value, actual.value);
     }
 
-    @Test()
+    @Test
+    @DisplayName("加算")
     void add() {
         Amount one = new Amount(1);
         Amount two = new Amount(2);
@@ -56,52 +59,56 @@ class AmountTest {
         assertEquals(new Amount(5).value, three.add(two).value, "3 + 2 = 5");
     }
 
-    @Test()
+    @Test
+    @DisplayName("加算オーバーフロー")
     void addOverflow() {
         Amount max = new Amount(Long.MAX_VALUE);
         Amount one = new Amount(1);
-        assertThrows(ArithmeticException.class, () -> max.add(one),"加算オーバーフロー");
+        assertThrows(ArithmeticException.class, () -> max.add(one));
     }
 
-    @Test()
+    @Test
+    @DisplayName("配列の加算")
     void addAllByArray() {
         Amount one = new Amount(1);
         Amount actual = one.addAll(
                 new Amount(2),
                 new Amount(3),
-                new Amount(4)
-        );
+                new Amount(4));
         assertEquals(new Amount(10).value, actual.value, "1 + (2 + 3 + 4) = 10");
     }
 
-    @Test()
+    @Test
+    @DisplayName("要素数0の配列の加算")
     void addAllByNoArray() {
         Amount one = new Amount(1);
         Amount actual = one.addAll();
-        assertEquals(new Amount(1).value, actual.value, "1 + ( 配列0 ) = 1");
+        assertEquals(new Amount(1).value, actual.value, "1 + ( 要素数0の配列 ) = 1");
     }
 
-    @Test()
+    @Test
+    @DisplayName("リストの加算")
     void addAllByCollection() {
         Amount one = new Amount(1);
         Collection<Amount> addends = Arrays.asList(
                 new Amount(2),
                 new Amount(3),
-                new Amount(4)
-        );
+                new Amount(4));
         Amount actual = one.addAll(addends);
         assertEquals(new Amount(10).value, actual.value, "1 + (2 + 3 + 4) = 10");
     }
 
-    @Test()
+    @Test
+    @DisplayName("要素数0のリストの加算")
     void addAllByNoCollection() {
         Amount one = new Amount(1);
         Collection<Amount> addends = Arrays.asList();
         Amount actual = one.addAll(addends);
-        assertEquals(new Amount(1).value, actual.value, "1 + ( リスト内の要素0 ) = 1");
+        assertEquals(new Amount(1).value, actual.value, "1 + ( 要素数0のリスト ) = 1");
     }
 
-    @Test()
+    @Test
+    @DisplayName("減算")
     void subtract() {
         Amount one = new Amount(1);
         Amount two = new Amount(2);
@@ -110,14 +117,16 @@ class AmountTest {
         assertEquals(new Amount(-1).value, two.subtract(three).value, "2 - 3 = -1");
     }
 
-    @Test()
+    @Test
+    @DisplayName("減算オーバーフロー")
     void subtractOverflow() {
         Amount min = new Amount(Long.MIN_VALUE);
         Amount one = new Amount(1);
-        assertThrows(ArithmeticException.class, () -> min.subtract(one),"減算オーバーフロー");
+        assertThrows(ArithmeticException.class, () -> min.subtract(one));
     }
 
-    @Test()
+    @Test
+    @DisplayName("乗算")
     void multiply() {
         Amount one = new Amount(1);
         Amount actual = one.multiply(2);
@@ -128,13 +137,15 @@ class AmountTest {
         assertEquals(new Amount(12).value, actual.value, "3 * 4 = 12");
     }
 
-    @Test()
+    @Test
+    @DisplayName("乗算オーバーフロー")
     void multiplyOverflow() {
         Amount max = new Amount(Long.MAX_VALUE);
-        assertThrows(ArithmeticException.class, () -> max.multiply(2),"乗算オーバーフロー");
+        assertThrows(ArithmeticException.class, () -> max.multiply(2));
     }
 
-    @Test()
+    @Test
+    @DisplayName("除算")
     void divideExact() {
         Amount two = new Amount(2);
         Amount actual = two.divideExact(1);
@@ -145,13 +156,15 @@ class AmountTest {
         assertEquals(new Amount(3).value, actual.value, "6 / 2 = 3");
     }
 
-    @Test()
+    @Test
+    @DisplayName("割り切れない除算による例外")
     void indivisibleDivide() {
         Amount four = new Amount(4);
-        assertThrows(ArithmeticException.class, () -> four.divideExact(3),"割り切れない除算");
+        assertThrows(ArithmeticException.class, () -> four.divideExact(3));
     }
 
-    @Test()
+    @Test
+    @DisplayName("余剰のある除算")
     void divideAndRemainder() {
         Amount two = new Amount(2);
         Amount[] actual = two.divideAndRemainder(1);
@@ -166,14 +179,16 @@ class AmountTest {
         assertEquals(new Amount(1).value, actual[1].value, "4 % 3 = 1");
     }
 
-    @Test()
+    @Test
+    @DisplayName("0除算による例外")
     void divideZero() {
         Amount one = new Amount(1);
         int divisorZero = 0;
-        assertThrows(ArithmeticException.class, () -> one.divideAndRemainder(divisorZero),"0除算");
+        assertThrows(ArithmeticException.class, () -> one.divideAndRemainder(divisorZero));
     }
 
-    @Test()
+    @Test
+    @DisplayName("イコール")
     void isEqualTo() {
         Amount one = new Amount(1);
         Amount otherOne = new Amount(1);
@@ -182,7 +197,8 @@ class AmountTest {
         assertFalse(one.isEqualTo(two), "異なる値");
     }
 
-    @Test()
+    @Test
+    @DisplayName("大なり")
     void isGreaterThan() {
         Amount one = new Amount(1);
         Amount two = new Amount(2);
@@ -193,7 +209,8 @@ class AmountTest {
         assertFalse(two.isGreaterThan(three), "2 は 3 より大きくない");
     }
 
-    @Test()
+    @Test
+    @DisplayName("大なりイコール")
     void isGreaterOrEqualTo() {
         Amount one = new Amount(1);
         Amount two = new Amount(2);
@@ -204,7 +221,8 @@ class AmountTest {
         assertFalse(two.isGreaterOrEqualTo(three), "2 は 3 以上ではない");
     }
 
-    @Test()
+    @Test
+    @DisplayName("小なり")
     void isLessThan() {
         Amount one = new Amount(1);
         Amount two = new Amount(2);
@@ -215,7 +233,8 @@ class AmountTest {
         assertTrue(two.isLessThan(three), "2 は 3 より小さい");
     }
 
-    @Test()
+    @Test
+    @DisplayName("小なりイコール")
     void isLessOrEqualTo() {
         Amount one = new Amount(1);
         Amount two = new Amount(2);
