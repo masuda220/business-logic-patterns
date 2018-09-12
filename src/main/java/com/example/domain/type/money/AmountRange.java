@@ -1,7 +1,5 @@
 package com.example.domain.type.money;
 
-import java.util.function.BiFunction;
-
 /**
  * 金額範囲 AmountRange型
  */
@@ -34,21 +32,10 @@ public class AmountRange {
 	 * @param target
 	 * @return true: 範囲内,
 	 */
-	public boolean inBetweenMinOrOverAndLessThanMax(Amount target) {
+	public boolean contains(Amount target) {
 		if (target == null) {
 			throw new NullPointerException();
 		}
 		return target.isGreaterOrEqualTo(min) && target.isLessThan(max);
-	}
-
-	/**
-	 * 
-	 * 比較条件を指定して範囲チェック
-	 *  
-	 * @param func 
-	 * @return true: 範囲内, false: 範囲外
-	 */
-	public boolean dynamicRangeCheckBy(BiFunction<Amount, Amount, Boolean> func){
-		return func.apply(min, max);
 	}
 }
