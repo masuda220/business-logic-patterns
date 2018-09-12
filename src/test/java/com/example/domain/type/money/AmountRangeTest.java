@@ -8,30 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class AmountRangeTest {
 
     @Test()
-    @DisplayName("コンストラクタ引数テスト")
-    void inputCheck() {
-        try{
-            Amount min = null;
-            Amount max = new Amount(100);
-            new AmountRange(min, max);
-            fail();
-        }
-        catch(NullPointerException expected){
-            assertEquals(expected.getMessage(), "The specified min value is null.");
-        }
-
-        try{
-            Amount min = new Amount(0);
-            Amount max = null;
-            new AmountRange(min, max);
-            fail();
-        }
-        catch(NullPointerException expected){
-            assertEquals(expected.getMessage(), "The specified max value is null.");
-        }
-    }
-
-    @Test()
     @DisplayName("境界値テスト")
     void contains() {
         Amount min = new Amount(1);
