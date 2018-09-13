@@ -10,6 +10,11 @@ public class Minute {
         this.time = time;
     }
 
+    Minute add(Minute minute) {
+        time += minute.time;
+        return new Minute(time);
+    }
+
     @Override
     public String toString() {
         return String.format("%d", time);

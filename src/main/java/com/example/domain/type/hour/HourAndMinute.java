@@ -12,8 +12,14 @@ public class HourAndMinute {
         this.minute = minute;
     }
 
+    static HourAndMinute from(Minute minute) {
+        Hour quotient = new Hour(minute.time / 60);
+        Minute remainder = new Minute(minute.time % 60);
+        return new HourAndMinute(quotient, remainder);
+    }
+
     Minute toMinute() {
-        return new Minute(hour.toMinute().time + minute.time);
+        return minute.add(hour.toMinute());
     }
 
     @Override
