@@ -1,7 +1,6 @@
 package com.example.domain.type.hour;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 
 /**
  * 時刻を時分単位で表す
