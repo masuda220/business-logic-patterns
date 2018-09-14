@@ -22,8 +22,19 @@ public class HourAndMinute {
         return minute.add(hour.toMinute());
     }
 
+    private String prepare(String hour, String minute) {
+        // FIXME 実装が美しくないので直したい
+        String parseHour = zeroPadding(hour);
+        String parseMinute = zeroPadding(minute);
+        return parseHour + ":" + parseMinute;
+    }
+
+    private String zeroPadding(String target) {
+        return String.format("%2s", target).replace(" ", "0");
+    }
+
     @Override
     public String toString() {
-        return hour.toString() + ':' + minute.toString();
+        return prepare(hour.toString(), minute.toString());
     } 
 }
