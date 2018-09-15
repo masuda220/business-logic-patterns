@@ -7,11 +7,6 @@ import java.time.LocalDate;
  */
 public class DateRange {
 
-    public enum ContainType {
-        期間内,
-        期間前,
-        期間後
-    }
     LocalDate start;
     LocalDate end;
 
@@ -33,11 +28,11 @@ public class DateRange {
         return new DateRange(LocalDate.now(), end);
     }
 
-    public ContainType contains(LocalDate target) {
-        if (start.isEqual(target)) return ContainType.期間内;
-        if (end.isEqual(target)) return ContainType.期間内;
-        if (start.isAfter(target)) return ContainType.期間前;
-        return ContainType.期間後;
+    public DateRangeContainType contains(LocalDate target) {
+        if (start.isEqual(target)) return DateRangeContainType.期間内;
+        if (end.isEqual(target)) return DateRangeContainType.期間内;
+        if (start.isAfter(target)) return DateRangeContainType.期間前;
+        return DateRangeContainType.期間後;
     }
 
     @Override

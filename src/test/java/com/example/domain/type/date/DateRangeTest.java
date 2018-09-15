@@ -96,8 +96,8 @@ public class DateRangeTest {
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
         LocalDate date20180902 = LocalDate.of(2018, 9, 2);
         DateRange range20180901to20180902 = DateRange.fromTo(date20180901, date20180902);
-        DateRange.ContainType actual = range20180901to20180902.contains(date20180831);
-        assertEquals(DateRange.ContainType.期間前, actual);
+        DateRangeContainType actual = range20180901to20180902.contains(date20180831);
+        assertEquals(DateRangeContainType.期間前, actual);
     }
 
     @Test
@@ -107,8 +107,8 @@ public class DateRangeTest {
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
         DateRange range20180830to20180831 = DateRange.fromTo(date20180830, date20180831);
-        DateRange.ContainType actual = range20180830to20180831.contains(date20180901);
-        assertEquals(DateRange.ContainType.期間後, actual);
+        DateRangeContainType actual = range20180830to20180831.contains(date20180901);
+        assertEquals(DateRangeContainType.期間後, actual);
     }
 
     @Test
@@ -118,8 +118,8 @@ public class DateRangeTest {
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
         LocalDate otherDate20180831 = LocalDate.of(2018, 8, 31);
         DateRange range20180831to20180901 = DateRange.fromTo(date20180831, date20180901);
-        DateRange.ContainType actual = range20180831to20180901.contains(otherDate20180831);
-        assertEquals(DateRange.ContainType.期間内, actual);
+        DateRangeContainType actual = range20180831to20180901.contains(otherDate20180831);
+        assertEquals(DateRangeContainType.期間内, actual);
     }
 
     @Test
@@ -129,8 +129,8 @@ public class DateRangeTest {
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
         LocalDate otherDate20180901 = LocalDate.of(2018, 9, 1);
         DateRange range20180831to20180901 = DateRange.fromTo(date20180831, date20180901);
-        DateRange.ContainType actual = range20180831to20180901.contains(otherDate20180901);
-        assertEquals(DateRange.ContainType.期間内, actual);
+        DateRangeContainType actual = range20180831to20180901.contains(otherDate20180901);
+        assertEquals(DateRangeContainType.期間内, actual);
     }
 
     @Test
@@ -139,7 +139,7 @@ public class DateRangeTest {
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
         LocalDate otherDate20180901 = LocalDate.of(2018, 9, 1);
         DateRange range20180901to20180901 = DateRange.fromTo(date20180901, date20180901);
-        DateRange.ContainType actual = range20180901to20180901.contains(otherDate20180901);
-        assertEquals(DateRange.ContainType.期間内, actual);
+        DateRangeContainType actual = range20180901to20180901.contains(otherDate20180901);
+        assertEquals(DateRangeContainType.期間内, actual);
     }
 }
