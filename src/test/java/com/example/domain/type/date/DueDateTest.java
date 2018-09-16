@@ -10,18 +10,78 @@ import static org.junit.jupiter.api.Assertions.*;
 class DueDateTest {
 
     @Test
-    @DisplayName("期日後")
-    public void overDue() {
+    @DisplayName("期限前判定 期日前")
+    public void beforeDueBefore() {
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
-        DueDate due20180831 = DueDate.of(date20180831);
-        boolean actual = due20180831.isOverDue(date20180901);
+        DueDate due20180901 = DueDate.of(date20180901);
+        boolean actual = due20180901.isBeforeDue(date20180831);
         assertTrue(actual);
     }
 
     @Test
-    @DisplayName("期日当日")
-    public void dueToday() {
+    @DisplayName("期限前判定 期日当日")
+    public void beforeDueToday() {
+        LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate other20180831 = LocalDate.of(2018, 8, 31);
+        DueDate due20180831 = DueDate.of(date20180831);
+        boolean actual = due20180831.isBeforeDue(other20180831);
+        assertFalse(actual);
+    }
+
+    @Test
+    @DisplayName("期限前判定 期日後")
+    public void beforeDueAfter() {
+        LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate date20180901 = LocalDate.of(2018, 9, 1);
+        DueDate due20180831 = DueDate.of(date20180831);
+        boolean actual = due20180831.isBeforeDue(date20180901);
+        assertFalse(actual);
+    }
+
+    @Test
+    @DisplayName("期限当日判定 期日前")
+    public void dueDateBefore() {
+        LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate date20180901 = LocalDate.of(2018, 9, 1);
+        DueDate due20180901 = DueDate.of(date20180901);
+        boolean actual = due20180901.isDueDate(date20180831);
+        assertFalse(actual);
+    }
+
+    @Test
+    @DisplayName("期限当日判定 期日当日")
+    public void dueDateToday() {
+        LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate other20180831 = LocalDate.of(2018, 8, 31);
+        DueDate due20180831 = DueDate.of(date20180831);
+        boolean actual = due20180831.isDueDate(other20180831);
+        assertTrue(actual);
+    }
+
+    @Test
+    @DisplayName("期限当日判定 期日後")
+    public void dueDateAfter() {
+        LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate date20180901 = LocalDate.of(2018, 9, 1);
+        DueDate due20180831 = DueDate.of(date20180831);
+        boolean actual = due20180831.isDueDate(date20180901);
+        assertFalse(actual);
+    }
+
+    @Test
+    @DisplayName("期限切れ判定 期日前")
+    public void overDueBefore() {
+        LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate date20180901 = LocalDate.of(2018, 9, 1);
+        DueDate due20180901 = DueDate.of(date20180901);
+        boolean actual = due20180901.isOverDue(date20180831);
+        assertFalse(actual);
+    }
+
+    @Test
+    @DisplayName("期限切れ判定 期日当日")
+    public void overDueToday() {
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
         LocalDate other20180831 = LocalDate.of(2018, 8, 31);
         DueDate due20180831 = DueDate.of(date20180831);
@@ -30,13 +90,13 @@ class DueDateTest {
     }
 
     @Test
-    @DisplayName("期日前")
-    public void beforeDue() {
+    @DisplayName("期限切れ判定 期日後")
+    public void overDueAfter() {
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
-        DueDate due20180901 = DueDate.of(date20180901);
-        boolean actual = due20180901.isOverDue(date20180831);
-        assertFalse(actual);
+        DueDate due20180831 = DueDate.of(date20180831);
+        boolean actual = due20180831.isOverDue(date20180901);
+        assertTrue(actual);
     }
 
     @Test

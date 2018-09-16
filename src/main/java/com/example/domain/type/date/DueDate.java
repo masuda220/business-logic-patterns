@@ -18,6 +18,14 @@ public class DueDate {
         return new DueDate(date);
     }
 
+    public boolean isBeforeDue(LocalDate date) {
+        return date.isBefore(value);
+    }
+
+    public boolean isDueDate(LocalDate date) {
+        return date.equals(value);
+    }
+
     public boolean isOverDue(LocalDate date) {
         return date.isAfter(value);
     }
@@ -31,7 +39,7 @@ public class DueDate {
     }
 
     public int daysPast(LocalDate date) {
-        if (value.isAfter(date)) throw new IllegalArgumentException();
+        if (isBeforeDue(date)) throw new IllegalArgumentException();
         long daysPast = ChronoUnit.DAYS.between(value, date);
         // TODO : 実際に使用される日付の範囲を考えるとこのチェックは不要？
         if (daysPast > (long) Integer.MAX_VALUE) throw new ArithmeticException();
