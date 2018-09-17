@@ -16,16 +16,16 @@ public class DecimalAmount {
         this.value = value.setScale(DEFAULT_SCALE);
     }
 
-    static DecimalAmount valueOf(long val) {
-        return new DecimalAmount(BigDecimal.valueOf(val));
+    static DecimalAmount valueOf(long value) {
+        return new DecimalAmount(BigDecimal.valueOf(value));
     }
 
-    public static DecimalAmount valueOf(Amount val) {
-        return DecimalAmount.valueOf(val.value);
+    public static DecimalAmount valueOf(Amount value) {
+        return DecimalAmount.valueOf(value.value);
     }
 
-    public static  DecimalAmount valueOf(String val) {
-        BigDecimal bigDecimalValue = new BigDecimal(val);
+    public static  DecimalAmount valueOf(String value) {
+        BigDecimal bigDecimalValue = new BigDecimal(value);
         if (bigDecimalValue.scale() > DEFAULT_SCALE) throw new ArithmeticException();
         return new DecimalAmount(bigDecimalValue);
     }
