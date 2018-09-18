@@ -15,10 +15,10 @@ public class HourTimeRange {
 
     // FIXME betweenのほうがわかりやすいかも
     public HourAndMinute differenceTime() {
-        int fromH = from.hourPoint.getHour();
-        int fromM = from.hourPoint.getMinute();
-        int toH = to.hourPoint.getHour();
-        int toM = to.hourPoint.getMinute();
+        int fromH = from.value.getHour();
+        int fromM = from.value.getMinute();
+        int toH = to.value.getHour();
+        int toM = to.value.getMinute();
 
         int prepareFrom = fromH * 60 + fromM;
         int prepareTo = toH * 60 + toM;

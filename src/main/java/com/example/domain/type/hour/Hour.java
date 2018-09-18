@@ -4,18 +4,18 @@ package com.example.domain.type.hour;
  * 時間(数)
  */
 public class Hour {
-    int time;
+    int value;
 
     Hour (int time) {
-        this.time = time;
+        value = time;
     }
 
     Minute toMinute() {
-        return new Minute(time * 60);
+        return new Minute(value * 60);
     }
 
     @Override
     public String toString() {
-        return String.format("%d", time);
+        return String.format("%d", value);
     } 
 }

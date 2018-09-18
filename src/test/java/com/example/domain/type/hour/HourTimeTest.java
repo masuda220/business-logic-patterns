@@ -13,9 +13,9 @@ class HourTimeTest {
     @DisplayName("コンストラクタテスト")
     void constructorText() {
         try {
-            new HourTime("1", "23");    //時間が一桁の場合
-            new HourTime("12", "3");    //分が一桁の場合
-            new HourTime("12", "34");
+            new HourTime(1, 23);    //時間が一桁の場合
+            new HourTime(12, 3);    //分が一桁の場合
+            new HourTime(12, 34);
         }
         catch(DateTimeParseException e) {
             fail();

@@ -10,8 +10,8 @@ class HourTimeRangeTest {
     @Test()
     @DisplayName("時間間隔取得テスト")
     void differenceTime() {
-        HourTime from = new HourTime("12", "31");
-        HourTime to = new HourTime("23", "10");
+        HourTime from = new HourTime(12, 31);
+        HourTime to = new HourTime(23, 10);
 
         HourTimeRange hourTimeGange = new HourTimeRange(from, to);
         HourAndMinute result = hourTimeGange.differenceTime();

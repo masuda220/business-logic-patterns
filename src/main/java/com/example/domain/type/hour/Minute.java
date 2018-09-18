@@ -4,19 +4,19 @@ package com.example.domain.type.hour;
  * 分(数)
  */
 public class Minute {
-    int time;
+    int value;
 
     Minute (int time) {
-        this.time = time;
+        value = time;
     }
 
     Minute add(Minute minute) {
-        time += minute.time;
-        return new Minute(time);
+        value += minute.value;
+        return new Minute(value);
     }
 
     @Override
     public String toString() {
-        return String.format("%d", time);
+        return String.format("%d", value);
     } 
 }
