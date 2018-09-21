@@ -13,8 +13,8 @@ class HourTimeRangeTest {
         HourTime from = new HourTime(12, 31);
         HourTime to = new HourTime(23, 10);
 
-        HourTimeRange hourTimeGange = new HourTimeRange(from, to);
-        HourAndMinute result = hourTimeGange.differenceTime();
+        HourTimeRange range = new HourTimeRange(from, to);
+        HourAndMinute result = range.between();
         
         assertEquals(result.toString(), "10:39"); result.toString();
     }

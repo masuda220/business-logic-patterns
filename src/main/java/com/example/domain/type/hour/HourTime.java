@@ -13,18 +13,7 @@ public class HourTime {
     }
 
     HourTime (int hour, int minute) {
-        value = LocalTime.parse(prepare(hour, minute));
-    }
-
-    private String prepare(int hour, int minute) {
-        // FIXME LocalTimeはxx:xx形式でなければParseできないのでintで1桁の場合を考慮する
-        String parseHour = zeroPadding(hour);
-        String parseMinute = zeroPadding(minute);
-        return parseHour + ":" + parseMinute;
-    }
-
-    private String zeroPadding(int target) {
-        return String.format("%02d", target);
+        value = LocalTime.of(hour, minute);
     }
 
     @Override

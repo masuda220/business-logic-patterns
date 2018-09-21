@@ -13,8 +13,12 @@ public class HourAndMinute {
     }
 
     static HourAndMinute from(Minute minute) {
-        Hour quotient = new Hour(minute.value / 60);
-        Minute remainder = new Minute(minute.value % 60);
+        return from(minute.value);
+    }
+
+    static HourAndMinute from(int minute) {
+        Hour quotient = new Hour(minute / 60);
+        Minute remainder = new Minute(minute % 60);
         return new HourAndMinute(quotient, remainder);
     }
 
