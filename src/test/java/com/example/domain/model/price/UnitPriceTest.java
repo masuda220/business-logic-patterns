@@ -1,4 +1,4 @@
-package com.example.domain.type.price;
+package com.example.domain.model.price;
 
 import static org.junit.jupiter.api.Assertions.*;
 

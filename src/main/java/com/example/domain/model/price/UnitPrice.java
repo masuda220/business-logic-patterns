@@ -1,4 +1,4 @@
-package com.example.domain.type.price;
+package com.example.domain.model.price;
 
 import com.example.domain.type.money.Amount;
 import com.example.domain.type.quantity.Quantity;
