@@ -105,8 +105,8 @@ class DueDateTest {
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
         LocalDate date20190901 = LocalDate.of(2019, 9, 1);
         DueDate due20190901 = DueDate.of(date20190901);
-        int actual = due20190901.remainingDays(date20180831);
-        assertEquals(366, actual, String.format("%s - %s", due20190901, date20180831));
+        Days actual = due20190901.remainingDays(date20180831);
+        assertEquals(366, actual.value, String.format("%s - %s", due20190901, date20180831));
     }
 
     @Test
@@ -115,17 +115,17 @@ class DueDateTest {
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
         LocalDate other20180831 = LocalDate.of(2018, 8, 31);
         DueDate due20180831 = DueDate.of(date20180831);
-        int actual = due20180831.remainingDays(other20180831);
-        assertEquals(0, actual);
+        Days actual = due20180831.remainingDays(other20180831);
+        assertEquals(0, actual.value);
     }
 
     @Test
-    @DisplayName("期日までの日数 オーバーフロー")
+    @DisplayName("期日までの日数 マイナス")
     public void remainingDaysOverflow() {
-        LocalDate dateMax = LocalDate.MAX;
-        LocalDate dateMin = LocalDate.MIN;
-        DueDate dueMax = DueDate.of(dateMax);
-        assertThrows(ArithmeticException.class, () -> dueMax.remainingDays(dateMin));
+        LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate date20180901 = LocalDate.of(2018, 9, 1);
+        DueDate due20180831 = DueDate.of(date20180831);
+        assertThrows(IllegalArgumentException.class, () -> due20180831.remainingDays(date20180901));
     }
 
     @Test
@@ -134,8 +134,8 @@ class DueDateTest {
         LocalDate date20170831 = LocalDate.of(2017, 8, 31);
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
         DueDate due20170831 = DueDate.of(date20170831);
-        int actual = due20170831.daysPast(date20180901);
-        assertEquals(366, actual, String.format("%s - %s", date20180901, due20170831));
+        Days actual = due20170831.daysPast(date20180901);
+        assertEquals(366, actual.value, String.format("%s - %s", date20180901, due20170831));
     }
 
     @Test
@@ -144,16 +144,16 @@ class DueDateTest {
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
         LocalDate other20180831 = LocalDate.of(2018, 8, 31);
         DueDate due20180831 = DueDate.of(date20180831);
-        int actual = due20180831.daysPast(other20180831);
-        assertEquals(0, actual);
+        Days actual = due20180831.daysPast(other20180831);
+        assertEquals(0, actual.value);
     }
 
     @Test
-    @DisplayName("超過日数 オーバーフロー")
+    @DisplayName("超過日数 マイナス")
     public void daysPastOverflow() {
-        LocalDate dateMax = LocalDate.MAX;
-        LocalDate dateMin = LocalDate.MIN;
-        DueDate dueMin = DueDate.of(dateMin);
-        assertThrows(ArithmeticException.class, () -> dueMin.daysPast(dateMax));
+        LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate date20180901 = LocalDate.of(2018, 9, 1);
+        DueDate due20180901 = DueDate.of(date20180901);
+        assertThrows(IllegalArgumentException.class, () -> due20180901.daysPast(date20180831));
     }
 }
