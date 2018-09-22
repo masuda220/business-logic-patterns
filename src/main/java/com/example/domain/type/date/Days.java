@@ -5,6 +5,8 @@ import java.time.temporal.ChronoUnit;
 
 public class Days {
 
+    public static final Days Zero = new Days(0);
+
     long value;
 
     public Days(long value) {

@@ -1,4 +1,6 @@
-package com.example.domain.type.date;
+package com.example.domain.model.duedate;
+
+import com.example.domain.type.date.Days;
 
 import java.time.LocalDate;
 

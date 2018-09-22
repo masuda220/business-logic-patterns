@@ -1,5 +1,6 @@
-package com.example.domain.type.date;
+package com.example.domain.model.duedate;
 
+import com.example.domain.type.date.Days;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -106,7 +107,8 @@ class DueDateTest {
         LocalDate date20190901 = LocalDate.of(2019, 9, 1);
         DueDate due20190901 = DueDate.of(date20190901);
         Days actual = due20190901.remainingDays(date20180831);
-        assertEquals(366, actual.value, String.format("%s - %s", due20190901, date20180831));
+        Days expected = new Days(366);
+        assertTrue(expected.isEqualTo(actual), String.format("%s - %s", due20190901, date20180831));
     }
 
     @Test
@@ -116,7 +118,8 @@ class DueDateTest {
         LocalDate other20180831 = LocalDate.of(2018, 8, 31);
         DueDate due20180831 = DueDate.of(date20180831);
         Days actual = due20180831.remainingDays(other20180831);
-        assertEquals(0, actual.value);
+        Days expected = Days.Zero;
+        assertTrue(expected.isEqualTo(actual));
     }
 
     @Test
@@ -135,7 +138,8 @@ class DueDateTest {
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
         DueDate due20170831 = DueDate.of(date20170831);
         Days actual = due20170831.daysPast(date20180901);
-        assertEquals(366, actual.value, String.format("%s - %s", date20180901, due20170831));
+        Days expected = new Days(366);
+        assertTrue(expected.isEqualTo(actual), String.format("%s - %s", date20180901, due20170831));
     }
 
     @Test
@@ -145,7 +149,8 @@ class DueDateTest {
         LocalDate other20180831 = LocalDate.of(2018, 8, 31);
         DueDate due20180831 = DueDate.of(date20180831);
         Days actual = due20180831.daysPast(other20180831);
-        assertEquals(0, actual.value);
+        Days expected = Days.Zero;
+        assertTrue(expected.isEqualTo(actual));
     }
 
     @Test
