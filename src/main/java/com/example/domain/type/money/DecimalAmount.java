@@ -4,16 +4,14 @@ import java.math.BigDecimal;
 
 public class DecimalAmount {
 
-    final static BigDecimal MAX_VALUE = BigDecimal.valueOf(Long.MAX_VALUE);
-    final static BigDecimal MIN_VALUE = BigDecimal.valueOf(Long.MIN_VALUE);
-    final static int DEFAULT_SCALE = 2;
+    final static int MAX_SCALE = 4;
 
     BigDecimal value;
 
     private DecimalAmount(BigDecimal value) {
-        if (MAX_VALUE.compareTo(value) < 0) throw new ArithmeticException();
-        if (MIN_VALUE.compareTo(value) > 0) throw new ArithmeticException();
-        this.value = value.setScale(DEFAULT_SCALE);
+        if (overMaxValue(value)) throw new ArithmeticException();
+        if (lessMinValue(value)) throw new ArithmeticException();
+        this.value = value;
     }
 
     static DecimalAmount valueOf(long value) {
@@ -26,7 +24,7 @@ public class DecimalAmount {
 
     public static  DecimalAmount valueOf(String value) {
         BigDecimal bigDecimalValue = new BigDecimal(value);
-        if (bigDecimalValue.scale() > DEFAULT_SCALE) throw new ArithmeticException();
+        if (bigDecimalValue.scale() > MAX_SCALE) throw new ArithmeticException();
         return new DecimalAmount(bigDecimalValue);
     }
 
@@ -52,6 +50,24 @@ public class DecimalAmount {
 
     public Amount toAmount() {
         return new Amount(value.setScale(0, BigDecimal.ROUND_HALF_UP).longValue());
+    }
+
+    boolean overMaxValue(BigDecimal value) {
+        return maxValue(value).compareTo(value) < 0;
+    }
+
+    boolean lessMinValue(BigDecimal value) {
+        return minValue(value).compareTo(value) > 0;
+    }
+
+    BigDecimal maxValue(BigDecimal value) {
+        BigDecimal longMaxValue = BigDecimal.valueOf(Long.MAX_VALUE);
+        return longMaxValue.movePointLeft(value.scale());
+    }
+
+    BigDecimal minValue(BigDecimal value) {
+        BigDecimal longMaxValue = BigDecimal.valueOf(Long.MIN_VALUE);
+        return longMaxValue.movePointLeft(value.scale());
     }
 
     @Override
