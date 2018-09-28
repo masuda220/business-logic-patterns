@@ -8,22 +8,22 @@ public class DecimalAmount {
 
     BigDecimal value;
 
-    private DecimalAmount(BigDecimal value) {
-        if (overMaxValue(value)) throw new ArithmeticException();
-        if (lessMinValue(value)) throw new ArithmeticException();
-        this.value = value;
+    private DecimalAmount(BigDecimal source) {
+        if (overMaxValue(source)) throw new ArithmeticException();
+        if (lessMinValue(source)) throw new ArithmeticException();
+        this.value = source;
     }
 
-    static DecimalAmount valueOf(long value) {
-        return new DecimalAmount(BigDecimal.valueOf(value));
+    static DecimalAmount valueOf(long longValue) {
+        return new DecimalAmount(BigDecimal.valueOf(longValue));
     }
 
-    public static DecimalAmount valueOf(Amount value) {
-        return DecimalAmount.valueOf(value.value);
+    public static DecimalAmount valueOf(Amount amount) {
+        return DecimalAmount.valueOf(amount.value);
     }
 
-    public static  DecimalAmount valueOf(String value) {
-        BigDecimal bigDecimalValue = new BigDecimal(value);
+    public static  DecimalAmount valueOf(String source) {
+        BigDecimal bigDecimalValue = new BigDecimal(source);
         if (bigDecimalValue.scale() > MAX_SCALE) throw new ArithmeticException();
         return new DecimalAmount(bigDecimalValue);
     }
@@ -52,22 +52,22 @@ public class DecimalAmount {
         return new Amount(value.setScale(0, BigDecimal.ROUND_HALF_UP).longValue());
     }
 
-    boolean overMaxValue(BigDecimal value) {
-        return maxValue(value).compareTo(value) < 0;
+    boolean overMaxValue(BigDecimal other) {
+        return maxValue(other).compareTo(other) < 0;
     }
 
-    boolean lessMinValue(BigDecimal value) {
-        return minValue(value).compareTo(value) > 0;
+    boolean lessMinValue(BigDecimal other) {
+        return minValue(other).compareTo(other) > 0;
     }
 
-    BigDecimal maxValue(BigDecimal value) {
+    BigDecimal maxValue(BigDecimal source) {
         BigDecimal longMaxValue = BigDecimal.valueOf(Long.MAX_VALUE);
-        return longMaxValue.movePointLeft(value.scale());
+        return longMaxValue.movePointLeft(source.scale());
     }
 
-    BigDecimal minValue(BigDecimal value) {
+    BigDecimal minValue(BigDecimal source) {
         BigDecimal longMaxValue = BigDecimal.valueOf(Long.MIN_VALUE);
-        return longMaxValue.movePointLeft(value.scale());
+        return longMaxValue.movePointLeft(source.scale());
     }
 
     @Override
