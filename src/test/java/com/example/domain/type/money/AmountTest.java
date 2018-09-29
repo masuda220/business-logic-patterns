@@ -8,6 +8,9 @@ import java.util.Collection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.example.domain.type.quantity.unit.BoxUnit;
+import com.example.domain.type.quantity.unit.PieceUnit;
+
 class AmountTest {
 
     @Test
@@ -185,6 +188,48 @@ class AmountTest {
         Amount one = new Amount(1);
         int divisorZero = 0;
         assertThrows(ArithmeticException.class, () -> one.divideAndRemainder(divisorZero));
+    }
+
+    @Test
+    @DisplayName("ピースからピースへの変換")
+    void pieceToPiece() {
+        Amount actual = new Amount(95).exchange(new PieceUnit(), new PieceUnit());
+        assertTrue(new Amount(95).isEqualTo(actual));
+    }
+
+    @Test
+    @DisplayName("ピースから箱への変換")
+    void pieceToBox() {
+        Amount actual = new Amount(95).exchange(new PieceUnit(), new BoxUnit(24));
+        assertTrue(new Amount(95 * 24).isEqualTo(actual));
+    }
+
+    @Test
+    @DisplayName("箱からピースへの変換")
+    void boxToPiece() {
+        Amount actual = new Amount(95 * 24).exchange(new BoxUnit(24), new PieceUnit());
+        assertTrue(new Amount(95).isEqualTo(actual));
+    }
+
+    @Test
+    @DisplayName("箱から箱への変換")
+    void boxToBox() {
+        Amount actual = new Amount(95 * 24).exchange(new BoxUnit(24), new BoxUnit(24));
+        assertTrue(new Amount(95 * 24).isEqualTo(actual));
+    }
+
+    @Test
+    @DisplayName("異なるピース数の箱への変換で例外")
+    void differentPieceBox() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Amount(95).exchange(new BoxUnit(24), new BoxUnit(36)));
+    }
+
+    @Test
+    @DisplayName("箱からピースへの変換で端数が出る場合は例外")
+    void boxToPieceException() {
+        assertThrows(ArithmeticException.class,
+                () -> new Amount(95 * 36).exchange(new BoxUnit(24), new PieceUnit()));
     }
 
     @Test

@@ -23,4 +23,10 @@ public class UnitPrice {
         return amount.multiply(one.toSameUnit(quantity));
     }
 
+    public UnitPrice convertTo(Unit target) {
+        amount = amount.exchange(unit, target);
+        unit = target;
+        return this;
+    }
+
 }

@@ -57,4 +57,67 @@ class UnitPriceTest {
         assertThrows(IllegalArgumentException.class, () -> unitPrice.multiply(quantity));
     }
 
+    @Test
+    @DisplayName("ピースからピースへの変換")
+    void pieceToPiece() {
+        UnitPrice unitPrice = new UnitPrice(new Amount(95), new PieceUnit());
+        UnitPrice expected = new UnitPrice(new Amount(95), new PieceUnit());
+
+        UnitPrice actual = unitPrice.convertTo(new PieceUnit());
+
+        assertTrue(expected.amount.isEqualTo(actual.amount));
+        assertTrue(expected.unit.isEqualTo(actual.unit));
+    }
+
+    @Test
+    @DisplayName("ピースから箱への変換")
+    void pieceToBox() {
+        UnitPrice unitPrice = new UnitPrice(new Amount(95), new PieceUnit());
+        UnitPrice expected = new UnitPrice(new Amount(95 * 24), new BoxUnit(24));
+
+        UnitPrice actual = unitPrice.convertTo(new BoxUnit(24));
+
+        assertTrue(expected.amount.isEqualTo(actual.amount));
+        assertTrue(expected.unit.isEqualTo(actual.unit));
+    }
+
+    @Test
+    @DisplayName("箱からピースへの変換")
+    void boxToPiece() {
+        UnitPrice unitPrice = new UnitPrice(new Amount(95 * 24), new BoxUnit(24));
+        UnitPrice expected = new UnitPrice(new Amount(95), new PieceUnit());
+
+        UnitPrice actual = unitPrice.convertTo(new PieceUnit());
+
+        assertTrue(expected.amount.isEqualTo(actual.amount));
+        assertTrue(expected.unit.isEqualTo(actual.unit));
+    }
+
+    @Test
+    @DisplayName("箱から箱への変換")
+    void boxToBox() {
+        UnitPrice unitPrice = new UnitPrice(new Amount(95 * 24), new BoxUnit(24));
+        UnitPrice expected = new UnitPrice(new Amount(95 * 24), new BoxUnit(24));
+
+        UnitPrice actual = unitPrice.convertTo(new BoxUnit(24));
+
+        assertTrue(expected.amount.isEqualTo(actual.amount));
+        assertTrue(expected.unit.isEqualTo(actual.unit));
+    }
+
+    @Test
+    @DisplayName("異なるピース数の箱への変換で例外")
+    void differentPieceBox() {
+        UnitPrice unitPrice = new UnitPrice(new Amount(95 * 24), new BoxUnit(24));
+        assertThrows(IllegalArgumentException.class, () -> unitPrice.convertTo(new BoxUnit(50)));
+    }
+
+    @Test
+    @DisplayName("箱からピースへの変換で端数が出る場合は例外")
+    void boxToPieceException() {
+        UnitPrice unitPrice = new UnitPrice(new Amount(95 * 25), new BoxUnit(24));
+        assertThrows(ArithmeticException.class, () -> unitPrice.convertTo(new PieceUnit()));
+    }
+
+
 }
