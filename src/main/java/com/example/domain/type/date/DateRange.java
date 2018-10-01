@@ -28,11 +28,16 @@ public class DateRange {
         return new DateRange(LocalDate.now(), end);
     }
 
-    public DateRangeContainType contains(LocalDate target) {
-        if (start.isEqual(target)) return DateRangeContainType.期間内;
-        if (end.isEqual(target)) return DateRangeContainType.期間内;
-        if (start.isAfter(target)) return DateRangeContainType.期間前;
-        return DateRangeContainType.期間後;
+    public boolean isContains(LocalDate date) {
+        if (start.isAfter(date)) return false;
+        if (end.isBefore(date)) return false;
+        return true;
+    }
+    public boolean isBeforeStart(LocalDate date) {
+        return date.isBefore(start);
+    }
+    public boolean isAfterEnd(LocalDate date) {
+        return date.isAfter(end);
     }
 
     @Override

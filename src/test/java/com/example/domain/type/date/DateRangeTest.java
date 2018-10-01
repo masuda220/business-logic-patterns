@@ -11,7 +11,7 @@ public class DateRangeTest {
 
     @Test
     @DisplayName("開始終了のファクトリメソッド")
-    public void fromTo() {
+    void fromTo() {
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
         LocalDate date20180902 = LocalDate.of(2018, 9, 2);
         DateRange actual = DateRange.fromTo(date20180901, date20180902);
@@ -21,7 +21,7 @@ public class DateRangeTest {
 
     @Test
     @DisplayName("開始終了のファクトリメソッド 同値")
-    public void fromToBySameDate() {
+    void fromToBySameDate() {
         LocalDate start20180901 = LocalDate.of(2018, 9, 1);
         LocalDate end20180901 = LocalDate.of(2018, 9, 1);
         DateRange actual = DateRange.fromTo(start20180901, end20180901);
@@ -31,7 +31,7 @@ public class DateRangeTest {
 
     @Test
     @DisplayName("開始終了のファクトリメソッド 開始＞終了で例外")
-    public void fromToIllegalArgument() {
+    void fromToIllegalArgument() {
         LocalDate date20180902 = LocalDate.of(2018, 9, 2);
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
         assertThrows(IllegalArgumentException.class, () -> DateRange.fromTo(date20180902, date20180901));
@@ -39,7 +39,7 @@ public class DateRangeTest {
 
     @Test
     @DisplayName("昨日から今日までのファクトリメソッド")
-    public void from() {
+    void from() {
         LocalDate yesterday = LocalDate.now().minusDays(1);
         LocalDate today = LocalDate.now();
         DateRange actual = DateRange.from(yesterday);
@@ -49,7 +49,7 @@ public class DateRangeTest {
 
     @Test
     @DisplayName("開始（今日）から今日のファクトリメソッド 同値")
-    public void fromByToday() {
+    void fromByToday() {
         LocalDate today = LocalDate.now();
         DateRange actual = DateRange.from(today);
         assertEquals(today, actual.start);
@@ -58,14 +58,14 @@ public class DateRangeTest {
 
     @Test
     @DisplayName("明日から今日のファクトリメソッド 開始＞終了で例外")
-    public void fromIllegalArgument() {
+    void fromIllegalArgument() {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         assertThrows(IllegalArgumentException.class, () -> DateRange.from(tomorrow));
     }
 
     @Test
     @DisplayName("今日から明日までのファクトリメソッド")
-    public void to() {
+    void to() {
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         DateRange actual = DateRange.to(tomorrow);
@@ -75,7 +75,7 @@ public class DateRangeTest {
 
     @Test
     @DisplayName("今日から終了（今日）のファクトリメソッド 同値")
-    public void toByToday() {
+    void toByToday() {
         LocalDate today = LocalDate.now();
         DateRange actual = DateRange.to(today);
         assertEquals(today, actual.start);
@@ -84,62 +84,71 @@ public class DateRangeTest {
 
     @Test
     @DisplayName("今日から昨日のファクトリメソッド 開始＞終了で例外")
-    public void toIllegalArgument() {
+    void toIllegalArgument() {
         LocalDate yesterday = LocalDate.now().minusDays(1);
         assertThrows(IllegalArgumentException.class, () -> DateRange.to(yesterday));
     }
 
     @Test
-    @DisplayName("期間の判定 開始前日")
-    public void containsByDayBeforeOfStart() {
-        LocalDate date20180831 = LocalDate.of(2018, 8, 31);
-        LocalDate date20180901 = LocalDate.of(2018, 9, 1);
-        LocalDate date20180902 = LocalDate.of(2018, 9, 2);
-        DateRange range20180901to20180902 = DateRange.fromTo(date20180901, date20180902);
-        DateRangeContainType actual = range20180901to20180902.contains(date20180831);
-        assertEquals(DateRangeContainType.期間前, actual);
-    }
-
-    @Test
-    @DisplayName("期間の判定 終了翌日")
-    public void containsByNextDayOfEnd() {
+    @DisplayName("期間内の判定")
+    void isContains() {
         LocalDate date20180830 = LocalDate.of(2018, 8, 30);
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate other20180831 = LocalDate.of(2018, 8, 31);
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
-        DateRange range20180830to20180831 = DateRange.fromTo(date20180830, date20180831);
-        DateRangeContainType actual = range20180830to20180831.contains(date20180901);
-        assertEquals(DateRangeContainType.期間後, actual);
+        LocalDate date20180902 = LocalDate.of(2018, 9, 2);
+        LocalDate other20180902 = LocalDate.of(2018, 9, 2);
+        LocalDate date20180903 = LocalDate.of(2018, 9, 3);
+        DateRange range0831to0902 = DateRange.fromTo(date20180831, date20180902);
+
+        assertAll(
+                () -> assertFalse(range0831to0902.isContains(date20180830), "期間前"),
+                () -> assertTrue(range0831to0902.isContains(other20180831), "期間開始日"),
+                () -> assertTrue(range0831to0902.isContains(date20180901), "期間中"),
+                () -> assertTrue(range0831to0902.isContains(other20180902), "期間終了日"),
+                () -> assertFalse(range0831to0902.isContains(date20180903), "期間後")
+        );
     }
 
     @Test
-    @DisplayName("期間の判定 開始当日")
-    public void containsBySameDayOfStart() {
+    @DisplayName("期間前の判定")
+    void beforeStart() {
+        LocalDate date20180830 = LocalDate.of(2018, 8, 30);
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate other20180831 = LocalDate.of(2018, 8, 31);
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
-        LocalDate otherDate20180831 = LocalDate.of(2018, 8, 31);
-        DateRange range20180831to20180901 = DateRange.fromTo(date20180831, date20180901);
-        DateRangeContainType actual = range20180831to20180901.contains(otherDate20180831);
-        assertEquals(DateRangeContainType.期間内, actual);
+        LocalDate date20180902 = LocalDate.of(2018, 9, 2);
+        LocalDate other20180902 = LocalDate.of(2018, 9, 2);
+        LocalDate date20180903 = LocalDate.of(2018, 9, 3);
+        DateRange range0831to0902 = DateRange.fromTo(date20180831, date20180902);
+
+        assertAll(
+                () -> assertTrue(range0831to0902.isBeforeStart(date20180830), "期間前"),
+                () -> assertFalse(range0831to0902.isBeforeStart(other20180831), "期間開始日"),
+                () -> assertFalse(range0831to0902.isBeforeStart(date20180901), "期間中"),
+                () -> assertFalse(range0831to0902.isBeforeStart(other20180902), "期間終了日"),
+                () -> assertFalse(range0831to0902.isBeforeStart(date20180903), "期間後")
+        );
     }
 
     @Test
-    @DisplayName("期間の判定 終了当日")
-    public void containsBySameDayOfEnd() {
+    @DisplayName("期間後の判定")
+    void afterEnd() {
+        LocalDate date20180830 = LocalDate.of(2018, 8, 30);
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
+        LocalDate other20180831 = LocalDate.of(2018, 8, 31);
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
-        LocalDate otherDate20180901 = LocalDate.of(2018, 9, 1);
-        DateRange range20180831to20180901 = DateRange.fromTo(date20180831, date20180901);
-        DateRangeContainType actual = range20180831to20180901.contains(otherDate20180901);
-        assertEquals(DateRangeContainType.期間内, actual);
-    }
+        LocalDate date20180902 = LocalDate.of(2018, 9, 2);
+        LocalDate other20180902 = LocalDate.of(2018, 9, 2);
+        LocalDate date20180903 = LocalDate.of(2018, 9, 3);
+        DateRange range0831to0902 = DateRange.fromTo(date20180831, date20180902);
 
-    @Test
-    @DisplayName("期間の判定 開始＝終了＝判定日")
-    public void containsBySameDayOfStartAndEnd() {
-        LocalDate date20180901 = LocalDate.of(2018, 9, 1);
-        LocalDate otherDate20180901 = LocalDate.of(2018, 9, 1);
-        DateRange range20180901to20180901 = DateRange.fromTo(date20180901, date20180901);
-        DateRangeContainType actual = range20180901to20180901.contains(otherDate20180901);
-        assertEquals(DateRangeContainType.期間内, actual);
+        assertAll(
+                () -> assertFalse(range0831to0902.isAfterEnd(date20180830), "期間前"),
+                () -> assertFalse(range0831to0902.isAfterEnd(other20180831), "期間開始日"),
+                () -> assertFalse(range0831to0902.isAfterEnd(date20180901), "期間中"),
+                () -> assertFalse(range0831to0902.isAfterEnd(other20180902), "期間終了日"),
+                () -> assertTrue(range0831to0902.isAfterEnd(date20180903), "期間後")
+        );
     }
 }
