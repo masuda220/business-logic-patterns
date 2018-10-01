@@ -2,6 +2,24 @@ package com.example.domain.type.money;
 
 import java.math.BigDecimal;
 
+/**
+ * 小数点以下4桁までの金額を表します。<br>
+ * DecimalAmount クラスは {@link java.lang.Long} の整数値と 0から4までの小数点以下を表すスケールで構成されます。<br>
+ * DecimalAmount で表される金額は {@link java.lang.Long#MAX_VALUE}×10 <sup>-scale</sup> から
+ * {@link java.lang.Long#MIN_VALUE}×10 <sup>-scale</sup> までで、
+ * スケールが 0 の場合は、 {@link java.lang.Long#MAX_VALUE} から {@link java.lang.Long#MIN_VALUE} までになります。<br>
+ *
+ * 加算、減算は、異なるスケールの演算が可能ですが、乗算、除算は乗数、除数は整数値のみとなります。
+ *
+ * <table>
+ *     <caption>算術演算の結果で優先されるスケール</caption>
+ *     <tr><th>演算</th><th>優先される結果のスケール</th></tr>
+ *     <tr><td>加算</td><td>max(addend.scale, augend.scale)</td></tr>
+ *     <tr><td>減算</td><td>max(minuend.scale, subtrahend.scale)</td></tr>
+ *     <tr><td>乗算</td><td>multiplier.scale</td></tr>
+ *     <tr><td>除算</td><td>dividend.scale</td></tr>
+ * </table>
+ */
 public class DecimalAmount {
 
     final static int MAX_SCALE = 4;
