@@ -65,9 +65,11 @@ public class Amount {
     public Amount exchange(Unit from, Unit to) {
         if (from.isEqualTo(to))
             return this;
-        else if (to.isPiece())
+
+        if (to.isPiece())
             return this.divideExact(from.piece());
-        else if (from.isPiece() && to.isBox())
+
+        if (from.isPiece() && to.isBox())
             return this.multiply(to.piece());
 
         throw new IllegalArgumentException();
