@@ -4,20 +4,22 @@ import java.math.BigDecimal;
 
 /**
  * 小数点以下4桁までの金額を表します。<br>
- * DecimalAmount クラスは {@link java.lang.Long} の整数値と 0から4までの小数点以下を表すスケールで構成されます。<br>
- * DecimalAmount で表される金額は {@link java.lang.Long#MAX_VALUE}×10 <sup>-scale</sup> から
- * {@link java.lang.Long#MIN_VALUE}×10 <sup>-scale</sup> までで、
- * スケールが 0 の場合は、 {@link java.lang.Long#MAX_VALUE} から {@link java.lang.Long#MIN_VALUE} までになります。<br>
- *
- * 加算、減算は、異なるスケールの演算が可能ですが、乗算、除算は乗数、除数は整数値のみとなります。
- *
+ * DecimalAmount クラスは {@link java.lang.Long} の整数値 (unscaled value) と0から4までの小数点以下の桁数(scale)で構成します。<br>
+ * DecimalAmount で表わす金額は {@link java.lang.Long#MAX_VALUE}×10 <sup>-scale</sup> から
+ * {@link java.lang.Long#MIN_VALUE}×10 <sup>-scale</sup> の範囲です。<br>
+ * スケールが0の場合に表わす金額は、 {@link java.lang.Long#MAX_VALUE} から {@link java.lang.Long#MIN_VALUE} の範囲です。<br>
+ * <br>
+ * 加算と減算は、異なるスケールの演算が可能です。<br>
+ * 乗算の乗数は整数値のみです。<br>
+ * 除算の除数は整数値のみです。<br>
+ * <br>
  * <table>
  *     <caption>算術演算の結果で優先されるスケール</caption>
- *     <tr><th>演算</th><th>優先される結果のスケール</th></tr>
- *     <tr><td>加算</td><td>max(addend.scale, augend.scale)</td></tr>
- *     <tr><td>減算</td><td>max(minuend.scale, subtrahend.scale)</td></tr>
- *     <tr><td>乗算</td><td>multiplier.scale</td></tr>
- *     <tr><td>除算</td><td>dividend.scale</td></tr>
+ *     <tr><th>演算</th><th>優先される結果のスケール</th><th>説明</th></tr>
+ *     <tr><td>加算</td><td>max(addend.scale, augend.scale)</td><td>加数のスケールと被加数のスケールのうちで大きい方のスケール</td></tr>
+ *     <tr><td>減算</td><td>max(minuend.scale, subtrahend.scale)</td><td>減数のスケールと被減数のスケールのうちで大きい方のスケール</td></tr>
+ *     <tr><td>乗算</td><td>multiplier.scale</td><td>被乗数のスケール</td></tr>
+ *     <tr><td>除算</td><td>dividend.scale</td><td>被除数のスケール</td></tr>
  * </table>
  */
 public class DecimalAmount {
