@@ -11,6 +11,10 @@ public interface Unit {
         return piece() == 1;
     }
 
+    default boolean isBox() {
+        return piece() > 1;
+    }
+
     default boolean isEqualTo(Unit other) {
         return this.getClass() == other.getClass() && piece() == other.piece();
     }
