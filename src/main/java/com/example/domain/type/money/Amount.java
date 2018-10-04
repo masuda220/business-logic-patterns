@@ -3,8 +3,6 @@ package com.example.domain.type.money;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.example.domain.type.quantity.unit.Unit;
-
 /**
  * 金額を扱う
  */
@@ -60,19 +58,6 @@ public class Amount {
                 remainder(divisor)
         };
         return result;
-    }
-
-    public Amount exchange(Unit from, Unit to) {
-        if (from.isEqualTo(to))
-            return this;
-
-        if (to.isPiece())
-            return this.divideExact(from.piece());
-
-        if (from.isPiece() && to.isBox())
-            return this.multiply(to.piece());
-
-        throw new IllegalArgumentException();
     }
 
     public boolean isEqualTo(Amount other) {
