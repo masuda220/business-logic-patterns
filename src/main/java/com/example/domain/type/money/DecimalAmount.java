@@ -2,31 +2,49 @@ package com.example.domain.type.money;
 
 import java.math.BigDecimal;
 
+/**
+ * 小数点以下4桁までの金額を表します。<br>
+ * DecimalAmount クラスは {@link java.lang.Long} の整数値 (unscaled value) と0から4までの小数点以下の桁数(scale)で構成します。<br>
+ * DecimalAmount で表わす金額は {@link java.lang.Long#MAX_VALUE}×10 <sup>-scale</sup> から
+ * {@link java.lang.Long#MIN_VALUE}×10 <sup>-scale</sup> の範囲です。<br>
+ * スケールが0の場合に表わす金額は、 {@link java.lang.Long#MAX_VALUE} から {@link java.lang.Long#MIN_VALUE} の範囲です。<br>
+ * <br>
+ * 加算と減算は、異なるスケールの演算が可能です。<br>
+ * 乗算の乗数は整数値のみです。<br>
+ * 除算の除数は整数値のみです。<br>
+ * <br>
+ * <table>
+ *     <caption>算術演算の結果で優先されるスケール</caption>
+ *     <tr><th>演算</th><th>優先される結果のスケール</th><th>説明</th></tr>
+ *     <tr><td>加算</td><td>max(addend.scale, augend.scale)</td><td>加数のスケールと被加数のスケールのうちで大きい方のスケール</td></tr>
+ *     <tr><td>減算</td><td>max(minuend.scale, subtrahend.scale)</td><td>減数のスケールと被減数のスケールのうちで大きい方のスケール</td></tr>
+ *     <tr><td>乗算</td><td>multiplier.scale</td><td>被乗数のスケール</td></tr>
+ *     <tr><td>除算</td><td>dividend.scale</td><td>被除数のスケール</td></tr>
+ * </table>
+ */
 public class DecimalAmount {
 
-    final static BigDecimal MAX_VALUE = BigDecimal.valueOf(Long.MAX_VALUE);
-    final static BigDecimal MIN_VALUE = BigDecimal.valueOf(Long.MIN_VALUE);
-    final static int DEFAULT_SCALE = 2;
+    final static int MAX_SCALE = 4;
 
     BigDecimal value;
 
-    private DecimalAmount(BigDecimal value) {
-        if (MAX_VALUE.compareTo(value) < 0) throw new ArithmeticException();
-        if (MIN_VALUE.compareTo(value) > 0) throw new ArithmeticException();
-        this.value = value.setScale(DEFAULT_SCALE);
+    private DecimalAmount(BigDecimal source) {
+        if (overMaxValue(source)) throw new ArithmeticException();
+        if (lessMinValue(source)) throw new ArithmeticException();
+        this.value = source;
     }
 
-    static DecimalAmount valueOf(long value) {
-        return new DecimalAmount(BigDecimal.valueOf(value));
+    static DecimalAmount valueOf(long longValue) {
+        return new DecimalAmount(BigDecimal.valueOf(longValue));
     }
 
-    public static DecimalAmount valueOf(Amount value) {
-        return DecimalAmount.valueOf(value.value);
+    public static DecimalAmount valueOf(Amount amount) {
+        return DecimalAmount.valueOf(amount.value);
     }
 
-    public static  DecimalAmount valueOf(String value) {
-        BigDecimal bigDecimalValue = new BigDecimal(value);
-        if (bigDecimalValue.scale() > DEFAULT_SCALE) throw new ArithmeticException();
+    public static  DecimalAmount valueOf(String source) {
+        BigDecimal bigDecimalValue = new BigDecimal(source);
+        if (bigDecimalValue.scale() > MAX_SCALE) throw new ArithmeticException();
         return new DecimalAmount(bigDecimalValue);
     }
 
@@ -52,6 +70,24 @@ public class DecimalAmount {
 
     public Amount toAmount() {
         return new Amount(value.setScale(0, BigDecimal.ROUND_HALF_UP).longValue());
+    }
+
+    boolean overMaxValue(BigDecimal other) {
+        return maxValue(other).compareTo(other) < 0;
+    }
+
+    boolean lessMinValue(BigDecimal other) {
+        return minValue(other).compareTo(other) > 0;
+    }
+
+    BigDecimal maxValue(BigDecimal source) {
+        BigDecimal longMaxValue = BigDecimal.valueOf(Long.MAX_VALUE);
+        return longMaxValue.movePointLeft(source.scale());
+    }
+
+    BigDecimal minValue(BigDecimal source) {
+        BigDecimal longMaxValue = BigDecimal.valueOf(Long.MIN_VALUE);
+        return longMaxValue.movePointLeft(source.scale());
     }
 
     @Override
