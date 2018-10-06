@@ -5,18 +5,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import static com.example.domain.type.state.Event.*;
+
+/**
+ * 状態を扱う
+ */
 public enum State {
-    LOCKED,
     OPENED,
-    CLOSED;
+    CLOSED,
+    LOCKED;
 
     static Map<State, Set<Event>> allowedEvents;
 
     static {
         allowedEvents = new HashMap<>();
-        allowedEvents.put(OPENED, EnumSet.of(Event.CLOSE, Event.LOCK));
-        allowedEvents.put(LOCKED, EnumSet.of(Event.OPEN));
-        allowedEvents.put(CLOSED, EnumSet.of(Event.OPEN));
+        allowedEvents.put(OPENED, EnumSet.of(CLOSE));
+        allowedEvents.put(CLOSED, EnumSet.of(OPEN, LOCK));
+        allowedEvents.put(LOCKED, EnumSet.of(UNLOCK));
     }
 
     public State occurs(Event event) {

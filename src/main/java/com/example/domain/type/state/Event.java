@@ -1,24 +1,23 @@
 package com.example.domain.type.state;
 
-public enum Event {
-    OPEN {
-        @Override
-        public State next() {
-            return State.OPENED;
-        }
-    },
-    CLOSE{
-        @Override
-        public State next() {
-            return State.CLOSED;
-        }
-    },
-    LOCK{
-        @Override
-        public State next() {
-            return State.LOCKED;
-        }
-    };
+import static com.example.domain.type.state.State.*;
 
-    public abstract State next();
+/**
+ * イベントを扱う
+ */
+public enum Event {
+    OPEN(OPENED),
+    CLOSE(CLOSED),
+    LOCK(LOCKED),
+    UNLOCK(CLOSED);
+
+    State nextState;
+
+    Event(State nextState) {
+        this.nextState = nextState;
+    }
+
+    State next() {
+        return nextState;
+    }
 }
