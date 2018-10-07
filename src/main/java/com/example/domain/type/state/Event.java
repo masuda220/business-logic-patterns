@@ -1,23 +1,17 @@
 package com.example.domain.type.state;
 
-import static com.example.domain.type.state.State.*;
-
 /**
  * イベントを扱う
  */
 public enum Event {
-    OPEN(OPENED),
-    CLOSE(CLOSED),
-    LOCK(LOCKED),
-    UNLOCK(CLOSED);
+    OPEN,
+    CLOSE,
+    LOCK,
+    UNLOCK;
 
-    State nextState;
-
-    Event(State nextState) {
-        this.nextState = nextState;
-    }
+    static NextState nextState = new NextState();
 
     State next() {
-        return nextState;
+        return nextState.next(this);
     }
 }
