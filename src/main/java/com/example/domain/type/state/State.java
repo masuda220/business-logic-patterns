@@ -8,14 +8,14 @@ public enum State {
     CLOSED,
     LOCKED;
 
-    static AllowedEvents allowedEvents = new AllowedEvents();
+    static ExpectedEvents expectedEvents = new ExpectedEvents();
 
     public State occurs(Event event) {
-        if (isArrowed(event)) return event.next();
+        if (isExpected(event)) return event.next();
         throw new IllegalArgumentException();
     }
 
-    boolean isArrowed(Event event) {
-        return  allowedEvents.isAllowed(this, event);
+    boolean isExpected(Event event) {
+        return  expectedEvents.isExpected(this, event);
     }
 }
