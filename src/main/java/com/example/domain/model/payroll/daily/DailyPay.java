@@ -13,6 +13,6 @@ public class DailyPay {
 
 
     public Amount amount() {
-        return null; // TODO 実装
+        return hourlyWage.amountFor(timeRecord.workTime());
     }
 }

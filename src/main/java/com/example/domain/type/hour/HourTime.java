@@ -12,12 +12,12 @@ public class HourTime {
         this.value = hourPoint;
     }
 
-    HourTime (int hour, int minute) {
+    public HourTime (int hour, int minute) {
         value = LocalTime.of(hour, minute);
     }
 
     @Override
     public String toString() {
         return String.format("HH:mm", value);
-    } 
+    }
 }

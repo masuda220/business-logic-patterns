@@ -12,7 +12,7 @@ public class HourAndMinute {
         this.minute = minute;
     }
 
-    static HourAndMinute from(Minute minute) {
+    public static HourAndMinute from(Minute minute) {
         return from(minute.value);
     }
 
@@ -22,7 +22,7 @@ public class HourAndMinute {
         return new HourAndMinute(quotient, remainder);
     }
 
-    Minute toMinute() {
+    public Minute toMinute() {
         return minute.add(hour.toMinute());
     }
 
