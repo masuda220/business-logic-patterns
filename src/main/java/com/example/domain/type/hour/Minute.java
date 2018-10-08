@@ -8,7 +8,7 @@ import java.time.DateTimeException;
 public class Minute {
     int value;
 
-    Minute (int time) {
+    public Minute (int time) {
         value = time;
     }
 
@@ -17,7 +17,7 @@ public class Minute {
         return new Minute(value);
     }
 
-    Minute subtract(Minute minute) {
+    public Minute subtract(Minute minute) {
         if (value - minute.value < 0) {
             // FIXME エラーメッセージをわかりやすく
             throw new DateTimeException("Error of minus time.");
@@ -29,5 +29,9 @@ public class Minute {
     @Override
     public String toString() {
         return String.format("%d", value);
-    } 
+    }
+
+    public int value() {
+        return value;
+    }
 }

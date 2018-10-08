@@ -6,9 +6,15 @@ import com.example.domain.type.money.Amount;
 public class HourlyWage {
     Amount amount;
 
-    // TODO コンストラクタ
+    public HourlyWage(Amount amount) {
+        this.amount = amount;
+    }
 
     Amount amountFor(HourAndMinute workTime) {
-        return null; // TODO 実装
+        Amount[] amountPerMinute = amount.divideAndRemainder(60);
+        int minute = workTime.toMinute().value();
+        return amountPerMinute[0].multiply(minute);
+
     }
+
 }
