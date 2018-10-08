@@ -8,14 +8,9 @@ public enum State {
     CLOSED,
     LOCKED;
 
-    static ExpectedEvents expectedEvents = new ExpectedEvents();
+    static Transitions transitions = new Transitions();
 
     public State occurs(Event event) {
-        if (isExpected(event)) return event.next();
-        throw new IllegalArgumentException();
-    }
-
-    boolean isExpected(Event event) {
-        return  expectedEvents.isExpected(this, event);
+        return transitions.next(this, event);
     }
 }

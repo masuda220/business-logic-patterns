@@ -7,7 +7,7 @@ import static com.example.domain.type.state.Event.*;
 import static com.example.domain.type.state.State.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class StateAndEventTest {
+public class TransitionTest {
 
     Class exception = IllegalArgumentException.class;
 
