@@ -1,11 +1,14 @@
-package com.example.domain.type.state;
+package com.example.domain.model.gate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.domain.type.state.Event.*;
-import static com.example.domain.type.state.State.*;
+import static com.example.domain.model.gate.Event.*;
+import static com.example.domain.model.gate.State.*;
 
+/**
+ * 状態遷移を扱う
+ */
 public class Transitions {
     List<Transition> transitions;
 

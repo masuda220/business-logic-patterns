@@ -1,6 +1,6 @@
-package com.example.domain.type.state;
+package com.example.domain.model.gate;
 
-import static com.example.domain.type.state.State.*;
+import static com.example.domain.model.gate.State.*;
 
 /**
  * イベントを扱う

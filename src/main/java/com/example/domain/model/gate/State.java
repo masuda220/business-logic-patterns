@@ -1,4 +1,4 @@
-package com.example.domain.type.state;
+package com.example.domain.model.gate;
 
 /**
  * 状態を扱う
