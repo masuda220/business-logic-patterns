@@ -19,6 +19,10 @@ public class Transition {
         return this.event == event;
     }
 
+    boolean matches(State from) {
+        return this.from == from;
+    }
+
     State next() {
         return to;
     }

@@ -13,4 +13,12 @@ public enum State {
     public State occurs(Event event) {
         return transitions.next(this, event);
     }
+
+    public boolean isExpected(Event event) {
+        return transitions.isExpected(this, event);
+    }
+
+    public Event[] expectedEvents() {
+        return transitions.expectedEvents(this);
+    }
 }
