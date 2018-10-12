@@ -16,9 +16,12 @@ public class StateTest {
     @Test
     @DisplayName("OPENEDからの状態遷移")
     void testOccursFromOpenedByEnum() {
-        assertAll(
+        assertAll("遷移できる",
+                () -> assertEquals(CLOSED, OPENED.occurs(CLOSE))
+        );
+
+        assertAll("遷移できない",
                 () -> assertThrows(exception, () -> OPENED.occurs(OPEN)),
-                () -> assertEquals(CLOSED, OPENED.occurs(CLOSE)),
                 () -> assertThrows(exception, () -> OPENED.occurs(LOCK)),
                 () -> assertThrows(exception, () -> OPENED.occurs(UNLOCK))
         );
@@ -27,10 +30,12 @@ public class StateTest {
     @Test
     @DisplayName("CLOSEDからの状態遷移")
     void testOccursFromClosedByEnum() {
-        assertAll(
+        assertAll("遷移できる",
                 () -> Assertions.assertEquals(OPENED, CLOSED.occurs(OPEN)),
+                () -> Assertions.assertEquals(LOCKED, CLOSED.occurs(LOCK))
+        );
+        assertAll("遷移できない",
                 () -> assertThrows(exception, () -> CLOSED.occurs(CLOSE)),
-                () -> Assertions.assertEquals(LOCKED, CLOSED.occurs(LOCK)),
                 () -> assertThrows(exception, () -> CLOSED.occurs(UNLOCK))
         );
     }
@@ -38,20 +43,24 @@ public class StateTest {
     @Test
     @DisplayName("LOCKEDからの状態遷移")
     void testOccursFromLockedByEnum() {
-        assertAll(
+        assertAll("遷移できる",
+                () -> assertEquals(CLOSED, LOCKED.occurs(UNLOCK))
+        );
+        assertAll("遷移できない",
                 () -> assertThrows(exception, () -> LOCKED.occurs(OPEN)),
                 () -> assertThrows(exception, () -> LOCKED.occurs(CLOSE)),
-                () -> assertThrows(exception, () -> LOCKED.occurs(LOCK)),
-                () -> assertEquals(CLOSED, LOCKED.occurs(UNLOCK))
+                () -> assertThrows(exception, () -> LOCKED.occurs(LOCK))
         );
     }
 
     @Test
     @DisplayName("OPENEDの期待するイベントの判定")
     void testOpenedIsExpected() {
-        assertAll(
+        assertAll("期待するイベント",
+                () -> assertTrue(OPENED.isExpected(CLOSE))
+        );
+        assertAll("期待しないイベント",
                 () -> assertFalse(OPENED.isExpected(OPEN)),
-                () -> assertTrue(OPENED.isExpected(CLOSE)),
                 () -> assertFalse(OPENED.isExpected(LOCK)),
                 () -> assertFalse(OPENED.isExpected(UNLOCK))
         );
@@ -60,10 +69,12 @@ public class StateTest {
     @Test
     @DisplayName("CLOSEDの期待するイベントの判定")
     void testClosedIsExpected() {
-        assertAll(
+        assertAll("期待するイベント",
                 () -> assertTrue(CLOSED.isExpected(OPEN)),
+                () -> assertTrue(CLOSED.isExpected(LOCK))
+        );
+        assertAll("期待しないイベント",
                 () -> assertFalse(CLOSED.isExpected(CLOSE)),
-                () -> assertTrue(CLOSED.isExpected(LOCK)),
                 () -> assertFalse(CLOSED.isExpected(UNLOCK))
         );
     }
@@ -71,11 +82,13 @@ public class StateTest {
     @Test
     @DisplayName("LOCKEDの期待するイベントの判定")
     void testLockedIsExpected() {
-        assertAll(
+        assertAll("期待するイベント",
+                () -> assertTrue(LOCKED.isExpected(UNLOCK))
+        );
+        assertAll("期待しないイベント",
                 () -> assertFalse(LOCKED.isExpected(OPEN)),
                 () -> assertFalse(LOCKED.isExpected(CLOSE)),
-                () -> assertFalse(LOCKED.isExpected(LOCK)),
-                () -> assertTrue(LOCKED.isExpected(UNLOCK))
+                () -> assertFalse(LOCKED.isExpected(LOCK))
         );
     }
 
