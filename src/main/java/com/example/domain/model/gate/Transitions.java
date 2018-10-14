@@ -2,6 +2,7 @@ package com.example.domain.model.gate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.domain.model.gate.Event.*;
 import static com.example.domain.model.gate.State.*;
@@ -29,5 +30,21 @@ public class Transitions {
             if (transition.matches(from, event)) return transition.next();
         }
         throw new IllegalArgumentException();
+    }
+
+    boolean isExpected(State from, Event event) {
+        return expectedEventsOf(from).contains(event);
+    }
+
+    Event[] expectedEvents(State from) {
+        return expectedEventsOf(from).toArray(new Event[0]);
+    }
+
+    List<Event> expectedEventsOf(State from) {
+        return transitions
+                .stream()
+                .filter(transition -> transition.matches(from))
+                .map(transition -> transition.event)
+                .collect(Collectors.toList());
     }
 }
