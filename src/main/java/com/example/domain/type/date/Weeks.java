@@ -42,37 +42,21 @@ public class Weeks {
     }
 
     public String show() {
-        return toString("%s週間", "と%s日");
+        Days[] weeksAndDays = days.divideAndRemainder(DAYS_OF_WEEKS);
+
+        if (weeksAndDays[1].isEqualTo(Days.Zero))
+            return String.format("%s週間", weeksAndDays[0].value);
+
+        return String.format("%s週間と%s", weeksAndDays[0].value, weeksAndDays[1].show());
     }
 
     @Override
     public String toString() {
-        return toString("%sweeks", "%sdays");
-    }
+        Days[] weeksAndDays = days.divideAndRemainder(DAYS_OF_WEEKS);
 
-    Days numberOfWeek() {
-        return new Days(days.value / DAYS_OF_WEEKS.value);
-    }
+        if (weeksAndDays[1].isEqualTo(Days.Zero))
+            return String.format("%sweeks", weeksAndDays[0].value);
 
-    Days remainderOfWeek() {
-        return new Days(days.value % DAYS_OF_WEEKS.value);
-    }
-
-    String toString(String formatOfWeeks, String formatOfDays) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(toStringWeeks(formatOfWeeks));
-        stringBuilder.append(toStringDays(formatOfDays));
-        return stringBuilder.toString();
-    }
-
-    String toStringWeeks(String format) {
-        Days numberOfWeek = numberOfWeek();
-        return String.format(format, numberOfWeek.value);
-    }
-
-    String toStringDays(String format) {
-        Days remainderOfWeek = remainderOfWeek();
-        if (remainderOfWeek.isEqualTo(Days.Zero)) return "";
-        return String.format(format,remainderOfWeek.value);
+        return String.format("%sweeks%sdays", weeksAndDays[0].value, weeksAndDays[1].value);
     }
 }

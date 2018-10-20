@@ -29,6 +29,27 @@ public class Days {
         return new Days(result);
     }
 
+    public Days multiply(long multiplicand) {
+        long result = Math.multiplyExact(value, multiplicand);
+        return new Days(result);
+    }
+
+    public Days[] divideAndRemainder(Days divisor) {
+        Days[] result = {
+                divide(divisor),
+                remainder(divisor)
+        };
+        return result;
+    }
+
+    Days divide(Days divisor) {
+        return new Days(value / divisor.value);
+    }
+
+    Days remainder(Days divisor) {
+        return new Days(value % divisor.value);
+    }
+
     public boolean isEqualTo(Days other) {
         return value == other.value;
     }
@@ -39,6 +60,10 @@ public class Days {
 
     public boolean isLessThan(Days other) {
         return value < other.value;
+    }
+
+    public String show() {
+        return String.format("%s日", value);
     }
 
     @Override

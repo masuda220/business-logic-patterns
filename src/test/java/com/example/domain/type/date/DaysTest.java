@@ -78,6 +78,51 @@ class DaysTest {
     }
 
     @Test
+    @DisplayName("乗算")
+    void multiply() {
+        Days one = new Days(1);
+        Days actual = one.multiply(2);
+        assertEquals(new Days(2).value, actual.value, "1 * 2 = 2");
+
+        Days three = new Days(3);
+        actual = three.multiply(4);
+        assertEquals(new Days(12).value, actual.value, "3 * 4 = 12");
+    }
+
+    @Test
+    @DisplayName("乗算オーバーフロー")
+    void multiplyOverflow() {
+        Days max = new Days(Long.MAX_VALUE);
+        assertThrows(ArithmeticException.class, () -> max.multiply(2));
+    }
+
+    @Test
+    @DisplayName("除算")
+    void divide() {
+        Days two = new Days(2);
+        Days one = new Days(1);
+        Days[] actual = two.divideAndRemainder(one);
+        assertEquals(2, actual.length, "{商、剰余}");
+        assertEquals(new Days(2).value, actual[0].value, "2 / 1 = 2");
+        assertEquals(new Days(0).value, actual[1].value, "2 % 1 = 0");
+
+        Days four = new Days(4);
+        Days three = new Days(3);
+        actual = four.divideAndRemainder(three);
+        assertEquals(2, actual.length, "{商、剰余}");
+        assertEquals(new Days(1).value, actual[0].value, "4 / 3 = 1");
+        assertEquals(new Days(1).value, actual[1].value, "4 % 3 = 1");
+    }
+
+    @Test
+    @DisplayName("0除算による例外")
+    void divideZero() {
+        Days one = new Days(1);
+        Days zero = new Days(0);
+        assertThrows(ArithmeticException.class, () -> one.divideAndRemainder(zero));
+    }
+
+    @Test
     @DisplayName("イコール")
     void isEqualTo() {
         Days one = new Days(1);
@@ -113,6 +158,13 @@ class DaysTest {
 
     @Test
     @DisplayName("文字列表現")
+    void show() {
+        Days one = new Days(1);
+        assertEquals("1日", one.show());
+    }
+
+    @Test
+    @DisplayName("toString")
     void string() {
         Days one = new Days(1);
         assertEquals("1日", one.toString());
