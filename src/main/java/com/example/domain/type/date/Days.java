@@ -29,24 +29,17 @@ public class Days {
         return new Days(result);
     }
 
-    public Days multiply(long multiplicand) {
+    public Days multiply(int multiplicand) {
         long result = Math.multiplyExact(value, multiplicand);
         return new Days(result);
     }
 
-    public Days[] divideAndRemainder(Days divisor) {
-        Days[] result = {
-                divide(divisor),
-                remainder(divisor)
-        };
-        return result;
+    public int divide(Days divisor) {
+        // TODO Days.value を int にするか、 divide の戻り値を long にするか
+        return (int)(value / divisor.value);
     }
 
-    Days divide(Days divisor) {
-        return new Days(value / divisor.value);
-    }
-
-    Days remainder(Days divisor) {
+    public Days remainder(Days divisor) {
         return new Days(value % divisor.value);
     }
 

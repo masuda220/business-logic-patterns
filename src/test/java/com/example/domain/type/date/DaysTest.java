@@ -101,17 +101,27 @@ class DaysTest {
     void divide() {
         Days two = new Days(2);
         Days one = new Days(1);
-        Days[] actual = two.divideAndRemainder(one);
-        assertEquals(2, actual.length, "{商、剰余}");
-        assertEquals(new Days(2).value, actual[0].value, "2 / 1 = 2");
-        assertEquals(new Days(0).value, actual[1].value, "2 % 1 = 0");
+        int actual = two.divide(one);
+        assertEquals(2, actual, "2 / 1 = 2");
 
         Days four = new Days(4);
         Days three = new Days(3);
-        actual = four.divideAndRemainder(three);
-        assertEquals(2, actual.length, "{商、剰余}");
-        assertEquals(new Days(1).value, actual[0].value, "4 / 3 = 1");
-        assertEquals(new Days(1).value, actual[1].value, "4 % 3 = 1");
+        actual = four.divide(three);
+        assertEquals(1, actual, "4 / 3 = 1");
+    }
+
+    @Test
+    @DisplayName("剰余")
+    void remainder() {
+        Days two = new Days(2);
+        Days one = new Days(1);
+        Days actual = two.remainder(one);
+        assertEquals(new Days(0).value, actual.value, "2 % 1 = 0");
+
+        Days four = new Days(4);
+        Days three = new Days(3);
+        actual = four.remainder(three);
+        assertEquals(new Days(1).value, actual.value, "4 % 3 = 1");
     }
 
     @Test
@@ -119,7 +129,8 @@ class DaysTest {
     void divideZero() {
         Days one = new Days(1);
         Days zero = new Days(0);
-        assertThrows(ArithmeticException.class, () -> one.divideAndRemainder(zero));
+        assertThrows(ArithmeticException.class, () -> one.divide(zero));
+        assertThrows(ArithmeticException.class, () -> one.remainder(zero));
     }
 
     @Test

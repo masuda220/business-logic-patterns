@@ -42,21 +42,23 @@ public class Weeks {
     }
 
     public String show() {
-        Days[] weeksAndDays = days.divideAndRemainder(DAYS_OF_WEEKS);
+        int weeks = days.divide(DAYS_OF_WEEKS);
+        Days remainder = days.remainder(DAYS_OF_WEEKS);
 
-        if (weeksAndDays[1].isEqualTo(Days.Zero))
-            return String.format("%s週間", weeksAndDays[0].value);
+        if (remainder.isEqualTo(Days.Zero))
+            return String.format("%s週間", weeks);
 
-        return String.format("%s週間と%s", weeksAndDays[0].value, weeksAndDays[1].show());
+        return String.format("%s週間と%s", weeks, remainder.show());
     }
 
     @Override
     public String toString() {
-        Days[] weeksAndDays = days.divideAndRemainder(DAYS_OF_WEEKS);
+        int weeks = days.divide(DAYS_OF_WEEKS);
+        Days remainder = days.remainder(DAYS_OF_WEEKS);
 
-        if (weeksAndDays[1].isEqualTo(Days.Zero))
-            return String.format("%sweeks", weeksAndDays[0].value);
+        if (remainder.isEqualTo(Days.Zero))
+            return String.format("%sweeks", weeks);
 
-        return String.format("%sweeks%sdays", weeksAndDays[0].value, weeksAndDays[1].value);
+        return String.format("%sweeks%sdays", weeks, remainder.value);
     }
 }
