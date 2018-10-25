@@ -14,7 +14,7 @@ class DaysTest {
     void between() {
         LocalDate date20180831 = LocalDate.of(2018, 8, 31);
         LocalDate date20180901 = LocalDate.of(2018, 9, 1);
-        long expected = 1;
+        int expected = 1;
         Days actual = Days.between(date20180831, date20180901);
         assertEquals(expected, actual.value);
     }
@@ -28,9 +28,15 @@ class DaysTest {
     }
 
     @Test
+    @DisplayName("開始終了の差が大きく日数生成でオーバーフロー")
+    void betweenOverflow() {
+        assertThrows(ArithmeticException.class, () -> Days.between(LocalDate.MIN, LocalDate.MAX));
+    }
+
+    @Test
     @DisplayName("日数0を生成")
     void constructorZero() {
-        long expected = 0;
+        int expected = 0;
         Days actual = new Days(0);
         assertEquals(expected, actual.value);
     }
@@ -46,7 +52,7 @@ class DaysTest {
     void add() {
         Days one = new Days(1);
         Days two = new Days(2);
-        long expected = 3;
+        int expected = 3;
         Days actual = one.add(two);
         assertEquals(expected, actual.value);
     }
@@ -54,7 +60,7 @@ class DaysTest {
     @Test
     @DisplayName("加算オーバーフロー")
     void addOverflow() {
-        Days max = new Days(Long.MAX_VALUE);
+        Days max = new Days(Integer.MAX_VALUE);
         Days one = new Days(1);
         assertThrows(ArithmeticException.class, () -> max.add(one));
     }
@@ -64,7 +70,7 @@ class DaysTest {
     void subtract() {
         Days one = new Days(1);
         Days two = new Days(2);
-        long expected = 1;
+        int expected = 1;
         Days actual = two.subtract(one);
         assertEquals(expected, actual.value);
     }
@@ -92,7 +98,7 @@ class DaysTest {
     @Test
     @DisplayName("乗算オーバーフロー")
     void multiplyOverflow() {
-        Days max = new Days(Long.MAX_VALUE);
+        Days max = new Days(Integer.MAX_VALUE);
         assertThrows(ArithmeticException.class, () -> max.multiply(2));
     }
 

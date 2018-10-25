@@ -12,7 +12,7 @@ public class WeeksTest {
     void addDays() {
         Weeks oneDay = new Weeks(new Days(1));
         Days tenDays = new Days(10);
-        long expected = 11;
+        int expected = 11;
         Weeks actual = oneDay.add(tenDays);
         assertEquals(expected, actual.days.value);
     }
@@ -22,7 +22,7 @@ public class WeeksTest {
     void addWeeks() {
         Weeks oneDay = new Weeks(new Days(1));
         Weeks tenDays = new Weeks(new Days(10));
-        long expected = 11;
+        int expected = 11;
         Weeks actual = oneDay.add(tenDays);
         assertEquals(expected, actual.days.value);
     }
@@ -32,7 +32,7 @@ public class WeeksTest {
     void subtractDays() {
         Weeks tenDays = new Weeks(new Days(10));
         Days oneDay = new Days(1);
-        long expected = 9;
+        int expected = 9;
         Weeks actual = tenDays.subtract(oneDay);
         assertEquals(expected, actual.days.value);
     }
@@ -42,7 +42,7 @@ public class WeeksTest {
     void subtractWeeks() {
         Weeks tenDays = new Weeks(new Days(10));
         Weeks oneDay = new Weeks(new Days(1));
-        long expected = 9;
+        int expected = 9;
         Weeks actual = tenDays.subtract(oneDay);
         assertEquals(expected, actual.days.value);
     }
