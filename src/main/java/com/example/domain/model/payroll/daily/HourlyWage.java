@@ -10,9 +10,9 @@ public class HourlyWage {
         this.amount = amount;
     }
 
-    Amount amountFor(HourAndMinute workTime) {
+    Amount amountFor(HourAndMinute workTime, MinuteUnit minuteUnit) {
         Amount[] amountPerMinute = amount.divideAndRemainder(60);
-        int minute = workTime.toMinute().value();
+        int minute = minuteUnit.toWageMinute(workTime.toMinute().value());
         return amountPerMinute[0].multiply(minute);
 
     }
