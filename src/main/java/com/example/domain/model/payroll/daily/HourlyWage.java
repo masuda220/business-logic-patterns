@@ -1,6 +1,8 @@
 package com.example.domain.model.payroll.daily;
 
+import com.example.domain.type.RoundingType;
 import com.example.domain.type.hour.HourAndMinute;
+import com.example.domain.type.hour.Minute;
 import com.example.domain.type.money.Amount;
 
 public class HourlyWage {
@@ -10,10 +12,11 @@ public class HourlyWage {
         this.amount = amount;
     }
 
-    Amount amountFor(HourAndMinute workTime, MinuteUnit minuteUnit) {
+    public Amount amountFor(HourAndMinute workTime, Minute minuteUnit, RoundingType roundingType) {
         Amount[] amountPerMinute = amount.divideAndRemainder(60);
-        int minute = minuteUnit.toWageMinute(workTime.toMinute().value());
-        return amountPerMinute[0].multiply(minute);
+        Minute workingMinute = new Minute(workTime.toMinute().value());
+        Minute calculatingMinute = workingMinute.byUnit(minuteUnit, roundingType);
+        return amountPerMinute[0].multiply(calculatingMinute.value());
 
     }
 
