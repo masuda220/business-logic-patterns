@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.DateTimeException;
 
 import com.example.domain.type.RoundingType;
+import com.example.domain.type.hour.unit.MinuteUnit;
 
 /**
  * 分(数)
@@ -45,9 +46,9 @@ public class Minute {
         return new Minute(quotient.intValue());
     }
 
-    public Minute byUnit(Minute minuteUnit, RoundingType roundingType) {
-        Minute units = this.divide(minuteUnit.value(), roundingType);
-        return minuteUnit.multiply(units.value);
+    public Minute byUnit(MinuteUnit minuteUnit, RoundingType roundingType) {
+        Minute units = this.divide(minuteUnit.minute().value, roundingType);
+        return minuteUnit.minute().multiply(units.value);
     }
 
     @Override

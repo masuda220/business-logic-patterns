@@ -3,6 +3,7 @@ package com.example.domain.model.payroll.daily;
 import com.example.domain.type.RoundingType;
 import com.example.domain.type.hour.HourAndMinute;
 import com.example.domain.type.hour.Minute;
+import com.example.domain.type.hour.unit.MinuteUnit;
 import com.example.domain.type.money.Amount;
 
 public class HourlyWage {
@@ -12,7 +13,7 @@ public class HourlyWage {
         this.amount = amount;
     }
 
-    public Amount amountFor(HourAndMinute workTime, Minute minuteUnit, RoundingType roundingType) {
+    public Amount amountFor(HourAndMinute workTime, MinuteUnit minuteUnit, RoundingType roundingType) {
         Amount[] amountPerMinute = amount.divideAndRemainder(60);
         Minute workingMinute = new Minute(workTime.toMinute().value());
         Minute calculatingMinute = workingMinute.byUnit(minuteUnit, roundingType);
