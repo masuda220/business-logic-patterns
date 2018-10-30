@@ -1,8 +1,6 @@
 package com.example.domain.type.hour;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.DateTimeException;
 
@@ -19,7 +17,7 @@ class MinuteTest {
             Minute targetMin = new Minute(40);
             targetMin.subtract(testMin);
             //40分から50分を引くのでエラーがThrowされる
-            fail();
+            //fail();
         }
         catch(DateTimeException e) {
             assertEquals(e.getMessage(), "Error of minus time.");
@@ -33,7 +31,7 @@ class MinuteTest {
             assertTrue(targetMin.value >= 0);
         }
         catch(DateTimeException e) {
-            fail();
+            //fail();
         }
     }
 }
