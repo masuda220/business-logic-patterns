@@ -4,8 +4,7 @@ import com.example.domain.type.hour.Minute;
 
 public enum MinuteUnit {
 
-    // FIXME アンダーバー始まりでない良い名前をつけたい
-    _1分(1), _5分(5), _10分(10), _15分(15), _20分(20), _30分(30), _60分(60);
+    ONE(1), FIVE(5), TEN(10), FIFTEEN(15), TWENTY(20), THIRTY(30), SIXTY(60);
 
     private int value;
 
