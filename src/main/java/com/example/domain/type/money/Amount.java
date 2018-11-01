@@ -80,11 +80,11 @@ public class Amount {
         return value <= other.value;
     }
 
-    Amount divide(int divisor) {
+    public Amount divide(int divisor) {
         return new Amount(value / divisor);
     }
 
-    Amount remainder(int divisor) {
+    public Amount remainder(int divisor) {
         return new Amount(value % divisor);
     }
 }
