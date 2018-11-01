@@ -17,17 +17,15 @@ public class Minute {
     }
 
     Minute add(Minute minute) {
-        value += minute.value;
-        return new Minute(value);
+        return new Minute(value + minute.value);
     }
 
     public Minute subtract(Minute minute) {
-        if (value - minute.value < 0) {
+        if (value < minute.value) {
             // FIXME エラーメッセージをわかりやすく
             throw new DateTimeException("Error of minus time.");
         }
-        value -= minute.value;
-        return new Minute(value);
+        return new Minute(value - minute.value);
     }
 
     public Minute multiply(int multiplier) {

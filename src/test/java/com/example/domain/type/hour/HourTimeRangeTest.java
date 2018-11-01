@@ -16,6 +16,6 @@ class HourTimeRangeTest {
         HourTimeRange range = new HourTimeRange(from, to);
         HourAndMinute result = range.between();
         
-        assertEquals(result.toString(), "10:39"); result.toString();
+        assertEquals("10:39", result.toString());
     }
 }

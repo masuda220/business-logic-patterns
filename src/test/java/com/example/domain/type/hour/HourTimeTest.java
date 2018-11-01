@@ -11,16 +11,15 @@ class HourTimeTest {
 
     @Test()
     @DisplayName("コンストラクタテスト")
-    void constructorText() {
-        try {
-            HourTime ht = new HourTime(12, 34);
+    void constructor() {
+        HourTime actual = new HourTime(12, 34);
+        assertEquals(12, actual.value.getHour());
+        assertEquals(34, actual.value.getMinute());
+    }
 
-            assertEquals(ht.value.getHour(), 12);
-            assertEquals(ht.value.getMinute(), 34);
-
-        }
-        catch(DateTimeParseException e) {
-            //fail();
-        }
+    @Test()
+    void string() {
+        HourTime actual = new HourTime(12, 34);
+        assertEquals("12:34", actual.toString());
     }
 }
