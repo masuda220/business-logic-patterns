@@ -15,7 +15,11 @@ public class RoundAmount {
         this.value = value;
     }
 
-    public Amount round(Amount amount) {
+    public Amount roundUp(Amount amount) {
+        return roundDown(amount).add(new Amount(value));
+    }
+
+    public Amount roundDown(Amount amount) {
         return amount.divide(value).multiply(value);
     }
 }

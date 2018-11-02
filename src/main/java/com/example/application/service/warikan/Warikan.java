@@ -1,7 +1,8 @@
 package com.example.application.service.warikan;
 
-import com.example.domain.model.warikan.Bill;
 import com.example.domain.model.warikan.Headcount;
+import com.example.domain.model.warikan.RoundAmount;
+import com.example.domain.model.warikan.SimpleWarikan;
 import com.example.domain.type.money.Amount;
 
 /**
@@ -9,7 +10,13 @@ import com.example.domain.type.money.Amount;
  */
 public class Warikan {
 
-    public Amount[] warikan(Bill totalBill, Headcount headcount) {
-        return totalBill.split(headcount);
+    public Amount[] warikan(Amount totalAmount, Headcount headcount) {
+        SimpleWarikan simpleWarikan = new SimpleWarikan(totalAmount, headcount);
+        return simpleWarikan.splitOfRoundUp(RoundAmount.ONE_HUNDRED);
+    }
+
+    public Amount[] warikanRoundDown(Amount totalAmount, Headcount headcount) {
+        SimpleWarikan simpleWarikan = new SimpleWarikan(totalAmount, headcount);
+        return simpleWarikan.splitOfRoundDown(RoundAmount.ONE_HUNDRED);
     }
 }
