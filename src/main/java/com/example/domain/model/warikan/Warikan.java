@@ -1,8 +1,7 @@
 package com.example.domain.model.warikan;
 
-import com.example.domain.type.RoundingType;
 import com.example.domain.type.money.Amount;
-import com.example.domain.type.money.Amount.AmountUnit;
+import com.example.domain.type.money.AmountUnit;
 
 /**
  * 割り勘
@@ -12,25 +11,17 @@ public class Warikan {
     Amount totalAmount;
     Headcount headcount;
     AmountUnit amountUnit;
-    RoundingType roundingType;
+    WarikanType warikanType;
 
-    Warikan(Amount totalAmount, Headcount headcount, AmountUnit amountUnit, RoundingType roundingType) {
+    public Warikan(Amount totalAmount, Headcount headcount, AmountUnit amountUnit, WarikanType warikanType) {
         this.totalAmount = totalAmount;
         this.headcount = headcount;
         this.amountUnit = amountUnit;
-        this.roundingType = roundingType;
-    }
-
-    public static Warikan withRemainderOf(Amount totalAmount, Headcount headcount, AmountUnit amountUnit) {
-        return new Warikan(totalAmount, headcount, amountUnit, RoundingType.切上げ);
-    }
-
-    public static Warikan withShortageOf(Amount totalAmount, Headcount headcount, AmountUnit amountUnit) {
-        return new Warikan(totalAmount, headcount, amountUnit, RoundingType.切捨て);
+        this.warikanType = warikanType;
     }
 
     public Amount perPerson() {
-        return amountPerPerson().round(amountUnit, roundingType);
+        return amountUnit.round(amountPerPerson(), warikanType.roundingType);
     }
 
     public Amount remainder() {
@@ -46,7 +37,7 @@ public class Warikan {
     }
 
     Amount amountPerPerson() {
-        return totalAmount.round(headcount.value);
+        return totalAmount.divide(headcount.value);
     }
 
     Amount amountOfHeadcount(Amount amountPerPerson) {

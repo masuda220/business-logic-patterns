@@ -1,8 +1,5 @@
 package com.example.domain.type.money;
 
-import com.example.domain.type.RoundingType;
-
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -10,17 +7,6 @@ import java.util.Collection;
  * 金額を扱う
  */
 public class Amount {
-
-    public enum AmountUnit {
-        ONE_HUNDRED(100),
-        ONE_THOUSAND(1000);
-
-        int value;
-
-        AmountUnit(int value) {
-            this.value = value;
-        }
-    }
 
     long value;
 
@@ -62,13 +48,13 @@ public class Amount {
     }
 
     public Amount divideExact(int divisor) {
-        if (value % divisor == 0) return round(divisor);
+        if (value % divisor == 0) return divide(divisor);
         throw new ArithmeticException();
     }
 
     public Amount[] divideAndRemainder(int divisor) {
         Amount[] result = {
-                round(divisor),
+                divide(divisor),
                 remainder(divisor)
         };
         return result;
@@ -94,17 +80,11 @@ public class Amount {
         return value <= other.value;
     }
 
-    public Amount round(int divisor) {
+    public Amount divide(int divisor) {
         return new Amount(value / divisor);
     }
 
     public Amount remainder(int divisor) {
         return new Amount(value % divisor);
-    }
-
-    public Amount round(AmountUnit unit, RoundingType roundingType) {
-        // TODO : テストケース
-        BigDecimal quotient = new BigDecimal(value).divide(new BigDecimal(unit.value), roundingType.mode());
-        return new Amount(quotient.longValue()).multiply(unit.value);
     }
 }

@@ -3,8 +3,7 @@ package com.example.application.service.warikan;
 import com.example.domain.model.warikan.Headcount;
 import com.example.domain.model.warikan.Warikan;
 import com.example.domain.type.money.Amount;
-import com.example.domain.type.money.Amount.AmountUnit;
-
+import com.example.domain.type.money.AmountUnit;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
