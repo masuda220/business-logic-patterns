@@ -7,18 +7,21 @@ import com.example.domain.type.money.Amount;
 import com.example.domain.type.money.AmountUnit;
 
 /**
- * 割り勘サービス
- * TODO 割り勘の説明をJavadocで記載する
- * 一人の金額の端数を切り捨てる : 支払に足りない金額が発生する
- * 一人の金額の端数を切り上げる : 支払いべき金額を上回る
+ * 請求金額を一人あたり{@link com.example.domain.type.money.AmountUnit 金額}単位になるように割り勘をします。
+ * <table>
+ *     <caption>割り勘の方法</caption>
+ *     <tr><th>割り勘の方法</th><th>説明</th></tr>
+ *     <tr><td>不足金額のある割り勘</td><td>全員の支払う金額が請求金額を超えないように割り勘をする。請求金額を下回る場合は不足金額が発生する。</td></tr>
+ *     <tr><td>余り金額のある割り勘</td><td>全員の支払う金額が請求金額を下回らないように割り勘をする。請求金額を上回る場合はお釣りが発生する。</td></tr>
+ * </table>
  */
 public class WarikanService {
 
     public Warikan warikanWithShortage(Amount totalAmount, Headcount headcount, AmountUnit amountUnit) {
-        return new Warikan(totalAmount, headcount, amountUnit, WarikanType.切捨て);
+        return new Warikan(totalAmount, headcount, amountUnit, WarikanType.不足あり);
     }
 
     public Warikan warikanWithRemainder(Amount totalAmount, Headcount headcount, AmountUnit amountUnit) {
-        return new Warikan(totalAmount, headcount, amountUnit, WarikanType.切上げ);
+        return new Warikan(totalAmount, headcount, amountUnit, WarikanType.余りあり);
     }
 }

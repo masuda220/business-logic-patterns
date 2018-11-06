@@ -10,17 +10,30 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WarikanServiceTest {
-
-    // TODO テストケース見直し、追加（余り不足がともに0, 1000円単位で丸めなど）
+class WarikanServiceTest {
 
     @Test
-    @DisplayName("支払総額に対して、多めに割り勘するテスト")
-    void testRoundUp() {
+    @DisplayName("不足が発生する割り勘を行い不足が発生するテスト")
+    void warikanWithShortage() {
+        Amount totalAmount = new Amount(10090);
+        Headcount headcount = new Headcount(10);
+        Warikan actual = new WarikanService().warikanWithShortage(totalAmount, headcount, AmountUnit.ONE_HUNDRED);
+        assertAll(
+                "10,090円を10人で100円単位で不足のある割り勘",
+                () -> assertTrue(actual.perPerson().isEqualTo(new Amount(1000)), "一人あたり1000円"),
+                () -> assertTrue(actual.remainder().isEqualTo(new Amount(0)), "余り0円"),
+                () -> assertTrue(actual.shortage().isEqualTo(new Amount(90)), "不足90円")
+        );
+    }
+
+    @Test
+    @DisplayName("余りが発生する割り勘を行い余りが発生するテスト")
+    void warikanWithRemainder() {
         Amount totalAmount = new Amount(10090);
         Headcount headcount = new Headcount(10);
         Warikan actual = new WarikanService().warikanWithRemainder(totalAmount, headcount, AmountUnit.ONE_HUNDRED);
         assertAll(
+                "10,090円を10人で100円単位で余りがある割り勘",
                 () -> assertTrue(actual.perPerson().isEqualTo(new Amount(1100)), "一人あたり1100円"),
                 () -> assertTrue(actual.remainder().isEqualTo(new Amount(910)), "余り910円"),
                 () -> assertTrue(actual.shortage().isEqualTo(new Amount(0)), "不足0円")
@@ -28,15 +41,30 @@ public class WarikanServiceTest {
     }
 
     @Test
-    @DisplayName("支払総額に対して、少なめに割り勘するテスト")
-    void testRoundDown() {
-        Amount totalAmount = new Amount(10090);
-        Headcount headcount = new Headcount(10);
-        Warikan actual = new WarikanService().warikanWithShortage(totalAmount, headcount, AmountUnit.ONE_HUNDRED);
+    @DisplayName("不足が発生する割り勘を行い余り不足のないテスト")
+    void warikanNonShortage() {
+        Amount totalAmount = new Amount(10000);
+        Headcount headcount = new Headcount(5);
+        Warikan actual = new WarikanService().warikanWithShortage(totalAmount, headcount, AmountUnit.ONE_THOUSAND);
         assertAll(
-                () -> assertTrue(actual.perPerson().isEqualTo(new Amount(1000)), "一人あたり1000円"),
+                "10,000円を5人で1,000円単位で割り勘",
+                () -> assertTrue(actual.perPerson().isEqualTo(new Amount(2000)), "一人あたり2000円"),
                 () -> assertTrue(actual.remainder().isEqualTo(new Amount(0)), "余り0円"),
-                () -> assertTrue(actual.shortage().isEqualTo(new Amount(90)), "不足90円")
+                () -> assertTrue(actual.shortage().isEqualTo(new Amount(0)), "不足0円")
+        );
+    }
+
+    @Test
+    @DisplayName("余りが発生する割り勘を行い余り不足のないテスト")
+    void warikanNonRemainder() {
+        Amount totalAmount = new Amount(10000);
+        Headcount headcount = new Headcount(5);
+        Warikan actual = new WarikanService().warikanWithRemainder(totalAmount, headcount, AmountUnit.ONE_THOUSAND);
+        assertAll(
+                "10,000円を5人で1,000円単位で割り勘",
+                () -> assertTrue(actual.perPerson().isEqualTo(new Amount(2000)), "一人あたり2000円"),
+                () -> assertTrue(actual.remainder().isEqualTo(new Amount(0)), "余り0円"),
+                () -> assertTrue(actual.shortage().isEqualTo(new Amount(0)), "不足0円")
         );
     }
 }
