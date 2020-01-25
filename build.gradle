@@ -16,17 +16,15 @@ repositories {
 }
 
 dependencies {
-    testCompile('org.junit.jupiter:junit-jupiter-api:5.2.0')
-    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+    implementation platform("org.springframework.boot:spring-boot-dependencies:2.2.2.RELEASE")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group: 'org.junit.vintage')
+    }
 }
 
 test {
     useJUnitPlatform()
-
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-
     reports {
         html.enabled = true
     }
