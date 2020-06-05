@@ -1,12 +1,14 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'org.dddjava.jig-gradle-plugin' version '2020.5.5'
 }
 
 group 'business-logic'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = '11'
+targetCompatibility = '11'
 
 def defaultEncoding = 'UTF-8'
 tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
@@ -16,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    implementation platform("org.springframework.boot:spring-boot-dependencies:2.2.2.RELEASE")
+    implementation platform("org.springframework.boot:spring-boot-dependencies:2.2.6.RELEASE")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group: 'org.junit.vintage')
@@ -29,3 +31,6 @@ test {
         html.enabled = true
     }
 }
+
+[compileJava, processResources]*.shouldRunAfter(clean)
+jigReports.dependsOn(clean, classes)
