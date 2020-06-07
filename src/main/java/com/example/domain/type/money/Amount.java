@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * 金額を扱う
+ * 金額
  */
 public class Amount {
 
