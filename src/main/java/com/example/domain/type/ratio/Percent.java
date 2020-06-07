@@ -22,10 +22,11 @@ public class Percent {
         this.value = value;
     }
 
-    public Percent multiply(int other) {
-        if(other > (Integer.MAX_VALUE / 100) ) throw new IllegalArgumentException("overflow");
-        if(other < (Integer.MIN_VALUE / 100) ) throw new IllegalArgumentException("underflow");
-        return new Percent(value * other);
+    public Percent multiply(long other) {
+        int intValue = Math.toIntExact(other); // intの範囲だけを対象にする
+        if( intValue > (Integer.MAX_VALUE / 100) ) throw new IllegalArgumentException("overflow");
+        if(intValue < (Integer.MIN_VALUE / 100) ) throw new IllegalArgumentException("underflow");
+        return new Percent(value * intValue);
     }
 
     int intValue(Rounding rounding) {
