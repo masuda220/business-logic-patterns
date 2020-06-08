@@ -3,7 +3,7 @@ package com.example.domain.model.conditions;
 /**
  * 日数
  */
-class DaysOfDelay {
+public class DaysOfDelay {
     int value;
 
     DaysOfDelay(int value) {

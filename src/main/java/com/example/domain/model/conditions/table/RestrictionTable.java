@@ -1,4 +1,8 @@
-package com.example.domain.model.conditions;
+package com.example.domain.model.conditions.table;
+
+import com.example.domain.model.conditions.DelayStatus;
+import com.example.domain.model.conditions.MemberType;
+import com.example.domain.model.conditions.RestrictionOfQuantity;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -11,7 +15,7 @@ import static com.example.domain.model.conditions.RestrictionOfQuantity.*;
 /**
  * 貸出制限の表条件
  */
-class RestrictionTable {
+public class RestrictionTable {
 
     Map<DelayStatus, Map<MemberType, RestrictionOfQuantity>> table = new EnumMap<>(DelayStatus.class);
 
@@ -35,7 +39,7 @@ class RestrictionTable {
         table.put(delayStatus, subMap);
     }
 
-    RestrictionOfQuantity lookup(DelayStatus delayStatus, MemberType memberType) {
+    public RestrictionOfQuantity lookup(DelayStatus delayStatus, MemberType memberType) {
         return table.get(delayStatus).get(memberType);
     }
 }

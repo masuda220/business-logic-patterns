@@ -3,7 +3,7 @@ package com.example.domain.model.conditions;
 /**
  * 冊数制限
  */
-enum RestrictionOfQuantity {
+public enum RestrictionOfQuantity {
     貸出５冊まで(5),
     貸出７冊まで(7),
     貸出４冊まで(4),
