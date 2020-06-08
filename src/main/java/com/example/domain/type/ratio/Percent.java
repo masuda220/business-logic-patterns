@@ -1,5 +1,9 @@
 package com.example.domain.type.ratio;
 
+import java.util.Objects;
+
+import static com.example.domain.type.ratio.Percent.Rounding.*;
+
 /**
  * 百分率
  */
@@ -7,9 +11,9 @@ public class Percent {
     int value;
 
     enum Rounding {
-        UP(99),
-        HALF_UP(50),
-        DOWN(0);
+        切り上げ(99),
+        四捨五入(50),
+        切り捨て(0);
 
         int offset;
 
@@ -22,27 +26,60 @@ public class Percent {
         this.value = value;
     }
 
-    public Percent multiply(long other) {
-        int intValue = Math.toIntExact(other); // intの範囲だけを対象にする
-        if( intValue > (Integer.MAX_VALUE / 100) ) throw new IllegalArgumentException("overflow");
-        if(intValue < (Integer.MIN_VALUE / 100) ) throw new IllegalArgumentException("underflow");
-        return new Percent(value * intValue);
+    public Percent plus(Percent other) {
+        return new Percent(value + other.value);
     }
 
-    int intValue(Rounding rounding) {
-        return (value + rounding.offset) / 100;
+    public Percent minus(Percent other) {
+        return new Percent(value - other.value);
     }
 
-    public int roundUp() {
-        return intValue(Rounding.UP);
+    @Override
+    public boolean equals(Object other) {
+        Percent percent = (Percent) other;
+        return value == percent.value;
     }
 
-    public int round()  {
-        return intValue(Rounding.HALF_UP);
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 
-    public int roundDown() {
-        return intValue(Rounding.DOWN);
+    // long範囲の演算
+    private long longOf(long source, Rounding rounding) {
+        long unscaled = Math.multiplyExact(source, value);
+        long unscaledWithOffset = Math.addExact(unscaled, rounding.offset);
+        return unscaledWithOffset / 100;
+    }
+
+    public long longOf_四捨五入(long source) {
+        return longOf(source, 四捨五入);
+    }
+
+    public long longOf_切り上げ(long source) {
+        return longOf(source, 切り上げ);
+    }
+
+    public long longOf_切り捨て(long source) {
+        return longOf(source, 切り捨て);
+    }
+
+    // int範囲の演算
+    private int of(int source, Rounding rounding) {
+        long longResult = longOf(source, rounding);
+        return Math.toIntExact(longResult);
+    }
+
+    public int of_四捨五入(int source) {
+        return of(source, 四捨五入);
+    }
+
+    public int of_切り上げ(int source) {
+        return of(source, 切り上げ);
+    }
+
+    public int of_切り捨て(int source) {
+        return of(source, 切り捨て);
     }
 
     @Override
