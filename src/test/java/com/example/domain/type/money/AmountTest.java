@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.example.domain.type.ratio.Percent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -144,6 +145,15 @@ class AmountTest {
         assertThrows(ArithmeticException.class, () -> max.multiply(2));
     }
 
+    @Test
+    @DisplayName("パーセント計算")
+    void percentOf() {
+        Percent eightPercent = new Percent(8);
+        Amount toHalfUp = new Amount(119);
+        assertEquals(9L,toHalfUp.multiply(eightPercent).value);
+        Amount toHalfDown = new Amount(118);
+        assertEquals(9L,toHalfDown.multiply(eightPercent).value);
+    }
     @Test
     @DisplayName("除算")
     void divideExact() {

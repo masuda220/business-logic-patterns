@@ -1,5 +1,7 @@
 package com.example.domain.type.money;
 
+import com.example.domain.type.ratio.Percent;
+
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -44,6 +46,11 @@ public class Amount {
 
     public Amount multiply(int multiplicand) {
         long result = Math.multiplyExact(value, multiplicand);
+        return new Amount(result);
+    }
+
+    public Amount multiply(Percent percent) {
+        long result = percent.longOf_切り捨て(value);
         return new Amount(result);
     }
 
