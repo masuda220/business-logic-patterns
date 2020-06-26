@@ -12,8 +12,8 @@ public class DelayOfMember {
     }
 
     @Override
-    public boolean equals(Object other) {
-        DelayOfMember that = (DelayOfMember) other;
+    public boolean equals(Object o) {
+        DelayOfMember that = (DelayOfMember) o;
         return delayStatus == that.delayStatus &&
                 memberType == that.memberType;
     }

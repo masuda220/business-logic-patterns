@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.2.6.RELEASE'
-    id 'org.dddjava.jig-gradle-plugin' version '2020.5.5'
+    id 'org.dddjava.jig-gradle-plugin' version '2020.6.3.1'
 }
 
 group 'business-logic'
