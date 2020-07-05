@@ -1,17 +1,23 @@
 package com.example.domain.type;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
+/**
+ * 丸めの種類
+ */
 public enum RoundingType {
-    四捨五入(BigDecimal.ROUND_HALF_UP), 切捨て(BigDecimal.ROUND_DOWN), 切上げ(BigDecimal.ROUND_UP);
+    四捨五入(RoundingMode.HALF_UP),
+    切捨て(RoundingMode.DOWN),
+    切上げ(RoundingMode.UP);
 
-    private int mode;
+    private RoundingMode mode;
 
-    private RoundingType(int roundingMode) {
+    private RoundingType(RoundingMode roundingMode) {
         this.mode = roundingMode;
     }
 
-    public int mode() {
+    public RoundingMode mode() {
         return mode;
     }
 
