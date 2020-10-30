@@ -1,7 +1,5 @@
 package com.example.domain.type.ratio;
 
-import java.util.Objects;
-
 /**
  * 百分率
  */
