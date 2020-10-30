@@ -149,11 +149,10 @@ class AmountTest {
     @DisplayName("パーセント計算")
     void percentOf() {
         Percent eightPercent = new Percent(8);
-        Amount toHalfUp = new Amount(119);
-        assertEquals(9L,toHalfUp.multiply(eightPercent).value);
-        Amount toHalfDown = new Amount(118);
-        assertEquals(9L,toHalfDown.multiply(eightPercent).value);
+        Amount amount = new Amount(118);
+        assertEquals(9L,amount.multiply(eightPercent).value);
     }
+
     @Test
     @DisplayName("除算")
     void divideExact() {

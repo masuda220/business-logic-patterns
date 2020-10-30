@@ -50,7 +50,7 @@ public class Amount {
     }
 
     public Amount multiply(Percent percent) {
-        long result = percent.longOf_切り捨て(value);
+        long result = percent.multiply(value);
         return new Amount(result);
     }
 

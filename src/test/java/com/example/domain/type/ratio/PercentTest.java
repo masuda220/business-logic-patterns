@@ -1,78 +1,48 @@
 package com.example.domain.type.ratio;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class PercentTest {
 
-    static Percent eightPercent = new Percent(8);
-    static int halfOver = 119; // * 0.08 = 9.52
-    static int halfUnder = 118; // * 0.08 = 9.44
+    static Percent three = new Percent(3);
+    static Percent five = new Percent(5);
+    static Percent eight = new Percent(8);
 
-    static Percent twoPercent = new Percent(2);
-    static Percent tenPercent = new Percent(10);
     @Test
-    void basicOperations() {
-        assertEquals(tenPercent, eightPercent.plus(twoPercent));
-        assertEquals(twoPercent, tenPercent.minus(eightPercent));
+    void plus() {
+        assertEquals(eight, three.plus(five));
     }
 
     @Test
-    void roundUp() {
-        assertEquals(10, eightPercent.of_切り上げ(halfOver));
-        assertEquals(10, eightPercent.of_切り上げ(halfUnder));
+    void minus() {
+        assertEquals(three, eight.minus(five));
     }
 
-    @Test
-    void round() {
-        assertEquals(10, eightPercent.longOf_四捨五入(halfOver));
-        assertEquals(9, eightPercent.longOf_四捨五入(halfUnder));
+    @ParameterizedTest
+    @MethodSource
+    void multiply(int expect, Percent percent, int data) {
+        assertEquals(expect, percent.multiply(data));
     }
 
-    @Test
-    void roundDown() {
-        assertEquals(9, eightPercent.longOf_切り捨て(halfOver));
-        assertEquals(9, eightPercent.longOf_切り捨て(halfUnder));
+    @ParameterizedTest
+    @MethodSource("multiply")
+    void multiply(long expect, Percent percent, long data) {
+        assertEquals(expect, percent.multiply(data));
     }
 
-    @Test
-    void longRoundUp() {
-        assertEquals(10, eightPercent.longOf_切り上げ(halfOver));
-        assertEquals(10, eightPercent.longOf_切り上げ(halfUnder));
-    }
-
-    @Test
-    void longRound() {
-        assertEquals(10, eightPercent.longOf_四捨五入(halfOver));
-        assertEquals(9, eightPercent.longOf_四捨五入(halfUnder));
-    }
-
-    @Test
-    void longRoundDown() {
-        assertEquals(9, eightPercent.of_切り捨て(halfOver));
-        assertEquals(9, eightPercent.of_切り捨て(halfUnder));
-    }
-
-    @Test
-    void overFlow() {
-        long value = Long.MAX_VALUE;
-        assertThrows(ArithmeticException.class, () -> eightPercent.longOf_切り上げ(value));
-        assertThrows(ArithmeticException.class, () -> eightPercent.longOf_切り上げ(value));
-        assertThrows(ArithmeticException.class, () -> eightPercent.longOf_切り捨て(value));
-    }
-
-    @Test
-    void underFlow() {
-        long value = Long.MIN_VALUE;
-        assertThrows(ArithmeticException.class, () -> eightPercent.longOf_切り上げ(value));
-        assertThrows(ArithmeticException.class, () -> eightPercent.longOf_切り上げ(value));
-        assertThrows(ArithmeticException.class, () -> eightPercent.longOf_切り捨て(value));
-    }
-
-    @Test
-    void testToString() {
-        Percent percent = new Percent(8);
-        assertEquals("8%", percent.toString());
+    static Stream<Arguments> multiply() {
+        return Stream.of(
+                arguments(1, three, 31),
+                arguments(2, five, 31),
+                arguments(2, eight, 31)
+        );
     }
 }
