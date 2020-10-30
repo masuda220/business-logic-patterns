@@ -6,35 +6,32 @@ import java.util.Objects;
  * 百分率
  */
 public class Percent {
-    int value;
+    DecimalRatio value;
 
-    public Percent(int value) {
+    private Percent(DecimalRatio value) {
         this.value = value;
     }
 
     public Percent plus(Percent other) {
-        int result = Math.addExact(value, other.value);
+        DecimalRatio result = value.plus(other.value);
         return new Percent(result);
     }
 
     public Percent minus(Percent other) {
-        int result = Math.subtractExact(value, other.value);
+        DecimalRatio result = value.minus(other.value);
         return new Percent(result);
     }
 
     public int multiply(int other) {
-        int percentResult = Math.multiplyExact(other, value);
-        return (percentResult / 100) + 四捨五入の調整値(percentResult);
+        return value.multiply(other);
     }
 
     public long multiply(long other) {
-        long percentResult = Math.multiplyExact(other, value);
-        return (percentResult / 100) + 四捨五入の調整値(percentResult);
+        return value.multiply(other);
     }
 
-    private int 四捨五入の調整値(long percentResult) {
-        long 端数の絶対値 = Math.abs(percentResult % 100);
-        return 端数の絶対値 >= 50 ? Long.signum(percentResult) : 0;
+    public static Percent of(int value) {
+        return new Percent(DecimalRatio.percent(value));
     }
 
     @Override
@@ -45,11 +42,11 @@ public class Percent {
     @Override
     public boolean equals(Object other) {
         Percent percent = (Percent) other;
-        return value == percent.value;
+        return value.equals(percent.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return value.hashCode();
     }
 }

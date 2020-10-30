@@ -12,9 +12,9 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class PercentTest {
 
-    static Percent three = new Percent(3);
-    static Percent five = new Percent(5);
-    static Percent eight = new Percent(8);
+    static Percent three = Percent.of(3);
+    static Percent five = Percent.of(5);
+    static Percent eight = Percent.of(8);
 
     @Test
     void plus() {

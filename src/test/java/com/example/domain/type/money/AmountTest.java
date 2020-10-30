@@ -148,7 +148,7 @@ class AmountTest {
     @Test
     @DisplayName("パーセント計算")
     void percentOf() {
-        Percent eightPercent = new Percent(8);
+        Percent eightPercent = Percent.of(8);
         Amount amount = new Amount(118);
         assertEquals(9L,amount.multiply(eightPercent).value);
     }
