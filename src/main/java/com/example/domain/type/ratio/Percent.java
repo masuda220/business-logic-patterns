@@ -13,13 +13,11 @@ public class Percent {
     }
 
     public Percent plus(Percent other) {
-        DecimalRatio result = value.plus(other.value);
-        return new Percent(result);
+        return Percent.of(value.plus(other.value));
     }
 
     public Percent minus(Percent other) {
-        DecimalRatio result = value.minus(other.value);
-        return new Percent(result);
+        return Percent.of(value.minus(other.value));
     }
 
     public int multiply(int other) {
@@ -32,6 +30,10 @@ public class Percent {
 
     public static Percent of(int value) {
         return new Percent(DecimalRatio.percent(value));
+    }
+
+    public static Percent of(DecimalRatio decimalRatio) {
+        return new Percent(decimalRatio);
     }
 
     @Override
