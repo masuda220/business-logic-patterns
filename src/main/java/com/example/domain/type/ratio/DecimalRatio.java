@@ -38,11 +38,23 @@ public class DecimalRatio {
 
     private int 四捨五入の調整値(long percentResult) {
         long 端数の絶対値 = Math.abs(percentResult % denominator);
-        return 端数の絶対値 >= (denominator / 2 ) ? Long.signum(percentResult) : 0;
+        return 端数の絶対値 >= (denominator / 2) ? Long.signum(percentResult) : 0;
     }
 
     private void ensureSameDenominator(DecimalRatio other) {
         if (denominator != other.denominator) throw new IllegalArgumentException("分母が不一致");
+    }
+
+    public String showWithOneDecimalPlace() {
+        return String.format("%d.%d", value / 10, value % 10);
+    }
+
+    public boolean isPercent() {
+        return denominator == 100;
+    }
+
+    public boolean isPermill() {
+        return denominator == 1_000;
     }
 
     public static DecimalRatio percent(int value) {

@@ -4,49 +4,45 @@ package com.example.domain.type.ratio;
  * 百分率
  */
 public class Percent {
-    DecimalRatio value;
+    DecimalRatio ratio;
 
     private Percent(DecimalRatio value) {
-        this.value = value;
+        this.ratio = value;
     }
 
     public Percent plus(Percent other) {
-        return Percent.of(value.plus(other.value));
+        return new Percent(ratio.plus(other.ratio));
     }
 
     public Percent minus(Percent other) {
-        return Percent.of(value.minus(other.value));
+        return new Percent(ratio.minus(other.ratio));
     }
 
-    public int multiply(int other) {
-        return value.multiply(other);
+    public int multiply(int value) {
+        return ratio.multiply(value);
     }
 
-    public long multiply(long other) {
-        return value.multiply(other);
+    public long multiply(long value) {
+        return ratio.multiply(value);
     }
 
     public static Percent of(int value) {
         return new Percent(DecimalRatio.percent(value));
     }
 
-    public static Percent of(DecimalRatio decimalRatio) {
-        return new Percent(decimalRatio);
-    }
-
     @Override
     public String toString() {
-        return String.format("%d%%", value);
+        return String.format("%d%%", ratio);
     }
 
     @Override
     public boolean equals(Object other) {
         Percent percent = (Percent) other;
-        return value.equals(percent.value);
+        return ratio.equals(percent.ratio);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return ratio.hashCode();
     }
 }
