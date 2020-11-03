@@ -51,4 +51,17 @@ class PermillTest {
     void showAsPercent() {
         assertEquals("8.1", Permill.of(81).showAsPercent());
     }
+
+    @ParameterizedTest
+    @MethodSource
+    void 分数から生成(Permill expect, int 分子, int 分母) {
+        assertEquals(expect, Permill.of(分子,分母));
+    }
+
+    static Stream<Arguments> 分数から生成() {
+        return Stream.of(
+                arguments(Permill.of(333), 1, 3),
+                arguments(Permill.of(667), 2, 3)
+        );
+    }
 }

@@ -30,9 +30,13 @@ public class Percent {
         return new Percent(DecimalRatio.percent(value));
     }
 
+    public static Percent of(int 分子, int 分母) {
+        return new Percent(DecimalRatio.of(分子, 分母, 100));
+    }
+
     @Override
     public String toString() {
-        return String.format("%d%%", ratio);
+        return String.format("%d%%", ratio.分子);
     }
 
     @Override

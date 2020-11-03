@@ -45,4 +45,18 @@ class PercentTest {
                 arguments(2, eight, 31)
         );
     }
+
+    @ParameterizedTest
+    @MethodSource
+    void 分数から生成(Percent expect, int 分子, int 分母) {
+        assertEquals(expect, Percent.of(分子,分母));
+    }
+
+    static Stream<Arguments> 分数から生成() {
+        return Stream.of(
+                arguments(Percent.of(33), 1, 3),
+                arguments(Percent.of(67), 2, 3)
+        );
+    }
+
 }
