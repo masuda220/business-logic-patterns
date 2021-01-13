@@ -1,123 +1,53 @@
 package com.example.domain.model.price;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import com.example.domain.type.money.Amount;
 import com.example.domain.type.quantity.Quantity;
-import com.example.domain.type.quantity.unit.BoxUnit;
-import com.example.domain.type.quantity.unit.PieceUnit;
+import com.example.domain.type.quantity.unit.Unit;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class UnitPriceTest {
 
-    @Test
-    @DisplayName("ピース×ピースの合計金額")
-    void multiplyPiece() {
-        UnitPrice unitPrice = new UnitPrice(new Amount(95), new PieceUnit());
-        Quantity quantity = new Quantity(24, new PieceUnit());
-
+    @DisplayName("正常ケース")
+    @ParameterizedTest
+    @MethodSource
+    void multiply(String message, Amount amount, Unit unit, int number, Amount expected) {
+        UnitPrice unitPrice = new UnitPrice(amount, unit);
+        Quantity quantity = new Quantity(number, unit);
         Amount actual = unitPrice.multiply(quantity);
 
-        assertTrue(new Amount(2280).isEqualTo(actual), "1ピース95円 * 24ピース = 2280円");
+        assertEquals(expected, actual, message);
     }
 
-    @Test
-    @DisplayName("箱×箱の合計金額")
-    void multiplyBox() {
-        int piece = 24;
-        UnitPrice unitPrice = new UnitPrice(new Amount(2280), new BoxUnit(piece));
-        Quantity quantity = new Quantity(5, new BoxUnit(piece));
-
-        Amount actual = unitPrice.multiply(quantity);
-
-        assertTrue(new Amount(11400).isEqualTo(actual), "1箱2280円 * 5箱 = 11400円");
+    static List<Arguments> multiply() {
+        return List.of(
+              arguments("1個95円 * 24個 = 2280円", new Amount(95), Unit.PIECE, 24, new Amount(2280)),
+              arguments("1箱105円 * 6箱 = 630円", new Amount(105), Unit.box(5), 6, new Amount(630))
+        );
     }
 
-    @Test
-    @DisplayName("ピース×箱の合計金額")
-    void multiplyPieceAndBox() {
-        int piece = 24;
-        UnitPrice unitPrice = new UnitPrice(new Amount(95), new PieceUnit());
-        Quantity quantity = new Quantity(6, new BoxUnit(piece));
-
-        Amount actual = unitPrice.multiply(quantity);
-
-        assertTrue(new Amount(13680).isEqualTo(actual), "1ピース95円 * 24ピース6箱 = 13680円");
+    @DisplayName("単位が不一致")
+    @ParameterizedTest
+    @MethodSource
+    void 単位が不一致(String message, Unit ofUnitPrice, Unit ofQuantity) {
+        UnitPrice unitPrice = new UnitPrice(new Amount(100), ofUnitPrice);
+        Quantity quantity = new Quantity(10, ofQuantity);
+        assertThrows(IllegalArgumentException.class, () -> unitPrice.multiply(quantity), message);
     }
 
-    @Test
-    @DisplayName("箱×ピースで例外")
-    void multiplyBoxAndPiece() {
-        int piece = 24;
-        UnitPrice unitPrice = new UnitPrice(new Amount(2280), new BoxUnit(piece));
-        Quantity quantity = new Quantity(5, new PieceUnit());
-
-        assertThrows(IllegalArgumentException.class, () -> unitPrice.multiply(quantity));
+    static List<Arguments> 単位が不一致() {
+        return List.of(
+              arguments("個数単価×箱数", Unit.PIECE, Unit.box(5)),
+              arguments("箱単価×個数", Unit.box(5), Unit.PIECE)
+        );
     }
-
-    @Test
-    @DisplayName("ピースからピースへの変換")
-    void pieceToPiece() {
-        UnitPrice unitPrice = new UnitPrice(new Amount(95), new PieceUnit());
-        UnitPrice expected = new UnitPrice(new Amount(95), new PieceUnit());
-
-        UnitPrice actual = unitPrice.convertTo(new PieceUnit());
-
-        assertTrue(expected.amount.isEqualTo(actual.amount));
-        assertTrue(expected.unit.isEqualTo(actual.unit));
-    }
-
-    @Test
-    @DisplayName("ピースから箱への変換")
-    void pieceToBox() {
-        UnitPrice unitPrice = new UnitPrice(new Amount(95), new PieceUnit());
-        UnitPrice expected = new UnitPrice(new Amount(95 * 24), new BoxUnit(24));
-
-        UnitPrice actual = unitPrice.convertTo(new BoxUnit(24));
-
-        assertTrue(expected.amount.isEqualTo(actual.amount));
-        assertTrue(expected.unit.isEqualTo(actual.unit));
-    }
-
-    @Test
-    @DisplayName("箱からピースへの変換")
-    void boxToPiece() {
-        UnitPrice unitPrice = new UnitPrice(new Amount(95 * 24), new BoxUnit(24));
-        UnitPrice expected = new UnitPrice(new Amount(95), new PieceUnit());
-
-        UnitPrice actual = unitPrice.convertTo(new PieceUnit());
-
-        assertTrue(expected.amount.isEqualTo(actual.amount));
-        assertTrue(expected.unit.isEqualTo(actual.unit));
-    }
-
-    @Test
-    @DisplayName("箱から箱への変換")
-    void boxToBox() {
-        UnitPrice unitPrice = new UnitPrice(new Amount(95 * 24), new BoxUnit(24));
-        UnitPrice expected = new UnitPrice(new Amount(95 * 24), new BoxUnit(24));
-
-        UnitPrice actual = unitPrice.convertTo(new BoxUnit(24));
-
-        assertTrue(expected.amount.isEqualTo(actual.amount));
-        assertTrue(expected.unit.isEqualTo(actual.unit));
-    }
-
-    @Test
-    @DisplayName("異なるピース数の箱への変換で例外")
-    void differentPieceBox() {
-        UnitPrice unitPrice = new UnitPrice(new Amount(95 * 24), new BoxUnit(24));
-        assertThrows(IllegalArgumentException.class, () -> unitPrice.convertTo(new BoxUnit(50)));
-    }
-
-    @Test
-    @DisplayName("箱からピースへの変換で端数が出る場合は例外")
-    void boxToPieceException() {
-        UnitPrice unitPrice = new UnitPrice(new Amount(95 * 25), new BoxUnit(24));
-        assertThrows(ArithmeticException.class, () -> unitPrice.convertTo(new PieceUnit()));
-    }
-
 
 }

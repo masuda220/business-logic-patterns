@@ -11,7 +11,7 @@ import static com.example.domain.model.gate.State.*;
 
 public class StateTest {
 
-    Class exception = IllegalArgumentException.class;
+    Class<IllegalArgumentException> exception = IllegalArgumentException.class;
 
     @Test
     @DisplayName("OPENEDからの状態遷移")

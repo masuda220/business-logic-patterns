@@ -1,5 +1,6 @@
 package com.example.domain.type.quantity;
 
+import com.example.domain.type.money.Amount;
 import com.example.domain.type.quantity.unit.Unit;
 
 /**
@@ -7,7 +8,6 @@ import com.example.domain.type.quantity.unit.Unit;
  */
 public class Quantity {
     int value;
-
     Unit unit;
 
     public Quantity(int value, Unit unit) {
@@ -16,12 +16,14 @@ public class Quantity {
     }
 
     public Quantity add(Quantity other) {
-        int result = Math.addExact(value, toSameUnit(other));
+        ensureSameUnit(other);
+        int result = Math.addExact(value, other.value);
         return new Quantity(result, unit);
     }
 
     public Quantity subtract(Quantity other) {
-        int result = Math.subtractExact(value, toSameUnit(other));
+        ensureSameUnit(other);
+        int result = Math.subtractExact(value, other.value);
         return new Quantity(result, unit);
     }
 
@@ -30,18 +32,39 @@ public class Quantity {
         return new Quantity(result, unit);
     }
 
-    public int toSameUnit(Quantity quantity) {
-        if (unit.isEqualTo(quantity.unit))
-            return quantity.value;
-        else if (unit.isPiece())
-            return Math.multiplyExact(quantity.value, quantity.unit.piece());
+    public int intValue() {
+        return value;
+    }
 
-        throw new IllegalArgumentException();
+    public Quantity convert(Unit target) {
+        int converted = unit.convert(value, target);
+        return new Quantity(converted, target);
+    }
+
+    public boolean isSameUnit(Unit other) {
+        return unit.equals(other);
+    }
+
+    private void ensureSameUnit(Quantity other) {
+        if (unit.equals(other.unit)) return;
+        throw new IllegalArgumentException("単位が違う");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Quantity quantity = (Quantity) o;
+        if (value != quantity.value) return false;
+        return unit.equals(quantity.unit);
+    }
+
+    @Override
+    public int hashCode() {
+        return value + unit.hashCode();
     }
 
     @Override
     public String toString() {
-        return String.format("%d", value);
+        return unit.show(value);
     }
 
 }

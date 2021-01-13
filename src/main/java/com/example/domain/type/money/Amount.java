@@ -94,4 +94,20 @@ public class Amount {
     public Amount remainder(int divisor) {
         return new Amount(value % divisor);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Amount amount = (Amount) o;
+        return value == amount.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }
