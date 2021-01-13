@@ -1,6 +1,7 @@
 package com.example.domain.type.money;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * 小数点以下4桁までの金額を表します。<br>
@@ -64,12 +65,12 @@ public class DecimalAmount {
     }
 
     public DecimalAmount divide(int divisor) {
-        BigDecimal result = value.divide(BigDecimal.valueOf(divisor), BigDecimal.ROUND_HALF_UP);
+        BigDecimal result = value.divide(BigDecimal.valueOf(divisor), RoundingMode.HALF_UP);
         return new DecimalAmount(result);
     }
 
     public Amount toAmount() {
-        return new Amount(value.setScale(0, BigDecimal.ROUND_HALF_UP).longValue());
+        return new Amount(value.setScale(0, RoundingMode.HALF_UP).longValue());
     }
 
     boolean overMaxValue(BigDecimal other) {

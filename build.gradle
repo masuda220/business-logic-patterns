@@ -1,7 +1,8 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.3.4.RELEASE'
-    id 'org.dddjava.jig-gradle-plugin' version '2020.10.3'
+    id 'org.springframework.boot' version '2.4.1'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.dddjava.jig-gradle-plugin' version '2021.1.1'
 }
 
 group 'business-logic'
@@ -18,11 +19,8 @@ repositories {
 }
 
 dependencies {
-    implementation platform("org.springframework.boot:spring-boot-dependencies:2.2.6.RELEASE")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group: 'org.junit.vintage')
-    }
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
@@ -33,7 +31,8 @@ test {
 }
 
 tasks.withType(JavaCompile) {
-    options.compilerArgs << '-Xlint:unchecked'
+    options.compilerArgs << '-Xlint'
+//    options.compilerArgs << '-Xlint:unchecked,deprecation'
 }
 
 [compileJava, processResources]*.shouldRunAfter(clean)
