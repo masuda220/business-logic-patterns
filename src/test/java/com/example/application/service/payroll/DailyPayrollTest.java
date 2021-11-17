@@ -28,7 +28,7 @@ class DailyPayrollTest extends DailyPayroll {
 
         Amount actual = new DailyPayroll().amountFor(timeRecord, MinuteUnit.SIXTY, RoundingType.切捨て, hourlyWage);
 
-        assertTrue(new Amount((int) ((820 / 60) * 60 * 8)).isEqualTo(actual));
+        assertTrue(new Amount((820 / 60) * 60 * 8).isEqualTo(actual));
     }
 
     @Test
@@ -42,7 +42,7 @@ class DailyPayrollTest extends DailyPayroll {
 
         Amount actual = new DailyPayroll().amountFor(timeRecord, MinuteUnit.SIXTY, RoundingType.四捨五入, hourlyWage);
 
-        assertTrue(new Amount((int) ((820 / 60) * 60 * 8)).isEqualTo(actual));
+        assertTrue(new Amount((820 / 60) * 60 * 8).isEqualTo(actual));
     }
 
     @Test
@@ -56,7 +56,7 @@ class DailyPayrollTest extends DailyPayroll {
 
         Amount actual = new DailyPayroll().amountFor(timeRecord, MinuteUnit.SIXTY, RoundingType.四捨五入, hourlyWage);
 
-        assertTrue(new Amount((int) ((820 / 60) * 60 * 9)).isEqualTo(actual));
+        assertTrue(new Amount((820 / 60) * 60 * 9).isEqualTo(actual));
     }
 
     @Test
@@ -70,7 +70,7 @@ class DailyPayrollTest extends DailyPayroll {
 
         Amount actual = new DailyPayroll().amountFor(timeRecord, MinuteUnit.FIVE, RoundingType.切捨て, hourlyWage);
 
-        assertTrue(new Amount((int) ((820 / 60) * 60 * 8)).isEqualTo(actual));
+        assertTrue(new Amount((820 / 60) * 60 * 8).isEqualTo(actual));
     }
 
     @Test
@@ -84,7 +84,7 @@ class DailyPayrollTest extends DailyPayroll {
 
         Amount actual = new DailyPayroll().amountFor(timeRecord, MinuteUnit.FIVE, RoundingType.四捨五入, hourlyWage);
 
-        assertTrue(new Amount((int) ((820 / 60) * 60 * 8)).isEqualTo(actual));
+        assertTrue(new Amount((820 / 60) * 60 * 8).isEqualTo(actual));
     }
 
     @Test
@@ -98,7 +98,7 @@ class DailyPayrollTest extends DailyPayroll {
 
         Amount actual = new DailyPayroll().amountFor(timeRecord, MinuteUnit.FIVE, RoundingType.四捨五入, hourlyWage);
 
-        assertTrue(new Amount((int) ((820 / 60) * (60 * 8 + 5))).isEqualTo(actual));
+        assertTrue(new Amount((820 / 60) * (60 * 8 + 5)).isEqualTo(actual));
 
     }
 
@@ -113,7 +113,7 @@ class DailyPayrollTest extends DailyPayroll {
 
         Amount actual = new DailyPayroll().amountFor(timeRecord, MinuteUnit.ONE, RoundingType.切捨て, hourlyWage);
 
-        assertTrue(new Amount((int) ((820 / 60) * (60 * 8 + 10))).isEqualTo(actual));
+        assertTrue(new Amount((820 / 60) * (60 * 8 + 10)).isEqualTo(actual));
     }
 
     @Test
@@ -127,7 +127,7 @@ class DailyPayrollTest extends DailyPayroll {
 
         Amount actual = new DailyPayroll().amountFor(timeRecord, MinuteUnit.ONE, RoundingType.四捨五入, hourlyWage);
 
-        assertTrue(new Amount((int) ((820 / 60) * (60 * 8 + 10))).isEqualTo(actual));
+        assertTrue(new Amount((820 / 60) * (60 * 8 + 10)).isEqualTo(actual));
     }
 
 }

@@ -1,21 +1,18 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.4.1'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    id 'org.dddjava.jig-gradle-plugin' version '2021.1.1'
+    id 'org.springframework.boot' version '2.5.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.dddjava.jig-gradle-plugin' version '2021.11.2'
 }
 
 group 'business-logic'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = '11'
-targetCompatibility = '11'
-
 def defaultEncoding = 'UTF-8'
 tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -26,13 +23,12 @@ dependencies {
 test {
     useJUnitPlatform()
     reports {
-        html.enabled = true
+        html.required = true
     }
 }
 
 tasks.withType(JavaCompile) {
     options.compilerArgs << '-Xlint'
-//    options.compilerArgs << '-Xlint:unchecked,deprecation'
 }
 
 [compileJava, processResources]*.shouldRunAfter(clean)
