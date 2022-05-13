@@ -2,8 +2,9 @@ package com.example.domain.type.enums;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
+
+import static java.util.Comparator.comparingInt;
 
 /**
  * 名前と優先順位を持つ分類区分
@@ -31,7 +32,7 @@ public enum Category {
 
     static List<Category> sortedCategories() {
         List<Category> list = Arrays.asList(Category.values());
-        list.sort(Comparator.comparingInt(each -> each.priority));
+        list.sort(comparingInt(each -> each.priority));
         return list;
     }
 }
