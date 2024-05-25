@@ -1,8 +1,8 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.6.7'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.dddjava.jig-gradle-plugin' version '2022.5.1'
+    id 'org.springframework.boot' version '3.3.0'
+    id 'io.spring.dependency-management' version '1.1.5'
+    id "org.dddjava.jig-gradle-plugin" version '2024.4.1'
 }
 
 group 'business-logic'
@@ -10,6 +10,10 @@ version '1.0-SNAPSHOT'
 
 def defaultEncoding = 'UTF-8'
 tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
+
+java {
+    sourceCompatibility = '21'
+}
 
 repositories {
     mavenCentral()
@@ -22,14 +26,11 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    reports {
-        html.required = true
-    }
-}
-
-tasks.withType(JavaCompile) {
-    options.compilerArgs << '-Xlint'
 }
 
 [compileJava, processResources]*.shouldRunAfter(clean)
 jigReports.dependsOn(clean, classes)
+
+jig {
+    modelPattern = '.*'
+}
