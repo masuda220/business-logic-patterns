@@ -1,11 +1,22 @@
 package com.example.domain.model.patterns.beginner.values;
 
-import com.example.domain.type.quantity.unit.Unit;
+import java.math.BigDecimal;
 
 /**
- * 数量
+ * 数量（単位付き）
+ *
+ * 100グラム単位
+ * 表示はキログラム（例:1.5kg）
  */
-public class Quantity {
+class Quantity {
     int value;
-    Unit unit;
+    static final Unit unit = Unit.キログラム;
+
+    private Quantity(int value) {
+        this.value = value;
+    }
+
+    static Quantity fromGram(int gram) {
+        return new Quantity(gram / 100);
+    }
 }
