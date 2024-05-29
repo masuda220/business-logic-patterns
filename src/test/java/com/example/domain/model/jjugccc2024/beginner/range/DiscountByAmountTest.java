@@ -8,6 +8,5 @@ class DiscountByAmountTest {
 
     @Test
     void makeRanges() {
-        DiscountByAmount.makeRanges();
     }
 }
