@@ -9,7 +9,7 @@ class AmountRangeTest {
 
     private final Amount 下限 = Amount.of(2_000);
     private final Amount 上限 = Amount.of(5_000);
-    private final AmountRange 金額範囲 = AmountRange.create(下限, 上限);
+    private final AmountRange 金額範囲 = AmountRange.生成(下限, 上限);
 
     @Test
     void が次の金額を含む() {

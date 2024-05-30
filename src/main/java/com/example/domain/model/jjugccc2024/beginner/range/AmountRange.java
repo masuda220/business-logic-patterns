@@ -18,7 +18,7 @@ class AmountRange {
         return true;
     }
 
-    static AmountRange create(Amount 下限, Amount 上限) {
+    static AmountRange 生成(Amount 下限, Amount 上限) {
         if (下限.が次の金額以上である(上限)) throw new ArithmeticException("下限が上限より大きい");
         return new AmountRange(下限, 上限);
     }
