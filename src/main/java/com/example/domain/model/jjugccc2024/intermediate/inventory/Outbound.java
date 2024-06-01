@@ -2,7 +2,10 @@ package com.example.domain.model.jjugccc2024.intermediate.inventory;
 
 import java.time.LocalDate;
 
-class Outbound {
+/**
+ * 出庫
+ */
+class Outbound implements Comparable<Outbound> {
     final LocalDate 出庫日;
     final int 出庫数;
 
@@ -15,5 +18,10 @@ class Outbound {
 
     static Outbound of(LocalDate 出庫日, int 出庫数) {
         return new Outbound(出庫日, 出庫数);
+    }
+
+    @Override
+    public int compareTo(Outbound other) {
+        return 出庫日.compareTo(other.出庫日);
     }
 }
