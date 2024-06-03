@@ -1,11 +1,11 @@
-package com.example.domain.model.jjugccc2024.advanced.set;
+package com.example.domain.model.jjugccc2024.advanced.matching;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.Set;
 
-import static com.example.domain.model.jjugccc2024.advanced.set.Languages.*;
+import static com.example.domain.model.jjugccc2024.advanced.matching.Languages.*;
 import static java.util.stream.Collectors.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

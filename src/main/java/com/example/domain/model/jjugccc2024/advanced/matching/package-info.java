@@ -10,4 +10,4 @@
  * - 要求される言語経験
  * - 要求とマッチする言語数別に、メンバーを分類
  */
-package com.example.domain.model.jjugccc2024.advanced.set;
+package com.example.domain.model.jjugccc2024.advanced.matching;

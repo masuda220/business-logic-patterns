@@ -1,4 +1,4 @@
-package com.example.domain.model.jjugccc2024.advanced.set;
+package com.example.domain.model.jjugccc2024.advanced.matching;
 
 import java.util.Set;
 import java.util.stream.Collectors;
