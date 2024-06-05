@@ -14,9 +14,12 @@ class SharePieByPointTest {
 
     @ParameterizedTest
     @MethodSource("配分")
-    void 比例配分(SharePieByPoint 構成比率, int 配分する送料, SharePieByAmount 期待する結果) {
-        SharePieByAmount 金額構成 = 構成比率.比例配分(new Amount(12345));
+    void 比例配分(SharePieByPoint 構成比率, int 配分対象, SharePieByAmount 期待する結果) {
+        SharePieByAmount 金額構成 = 構成比率.比例配分(new Amount(配分対象));
+        System.out.println(金額構成);
+        System.out.println(期待する結果);
         assertTrue(期待する結果.同じ金額構成(金額構成));
+
     }
 
     static Stream<Arguments> 配分() {
@@ -24,15 +27,15 @@ class SharePieByPointTest {
             arguments(
                 SharePieByPoint.of(SharePie.値の大きい順で構築(
                     List.of(
-                        Share.of("A社", 1999),
-                        Share.of("B社", 2998),
-                        Share.of("C社", 5003)))),
-                12345,
+                        Share.of("A社", 1_999),
+                        Share.of("B社", 2_998),
+                        Share.of("C社", 5_003)))),
+                134675,
                 SharePieByAmount.of(SharePie.値の大きい順で構築(
                     List.of(
-                        Share.of("A社", 2467),
-                        Share.of("B社", 3701),
-                        Share.of("C社", 6177))))
+                        Share.of("A社", 26_921),
+                        Share.of("B社", 40_375),
+                        Share.of("C社", 67_379))))
             )
         );
     }
