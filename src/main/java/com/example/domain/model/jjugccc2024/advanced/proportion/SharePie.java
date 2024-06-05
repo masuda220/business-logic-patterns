@@ -4,7 +4,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * 分担構成
+ * *分担構成
+ *
+ * プログラミング言語レベルの実装の詳細
  */
 class SharePie {
     final SortedSet<Share> 分担構成;
@@ -13,19 +15,43 @@ class SharePie {
         this.分担構成 = 分担構成;
     }
 
-    SharePie 主分担者に配分して調整(int 差分) {
-        Share 主分担の現在の分担内容 = 分担構成.first(); // 大きい順の先頭
-        Share 調整後の分担内容 = 主分担の現在の分担内容.値の調整(差分);
-
-        Set<Share> 調整用の分担構成 = new HashSet<>(分担構成);
-        調整用の分担構成.remove(主分担の現在の分担内容);
-        調整用の分担構成.add(調整後の分担内容);
-
-        return SharePie.構築(調整用の分担構成);
+    SharePie 端数を最大出資者に割り当てて調整(int 正しい全体量) {
+        int 端数 = 単純全体量との差分(正しい全体量);
+        Collection<Share> 調整後の分担構成 = 端数調整(端数);
+        return SharePie.値の大きい順で構築(調整後の分担構成);
     }
 
-    int 合計() {
-        return 分担構成.stream().mapToInt(Share::値).sum();
+    private Collection<Share> 端数調整(int 端数金額) {
+        Share 最大出資者の現在の分担内容 = 分担構成.first(); // 大きい順の先頭
+        Share 最大出資者の端数調整後の分担内容 = 最大出資者の現在の分担内容.増やす(端数金額);
+
+        Set<Share> 調整用の分担構成 = new HashSet<>(分担構成); // 作業用の可変Set
+
+        調整用の分担構成.remove(最大出資者の現在の分担内容);
+        調整用の分担構成.add(最大出資者の端数調整後の分担内容);
+
+        return Collections.unmodifiableSet(調整用の分担構成); // 不変化
+    }
+
+    private int 単純全体量との差分(int 正しい全体量) {
+        int 現在の全体量 = 分担構成.stream().mapToInt(Share::分担量).sum();
+        return 正しい全体量 - 現在の全体量;
+    }
+
+    SharePie 掛ける(int 倍数) {
+        Collection<Share> 結果 = 分担構成.stream()
+                .map(分担内容 -> 分担内容.掛ける(倍数)).toList();
+        return SharePie.値の大きい順で構築(結果);
+    }
+
+    SharePie 割る(int 除数) {
+        Collection<Share> 結果 = 分担構成.stream()
+                .map(分担内容 -> 分担内容.割る(除数)).toList();
+        return SharePie.値の大きい順で構築(結果);
+    }
+
+    int 分担量の合計() {
+        return 分担構成.stream().mapToInt(Share::分担量).sum();
     }
 
     boolean 同じ分担構成(SharePie 比較対象) {
@@ -33,18 +59,25 @@ class SharePie {
     }
 
     /**
-     * 重複なし、値の大きい順、変更不可のShareの集合を構築する
+     * 重複なし、値の大きい順、変更不可のSharePieを構築する
      */
-    static SharePie 構築(Collection<Share> 構成要素) {
-        List<String> 出資企業リスト = 構成要素.stream()
-                .map(Share::toString)
-                .distinct().toList();
+    static SharePie 値の大きい順で構築(Collection<Share> すべての構成要素) {
+        出資企業の重複チェック(すべての構成要素);
+        SortedSet<Share> 分担が大きい順 = Collections.unmodifiableSortedSet(new TreeSet<>(すべての構成要素));
+        return new SharePie(分担が大きい順);
+    }
 
-        if (構成要素.size() != 出資企業リスト.size()) throw new IllegalArgumentException("出資企業が重複");
+    private static void 出資企業の重複チェック(Collection<Share> 構成要素) {
+        long 出資企業数 = 構成要素.stream()
+                .map(Share::toString).distinct().count();
 
-        SortedSet<Share> 値の大きい順 = 構成要素.stream()
-                .sorted(Comparator.comparingInt(Share::値).reversed())
-                .collect(Collectors.toCollection(TreeSet::new));
-        return new SharePie(Collections.unmodifiableSortedSet(値の大きい順));
+        if (構成要素.size() != 出資企業数) throw new IllegalArgumentException("出資企業が重複");
+    }
+
+    @Override
+    public String toString() {
+        return "SharePie{" +
+                "分担構成=" + 分担構成 +
+                '}';
     }
 }
