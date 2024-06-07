@@ -7,10 +7,10 @@ import static com.example.domain.model.jjugccc2024.intermediate.statetransition.
 import static com.example.domain.model.jjugccc2024.intermediate.statetransition.StateType.*;
 
 /**
- * 状態ごとに可能なアクションの定義
+ * 状態ごとのアクション
  */
 class ActionsByState {
-    Map<StateType, Set<ActionType>> 状態_アクション_マッピング =
+    Map<StateType, Set<ActionType>> 状態とアクションのマッピング =
             Map.of(
                     審査中, Set.of(承認, 差し戻し),
                     承認済, Set.of(開始, 取り下げ),
@@ -21,10 +21,10 @@ class ActionsByState {
             );
 
     Set<ActionType> 可能なアクション(StateType 現在の状態) {
-        return 状態_アクション_マッピング.get(現在の状態);
+        return 状態とアクションのマッピング.get(現在の状態);
     }
 
     boolean アクションの妥当性検査(StateType 現在の状態, ActionType 検査するアクション) {
-        return 状態_アクション_マッピング.get(現在の状態).contains(検査するアクション);
+        return 状態とアクションのマッピング.get(現在の状態).contains(検査するアクション);
     }
 }

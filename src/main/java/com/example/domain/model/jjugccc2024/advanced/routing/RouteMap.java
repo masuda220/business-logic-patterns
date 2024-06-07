@@ -4,7 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.*;
 
 /**
  * 経路
@@ -23,6 +26,11 @@ public class RouteMap {
         幅優先で探索して各地点への最短距離を更新(出発地, 各地点への最短距離のマップ);
 
         return 各地点への最短距離のマップ;
+    }
+
+    Map<Integer, List<Place>> 分岐数別グルーピング() {
+        return 隣接リストのマップ.entrySet().stream()
+                .collect(groupingBy(entry -> entry.getValue().size(), mapping(Map.Entry::getKey, toList())));
     }
 
     private void 幅優先で探索して各地点への最短距離を更新(Place 最初の出発地,

@@ -15,7 +15,7 @@ class RouteMapFactory {
 
         Map<Place, List<Place>> 隣接リスト =
                 Stream.concat(経路の集合.stream(), 逆方向の経路の集合.stream())
-                .collect(groupingBy(PathWithDistance::到着地, mapping(PathWithDistance::出発地, toList())));
+                .collect(groupingBy(PathWithDistance::出発地, mapping(PathWithDistance::到着地, toList())));
 
         Map<Path, Integer> パス間の距離 =
                 Stream.concat(経路の集合.stream(), 逆方向の経路の集合.stream())
