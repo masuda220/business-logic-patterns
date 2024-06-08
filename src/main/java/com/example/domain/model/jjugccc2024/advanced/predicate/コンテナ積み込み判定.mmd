@@ -6,32 +6,30 @@ classDiagram
     Specification ..> コンテナ
     コンテナ --* コンテナ機能
 
-    namespace 仕様 {
-        class Predicate {
-            <<インターフェース>>
-            test(コンテナ) boolean
-        }
+    class Predicate {
+        <<インターフェース>>
+        test(コンテナ) boolean
+    }
 
-        class 貨物特性 {
-            <<列挙>>
-            爆発性,
-            揮発性,
-            爆発性かつ揮発性,
-            一般品;
-            【特性ごとの属性】
-            Predicate<コンテナ> 積み込み仕様
-            格納できる(コンテナ) boolean
-        }
+    class 貨物特性 {
+        <<列挙>>
+        爆発性,
+        揮発性,
+        爆発性かつ揮発性,
+        一般品;
+        【特性ごとの属性】
+        Predicate<コンテナ> 積み込み仕様
+        格納できる(コンテナ) boolean
+    }
 
-        class Specification["積み込み仕様"] {
-            必要なコンテナ機能
-            【定義済の積み込み仕様】
-            static Predicate~コンテナ~ 条件_強化
-            static Predicate~コンテナ~ 条件_換気
-            static Predicate~コンテナ~ 条件_強化かつ換気
-            static Predicate~コンテナ~ 条件_標準
-            test(コンテナ) boolean
-        }
+    class Specification["積み込み仕様"] {
+        必要なコンテナ機能
+        【定義済の積み込み仕様】
+        static Predicate~コンテナ~ 条件_強化
+        static Predicate~コンテナ~ 条件_換気
+        static Predicate~コンテナ~ 条件_強化かつ換気
+        static Predicate~コンテナ~ 条件_標準
+        test(コンテナ) boolean
     }
 
     class コンテナ {
