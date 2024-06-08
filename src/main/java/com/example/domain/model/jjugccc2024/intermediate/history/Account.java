@@ -13,7 +13,7 @@ class Account {
     }
 
     Amount 残高(LocalDate 計算日) {
-        return 入出金履歴.投影(計算日);
+        return 入出金履歴.残高の投影(計算日);
     }
 
     static Account 生成(EventHistory 入出金履歴) {

@@ -10,7 +10,7 @@ class EventHistory {
         this.入出金履歴 = 入出金履歴;
     }
 
-    Amount 投影(LocalDate 計算日) {
+    Amount 残高の投影(LocalDate 計算日) {
         return 入出金履歴.stream()
                 .filter(入出金 -> 入出金.以前(計算日))
                 .map(AccountEvent::入出金額)
