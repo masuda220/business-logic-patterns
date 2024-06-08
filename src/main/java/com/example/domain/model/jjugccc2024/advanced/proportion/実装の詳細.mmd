@@ -2,11 +2,11 @@
 title: 実装の詳細
 ---
 classDiagram
-    金額パイ --> シェアパイ
-    割合パイ --> シェアパイ
-    シェアパイ --* シェア
+    金額パイ --> SharePie
+    割合パイ --> SharePie
+    SharePie --* シェア
 
-    class シェアパイ {
+    class SharePie["シェアパイ"] {
         SortedSet~シェア~ 配分構成
         [制約：企業が重複しない]
         [制約：分担量の大きい順]
@@ -22,12 +22,4 @@ classDiagram
         割る(除数) シェア
         増やす(増分) シェア
         同一企業(比較対象のシェア) boolean
-    }
-    class 割合パイ {
-        シェアパイ
-        万分率
-    }
-    class 金額パイ {
-        シェアパイ
-        実金額
     }
