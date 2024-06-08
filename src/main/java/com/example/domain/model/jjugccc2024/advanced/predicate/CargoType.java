@@ -9,7 +9,7 @@ import static com.example.domain.model.jjugccc2024.advanced.predicate.LoadingSpe
  *
  * 特性ごとに必要とするコンテナ機能を定義
  */
-public enum CargoType {
+enum CargoType {
     爆発性(条件_強化),
     揮発性(条件_換気),
     爆発性かつ揮発性(条件_強化かつ換気),

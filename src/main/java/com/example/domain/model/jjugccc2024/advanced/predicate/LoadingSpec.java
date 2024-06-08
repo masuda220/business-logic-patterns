@@ -7,19 +7,19 @@ import static com.example.domain.model.jjugccc2024.advanced.predicate.ContainerF
 /**
  * 積載条件
  */
-public class LoadingSpec implements Predicate<Container> {
+class LoadingSpec implements Predicate<Container> {
 
     ContainerFeature 必要なコンテナ機能;
 
     /**
      * 定義済の必要条件
      */
-    public static Predicate<Container> 条件_強化 = new LoadingSpec(構造強化型);
-    public static Predicate<Container> 条件_換気 = new LoadingSpec(通気設備付き);
-    public static Predicate<Container> 条件_強化かつ換気 = 条件_強化.and(条件_換気);
-    public static Predicate<Container> 条件_標準 = (条件_強化.negate()).and(条件_換気.negate());
+    static Predicate<Container> 条件_強化 = new LoadingSpec(構造強化型);
+    static Predicate<Container> 条件_換気 = new LoadingSpec(通気設備付き);
+    static Predicate<Container> 条件_強化かつ換気 = 条件_強化.and(条件_換気);
+    static Predicate<Container> 条件_標準 = (条件_強化.negate()).and(条件_換気.negate());
 
-    public LoadingSpec(ContainerFeature 必要なコンテナ機能) {
+    LoadingSpec(ContainerFeature 必要なコンテナ機能) {
         this.必要なコンテナ機能 = 必要なコンテナ機能;
     }
 

@@ -5,12 +5,12 @@ import java.util.Set;
 /**
  * コンテナ
  */
-public class Container {
+class Container {
     Set<ContainerFeature> コンテナ機能;
 
     private Container() {} // 提供機能を指定しない生成は不可
 
-    public Container(Set<ContainerFeature> コンテナ機能) {
+    Container(Set<ContainerFeature> コンテナ機能) {
         this.コンテナ機能 = コンテナ機能;
     }
 
