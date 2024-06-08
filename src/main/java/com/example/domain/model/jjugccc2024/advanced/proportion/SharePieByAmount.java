@@ -1,7 +1,7 @@
 package com.example.domain.model.jjugccc2024.advanced.proportion;
 
 /**
- * *金額ベースの構成
+ * *金額パイ
  */
 class SharePieByAmount {
     SharePie 金額構成;

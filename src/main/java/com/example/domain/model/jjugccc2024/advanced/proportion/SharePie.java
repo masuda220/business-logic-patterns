@@ -1,12 +1,11 @@
 package com.example.domain.model.jjugccc2024.advanced.proportion;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
- * *分担構成
+ * *シェアパイ
  *
- * プログラミング言語レベルの実装の詳細
+ * 比例配分の実装クラス
  */
 class SharePie {
     final SortedSet<Share> 分担構成;
