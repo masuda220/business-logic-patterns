@@ -9,7 +9,7 @@ import static com.example.domain.model.jjugccc2024.advanced.predicate.ContainerF
  */
 public class LoadingSpec implements Predicate<Container> {
 
-    ContainerFeature 必要な機能;
+    ContainerFeature 必要なコンテナ機能;
 
     /**
      * 定義済の必要条件
@@ -19,8 +19,8 @@ public class LoadingSpec implements Predicate<Container> {
     public static Predicate<Container> 条件_強化かつ換気 = 条件_強化.and(条件_換気);
     public static Predicate<Container> 条件_標準 = (条件_強化.negate()).and(条件_換気.negate());
 
-    public LoadingSpec(ContainerFeature 必要な機能) {
-        this.必要な機能 = 必要な機能;
+    public LoadingSpec(ContainerFeature 必要なコンテナ機能) {
+        this.必要なコンテナ機能 = 必要なコンテナ機能;
     }
 
     /**
@@ -30,6 +30,6 @@ public class LoadingSpec implements Predicate<Container> {
      */
     @Override
     public boolean test(Container コンテナ) {
-        return コンテナ.満たす(必要な機能);
+        return コンテナ.満たす(必要なコンテナ機能);
     }
 }

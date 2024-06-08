@@ -14,22 +14,22 @@ class SharePie {
         this.分担構成 = 分担構成;
     }
 
-    SharePie 端数を最大出資者に割り当てて調整(int 正しい全体量) {
+    SharePie 端数を最大分担者に割り当てて調整(int 正しい全体量) {
         int 端数 = 単純全体量との差分(正しい全体量);
         Collection<Share> 調整後の分担構成 = 端数調整(端数);
         return SharePie.値の大きい順で構築(調整後の分担構成);
     }
 
     private Collection<Share> 端数調整(int 端数金額) {
-        Share 最大出資者の現在の分担内容 = 分担構成.first(); // 大きい順の先頭
-        Share 最大出資者の端数調整後の分担内容 = 最大出資者の現在の分担内容.増やす(端数金額);
+        Share 最大分担者の現在の分担内容 = 分担構成.first(); // 大きい順の先頭
+        Share 最大分担者の端数調整後の分担内容 = 最大分担者の現在の分担内容.増やす(端数金額);
 
         Set<Share> 調整用の分担構成 = new HashSet<>(分担構成); // 作業用の可変Set
 
-        調整用の分担構成.remove(最大出資者の現在の分担内容);
-        調整用の分担構成.add(最大出資者の端数調整後の分担内容);
+        調整用の分担構成.remove(最大分担者の現在の分担内容);
+        調整用の分担構成.add(最大分担者の端数調整後の分担内容);
 
-        return Collections.unmodifiableSet(調整用の分担構成); // 不変化
+        return Collections.unmodifiableSet(調整用の分担構成); // 不変
     }
 
     private int 単純全体量との差分(int 正しい全体量) {

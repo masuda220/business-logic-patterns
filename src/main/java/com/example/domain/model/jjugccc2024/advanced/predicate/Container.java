@@ -6,15 +6,15 @@ import java.util.Set;
  * コンテナ
  */
 public class Container {
-    Set<ContainerFeature> 提供機能;
+    Set<ContainerFeature> コンテナ機能;
 
     private Container() {} // 提供機能を指定しない生成は不可
 
-    public Container(Set<ContainerFeature> 提供機能) {
-        this.提供機能 = 提供機能;
+    public Container(Set<ContainerFeature> コンテナ機能) {
+        this.コンテナ機能 = コンテナ機能;
     }
 
     boolean 満たす(ContainerFeature 要求機能) {
-        return 提供機能.contains(要求機能);
+        return コンテナ機能.contains(要求機能);
     }
 }

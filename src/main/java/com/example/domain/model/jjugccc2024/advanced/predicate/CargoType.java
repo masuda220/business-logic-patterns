@@ -15,13 +15,13 @@ public enum CargoType {
     爆発性かつ揮発性(条件_強化かつ換気),
     一般品(条件_標準);
 
-    final Predicate<Container> 必要条件;
+    final Predicate<Container> 積み込み仕様;
 
-    CargoType(Predicate<Container> 必要条件) {
-        this.必要条件 = 必要条件;
+    CargoType(Predicate<Container> 積み込み仕様) {
+        this.積み込み仕様 = 積み込み仕様;
     }
 
     boolean 格納できる(Container コンテナ) {
-        return 必要条件.test(コンテナ);
+        return 積み込み仕様.test(コンテナ);
     }
 }
