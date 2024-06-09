@@ -17,7 +17,7 @@ class MemberExperience {
     }
 
     MemberExperience 要求に合致(LanguageSet 要求言語) {
-        LanguageSet 照合結果 = 経験言語.合致(要求言語);
+        LanguageSet 照合結果 = 経験言語.合致した言語(要求言語);
         return MemberExperience.of(メンバー, 照合結果);
     }
 
