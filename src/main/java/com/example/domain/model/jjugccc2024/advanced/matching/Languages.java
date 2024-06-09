@@ -3,7 +3,7 @@ package com.example.domain.model.jjugccc2024.advanced.matching;
 /**
  * プログラミング言語
  */
-public enum Languages {
+enum Languages {
     Python,
     Java,
     CPlusPlus,

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 /**
  * 経験言語
  */
-public class LanguageSet {
+class LanguageSet {
     Set<Languages> 経験言語;
 
     private LanguageSet(Set<Languages> 経験言語) {
@@ -24,7 +24,7 @@ public class LanguageSet {
         return new LanguageSet(Set.of(経験言語));
     }
 
-    public int count() {
+    int count() {
         return 経験言語.size();
     }
 

@@ -1,6 +1,6 @@
 package com.example.domain.model.jjugccc2024.intermediate.history;
 
-public class Amount {
+class Amount {
     int 金額;
 
     static final Amount ゼロ = Amount.of(0);

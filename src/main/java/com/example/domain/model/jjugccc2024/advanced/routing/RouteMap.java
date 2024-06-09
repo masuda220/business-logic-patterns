@@ -11,7 +11,7 @@ import static java.util.stream.Collectors.*;
 /**
  * 経路
  */
-public class RouteMap {
+class RouteMap {
     Map<Place, List<Place>> 隣接リストのマップ;
     Map<Path, Integer> パス間の距離;
 

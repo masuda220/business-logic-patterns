@@ -3,7 +3,7 @@ package com.example.domain.model.jjugccc2024.advanced.proportion;
 /**
  * *尺度
  */
-public enum ScaleType {
+enum ScaleType {
     実金額(1, "円", "実際の金額"),
     万分率(10_000, "bps", "ベーシスポイント：1bp = 0.01%");
 

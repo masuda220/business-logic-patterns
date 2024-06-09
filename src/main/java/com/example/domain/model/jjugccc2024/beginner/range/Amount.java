@@ -1,6 +1,6 @@
 package com.example.domain.model.jjugccc2024.beginner.range;
 
-public class Amount {
+class Amount {
     int 金額;
 
     static final Amount 上限額 = Amount.of(1_000_000);

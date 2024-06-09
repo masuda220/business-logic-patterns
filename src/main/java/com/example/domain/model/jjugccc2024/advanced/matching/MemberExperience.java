@@ -3,7 +3,7 @@ package com.example.domain.model.jjugccc2024.advanced.matching;
 /**
  * メンバーの経験言語
  */
-public class MemberExperience {
+class MemberExperience {
     Member メンバー;
     LanguageSet 経験言語;
 
