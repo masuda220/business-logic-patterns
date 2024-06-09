@@ -14,13 +14,13 @@ class SharePie {
         this.分担構成 = 分担構成;
     }
 
-    SharePie 端数を最大分担者に割り当てて調整(int 正しい全体量) {
-        int 端数 = 単純全体量との差分(正しい全体量);
+    SharePie 端数を最大分担者に割り当てて調整(long 正しい全体量) {
+        long 端数 = 単純全体量との差分(正しい全体量);
         Collection<Share> 調整後の分担構成 = 端数調整(端数);
         return SharePie.値の大きい順で構築(調整後の分担構成);
     }
 
-    private Collection<Share> 端数調整(int 端数金額) {
+    private Collection<Share> 端数調整(long 端数金額) {
         Share 最大分担者の現在の分担内容 = 分担構成.first(); // 大きい順の先頭
         Share 最大分担者の端数調整後の分担内容 = 最大分担者の現在の分担内容.増やす(端数金額);
 
@@ -32,12 +32,12 @@ class SharePie {
         return Collections.unmodifiableSet(調整用の分担構成); // 不変
     }
 
-    private int 単純全体量との差分(int 正しい全体量) {
-        int 現在の全体量 = 分担構成.stream().mapToInt(Share::分担量).sum();
+    private long 単純全体量との差分(long 正しい全体量) {
+        long 現在の全体量 = 分担構成.stream().mapToLong(Share::分担量).sum();
         return 正しい全体量 - 現在の全体量;
     }
 
-    SharePie 掛ける(int 倍数) {
+    SharePie 掛ける(long 倍数) {
         Collection<Share> 結果 = 分担構成.stream()
                 .map(分担内容 -> 分担内容.掛ける(倍数)).toList();
         return SharePie.値の大きい順で構築(結果);
@@ -49,8 +49,8 @@ class SharePie {
         return SharePie.値の大きい順で構築(結果);
     }
 
-    int 分担量の合計() {
-        return 分担構成.stream().mapToInt(Share::分担量).sum();
+    long 分担量の合計() {
+        return 分担構成.stream().mapToLong(Share::分担量).sum();
     }
 
     boolean 同じ分担構成(SharePie 比較対象) {
