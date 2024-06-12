@@ -4,10 +4,24 @@ classDiagram
     メンバー経験言語 --> メンバー
 
     class メンバー経験言語 {
+        メンバー
         言語セット
     }
 
     class 言語セット {
         Set~言語~
         一致した言語セット(対象の言語セット) 言語セット
+    }
+
+    class 言語 {
+        <<列挙>>
+        Python,
+        Java,
+        CPlusPlus,
+        CSharp,
+        JavaScript,
+        SQL,
+        PHP,
+        GO,
+        Rust
     }
