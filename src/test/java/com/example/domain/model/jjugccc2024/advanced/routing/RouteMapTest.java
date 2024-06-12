@@ -58,13 +58,12 @@ class RouteMapTest {
 
     @Test
     void 東京からは三鷹がもっとも遠い() {
-        final Place 出発地点 = new Place("東京");
-        final PathLengthMap 各地点までの最短距離のマップ = 隣接リスト.最短経路マップ(東京);
+        final PathLengthMap 各地点への距離のマップ = 隣接リスト.各地点への距離(東京);
 
-        System.out.println(各地点までの最短距離のマップ);
+        System.out.println(各地点への距離のマップ);
 
         PathWithDistance 期待値 = new PathWithDistance(new Path(東京, 三鷹), 4);
-        assertEquals(期待値, 各地点までの最短距離のマップ.出発地点からの最も遠い地点への距離());
+        assertEquals(期待値, 各地点への距離のマップ.最初の出発地点からの最も遠い地点への距離());
     }
 
 }

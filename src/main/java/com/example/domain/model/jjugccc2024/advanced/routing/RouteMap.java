@@ -13,18 +13,18 @@ import static java.util.stream.Collectors.*;
  */
 class RouteMap {
     Map<Place, List<Place>> 隣接リストのマップ;
-    Map<Path, Integer> パス間の距離;
+    Map<Path, Integer> パスの長さ;
 
-    RouteMap(Map<Place, List<Place>> 隣接リストのマップ, Map<Path, Integer> パス間の距離) {
+    RouteMap(Map<Place, List<Place>> 隣接リストのマップ, Map<Path, Integer> パスの長さ) {
         this.隣接リストのマップ = 隣接リストのマップ;
-        this.パス間の距離 = パス間の距離;
+        this.パスの長さ = パスの長さ;
     }
 
-    PathLengthMap 最短経路マップ(Place 出発地) {
-        PathLengthMap 各地点への最短距離のマップ = PathLengthMap.初期化(出発地, 隣接リストのマップ.keySet());
-        幅優先で探索して各地点への最短距離を更新(出発地, 各地点への最短距離のマップ);
+    PathLengthMap 各地点への距離(Place 出発地) {
+        PathLengthMap 出発地からの距離のマップ = PathLengthMap.初期化(出発地, 隣接リストのマップ.keySet(), パスの長さ);
+        幅優先で探索して各地点への距離を更新(出発地, 出発地からの距離のマップ);
 
-        return 各地点への最短距離のマップ;
+        return 出発地からの距離のマップ;
     }
 
     Map<Integer, List<Place>> 分岐数別グルーピング() {
@@ -32,25 +32,24 @@ class RouteMap {
                 .collect(groupingBy(entry -> entry.getValue().size(), mapping(Map.Entry::getKey, toList())));
     }
 
-    private void 幅優先で探索して各地点への最短距離を更新(Place 最初の出発地,
-                                                          PathLengthMap 各地点への最短距離のマップ) {
-        Queue<Place> 探索すべき地点のキュー = new LinkedList<>();
-        探索すべき地点のキュー.add(最初の出発地); // 探索の開始地点
+    private void 幅優先で探索して各地点への距離を更新(Place 最初の出発地, PathLengthMap 出発地からの距離のマップ) {
+        Queue<Place> 探索地点のキュー = new LinkedList<>();
+        探索地点のキュー.add(最初の出発地); // 探索の開始地点
 
-        while (!探索すべき地点のキュー.isEmpty()) {
-            Place 探索中の出発地 = 探索すべき地点のキュー.remove(); // 先頭を取り出す
-            未探索の隣接地点のリスト(探索中の出発地, 各地点への最短距離のマップ)
-                    .forEach(探索中の到達地 -> {
-                        各地点への最短距離のマップ.更新(探索中の到達地, 探索中の出発地, パス間の距離);
-                        探索すべき地点のキュー.add(探索中の到達地);
-                      }
-                    );
+        while (!探索地点のキュー.isEmpty()) {
+            Place 探索地点 = 探索地点のキュー.remove(); // 先頭を取り出す
+            Stream<Place> 探索地に隣接する未探索の地点 = 未探索の隣接地点のリスト(探索地点, 出発地からの距離のマップ);
+            探索地に隣接する未探索の地点.forEach(隣接地点 -> {
+                        出発地からの距離のマップ.更新(探索地点, 隣接地点);
+                        探索地点のキュー.add(隣接地点);
+                    }
+            );
         }
     }
 
-    private Stream<Place> 未探索の隣接地点のリスト(Place 探索中の出発地, PathLengthMap 各地点への最短距離のマップ) {
-        return 隣接リストのマップ.get(探索中の出発地).stream()
-                .filter(各地点への最短距離のマップ::未探索);
+    private Stream<Place> 未探索の隣接地点のリスト(Place 出発地, PathLengthMap 各地点への距離のマップ) {
+        return 隣接リストのマップ.get(出発地).stream()
+                .filter(各地点への距離のマップ::未探索);
     }
 
     @Override
