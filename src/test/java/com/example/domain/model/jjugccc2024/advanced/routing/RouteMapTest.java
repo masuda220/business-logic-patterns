@@ -65,7 +65,7 @@ class RouteMapTest {
         System.out.println(各地点への最短距離);
 
         PathWithDistance 期待値 = new PathWithDistance(new Path(東京, 三鷹), 4);
-        assertEquals(期待値, 各地点への最短距離.出発地点から最も遠い地点への距離());
+        assertEquals(期待値, 各地点への最短距離.出発地から最も遠い地点への距離());
     }
 
 }
