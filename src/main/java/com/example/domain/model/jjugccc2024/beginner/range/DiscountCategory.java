@@ -22,9 +22,9 @@ enum DiscountCategory {
         this.割引率 = 割引率;
     }
 
-    static Amount 割り引く(Amount 元の金額) {
-        DiscountCategory 価格帯 = 該当する(元の金額);
-        return 元の金額.割り引く(価格帯.割引率);
+    static Amount 割り引く(Amount 割引対象金額) {
+        DiscountCategory 価格帯 = 該当する(割引対象金額);
+        return 割引対象金額.割り引く(価格帯.割引率);
     }
 
     // 実装の詳細

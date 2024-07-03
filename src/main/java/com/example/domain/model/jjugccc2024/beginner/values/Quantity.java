@@ -7,11 +7,11 @@ package com.example.domain.model.jjugccc2024.beginner.values;
  * 表示はキログラム（例:1.5kg）
  */
 class Quantity {
-    int value;
-    static final Unit unit = Unit.キログラム;
+    int 量;
+    Unit 単位 = Unit.キログラム;
 
-    private Quantity(int value) {
-        this.value = value;
+    private Quantity(int 量) {
+        this.量 = 量;
     }
 
     static Quantity fromGram(int gram) {

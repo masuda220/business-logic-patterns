@@ -45,11 +45,12 @@ class RouteMapTest {
 
     @Test
     void 接続数は新宿が一番多い() {
-        Map<Integer, List<Place>> 接続数別グルーピング = 隣接リスト.分岐数別グルーピング();
+        Map<Integer, List<Place>> 接続数 = 隣接リスト.接続数別グルーピング();
 
-        System.out.println(接続数別グルーピング);
+        System.out.println("接続数");
+        System.out.println(接続数);
 
-        List<Place> 接続数が最も多い = 接続数別グルーピング.entrySet().stream()
+        List<Place> 接続数が最も多い = 接続数.entrySet().stream()
                 .max(comparingInt(Map.Entry::getKey))
                 .orElseThrow().getValue();
 
@@ -58,12 +59,13 @@ class RouteMapTest {
 
     @Test
     void 東京からは三鷹がもっとも遠い() {
-        final PathLengthMap 各地点への距離のマップ = 隣接リスト.各地点への距離(東京);
+        final ShortestDistanceMap 各地点への最短距離 = 隣接リスト.各地点への最短距離(東京);
 
-        System.out.println(各地点への距離のマップ);
+        System.out.println("各地点への最短距離");
+        System.out.println(各地点への最短距離);
 
         PathWithDistance 期待値 = new PathWithDistance(new Path(東京, 三鷹), 4);
-        assertEquals(期待値, 各地点への距離のマップ.最初の出発地点からの最も遠い地点への距離());
+        assertEquals(期待値, 各地点への最短距離.出発地点から最も遠い地点への距離());
     }
 
 }

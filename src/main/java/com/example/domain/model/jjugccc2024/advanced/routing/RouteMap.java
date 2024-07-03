@@ -13,26 +13,26 @@ import static java.util.stream.Collectors.*;
  */
 class RouteMap {
     Map<Place, List<Place>> 隣接リストのマップ;
-    Map<Path, Integer> パスの長さ;
+    Map<Path, Integer> 各地点間の距離;
 
-    RouteMap(Map<Place, List<Place>> 隣接リストのマップ, Map<Path, Integer> パスの長さ) {
+    RouteMap(Map<Place, List<Place>> 隣接リストのマップ, Map<Path, Integer> 各地点間の距離) {
         this.隣接リストのマップ = 隣接リストのマップ;
-        this.パスの長さ = パスの長さ;
+        this.各地点間の距離 = 各地点間の距離;
     }
 
-    PathLengthMap 各地点への距離(Place 出発地) {
-        PathLengthMap 出発地からの距離のマップ = PathLengthMap.初期化(出発地, 隣接リストのマップ.keySet(), パスの長さ);
-        幅優先で探索して各地点への距離を更新(出発地, 出発地からの距離のマップ);
+    ShortestDistanceMap 各地点への最短距離(Place 出発地) {
+        ShortestDistanceMap 出発地からの各地点までの最短距離 = ShortestDistanceMap.初期化(出発地, 各地点間の距離);
+        幅優先で探索して各地点への最短距離を更新(出発地, 出発地からの各地点までの最短距離);
 
-        return 出発地からの距離のマップ;
+        return 出発地からの各地点までの最短距離;
     }
 
-    Map<Integer, List<Place>> 分岐数別グルーピング() {
+    Map<Integer, List<Place>> 接続数別グルーピング() {
         return 隣接リストのマップ.entrySet().stream()
                 .collect(groupingBy(entry -> entry.getValue().size(), mapping(Map.Entry::getKey, toList())));
     }
 
-    private void 幅優先で探索して各地点への距離を更新(Place 最初の出発地, PathLengthMap 出発地からの距離のマップ) {
+    private void 幅優先で探索して各地点への最短距離を更新(Place 最初の出発地, ShortestDistanceMap 出発地からの距離のマップ) {
         Queue<Place> 探索地点のキュー = new LinkedList<>();
         探索地点のキュー.add(最初の出発地); // 探索の開始地点
 
@@ -40,14 +40,14 @@ class RouteMap {
             Place 探索地点 = 探索地点のキュー.remove(); // 先頭を取り出す
             Stream<Place> 探索地に隣接する未探索の地点 = 未探索の隣接地点のリスト(探索地点, 出発地からの距離のマップ);
             探索地に隣接する未探索の地点.forEach(隣接地点 -> {
-                        出発地からの距離のマップ.更新(探索地点, 隣接地点);
+                        出発地からの距離のマップ.出発地から隣接地までの最短距離の更新(探索地点, 隣接地点);
                         探索地点のキュー.add(隣接地点);
                     }
             );
         }
     }
 
-    private Stream<Place> 未探索の隣接地点のリスト(Place 出発地, PathLengthMap 各地点への距離のマップ) {
+    private Stream<Place> 未探索の隣接地点のリスト(Place 出発地, ShortestDistanceMap 各地点への距離のマップ) {
         return 隣接リストのマップ.get(出発地).stream()
                 .filter(各地点への距離のマップ::未探索);
     }
