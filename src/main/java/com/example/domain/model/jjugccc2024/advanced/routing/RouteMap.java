@@ -2,6 +2,8 @@ package com.example.domain.model.jjugccc2024.advanced.routing;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Predicate;
 
 import static java.util.stream.Collectors.*;
 
@@ -17,11 +19,14 @@ class RouteMap {
         this.各地点間の距離 = 各地点間の距離;
     }
 
-    ShortestDistanceMap 各地点への最短距離(Place 出発地) {
-        ShortestDistanceMap 出発地から各地点までの最短距離 = ShortestDistanceMap.初期化(出発地, 各地点間の距離);
-        出発地から各地点までの最短距離.幅優先で探索(隣接リストのマップ);
+    int 地点間の距離(Place 現在地, Place 隣接地) {
+        return 各地点間の距離.get(new Path(現在地, 隣接地));
+    }
 
-        return 出発地から各地点までの最短距離;
+    List<Place> 隣接リスト(Place 地点, Set<Place> 対象外) {
+        return 隣接リストのマップ.get(地点).stream()
+                .filter(Predicate.not(対象外::contains))
+                .toList();
     }
 
     Map<Integer, List<Place>> 接続数別グルーピング() {

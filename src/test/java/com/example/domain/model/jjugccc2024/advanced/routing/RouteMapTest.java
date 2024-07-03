@@ -59,7 +59,9 @@ class RouteMapTest {
 
     @Test
     void 東京からは三鷹がもっとも遠い() {
-        final ShortestDistanceMap 各地点への最短距離 = 隣接リスト.各地点への最短距離(東京);
+//        final ShortestDistanceMap 各地点への最短距離 = 隣接リスト.各地点への最短距離(東京);
+        final ShortestDistanceMap 各地点への最短距離 = ShortestDistanceMap.初期化(東京);
+        各地点への最短距離.幅優先で探索(隣接リスト);
 
         System.out.println("各地点への最短距離");
         System.out.println(各地点への最短距離);
