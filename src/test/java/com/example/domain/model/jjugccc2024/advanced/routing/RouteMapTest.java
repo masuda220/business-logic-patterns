@@ -22,21 +22,21 @@ class RouteMapTest {
     Place 渋谷 = new Place("渋谷");
     Place 三鷹 = new Place("三鷹");
 
-    Set<PathWithDistance> 経路の集合 = Set.of(
+    Set<Path> 経路の集合 = Set.of(
             // 中央線
-            new PathWithDistance(new Path(東京, 神田), 1),
-            new PathWithDistance(new Path(秋葉原, 御茶ノ水), 1),
-            new PathWithDistance(new Path(神田, 御茶ノ水), 1),
-            new PathWithDistance(new Path(御茶ノ水, 新宿), 1),
-            new PathWithDistance(new Path(新宿, 三鷹), 1),
+            new Path(東京, 神田, 1),
+            new Path(秋葉原, 御茶ノ水, 1),
+            new Path(神田, 御茶ノ水, 1),
+            new Path(御茶ノ水, 新宿, 1),
+            new Path(新宿, 三鷹, 1),
             // 山手線 内回り
-            new PathWithDistance(new Path(東京, 秋葉原), 1),
-            new PathWithDistance(new Path(秋葉原, 池袋), 1),
-            new PathWithDistance(new Path(池袋, 新宿), 1),
+            new Path(東京, 秋葉原, 1),
+            new Path(秋葉原, 池袋, 1),
+            new Path(池袋, 新宿, 1),
             // 山手線 外回り
-            new PathWithDistance(new Path(東京, 品川), 1),
-            new PathWithDistance(new Path(品川, 渋谷), 1),
-            new PathWithDistance(new Path(渋谷, 新宿), 1)
+            new Path(東京, 品川, 1),
+            new Path(品川, 渋谷, 1),
+            new Path(渋谷, 新宿, 1)
     );
 
     RouteMap 隣接リスト = RouteMapFactory.隣接リストの構築(経路の集合);
@@ -66,7 +66,7 @@ class RouteMapTest {
         System.out.println("各地点への最短距離");
         System.out.println(各地点への最短距離);
 
-        PathWithDistance 期待値 = new PathWithDistance(new Path(東京, 三鷹), 4);
+        Path 期待値 = new Path(東京, 三鷹, 4);
         assertEquals(期待値, 各地点への最短距離.出発地から最も遠い地点への距離());
     }
 

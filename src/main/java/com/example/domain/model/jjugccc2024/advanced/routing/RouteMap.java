@@ -3,7 +3,6 @@ package com.example.domain.model.jjugccc2024.advanced.routing;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import static java.util.stream.Collectors.*;
 
@@ -12,21 +11,21 @@ import static java.util.stream.Collectors.*;
  */
 class RouteMap {
     Map<Place, List<Place>> 隣接リストのマップ;
-    Map<Path, Integer> 各地点間の距離;
+    Set<Path> 経路の集合;
 
-    RouteMap(Map<Place, List<Place>> 隣接リストのマップ, Map<Path, Integer> 各地点間の距離) {
+    RouteMap(Map<Place, List<Place>> 隣接リストのマップ, Set<Path> 経路の集合) {
         this.隣接リストのマップ = 隣接リストのマップ;
-        this.各地点間の距離 = 各地点間の距離;
+        this.経路の集合 = 経路の集合;
     }
 
     int 地点間の距離(Place 現在地, Place 隣接地) {
-        return 各地点間の距離.get(new Path(現在地, 隣接地));
+        Path result = 経路の集合.stream()
+                .filter(経路 -> 経路.一致(現在地, 隣接地 )).findFirst().orElseThrow();
+        return result.距離();
     }
 
-    List<Place> 隣接リスト(Place 地点, Set<Place> 対象外) {
-        return 隣接リストのマップ.get(地点).stream()
-                .filter(Predicate.not(対象外::contains))
-                .toList();
+    PlaceList 隣接リスト(Place 地点) {
+        return PlaceList.of(隣接リストのマップ.get(地点));
     }
 
     Map<Integer, List<Place>> 接続数別グルーピング() {

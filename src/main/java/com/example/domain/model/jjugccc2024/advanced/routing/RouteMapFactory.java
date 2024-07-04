@@ -8,19 +8,16 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.*;
 
 class RouteMapFactory {
-    static RouteMap 隣接リストの構築(Set<PathWithDistance> 経路の集合) {
+    static RouteMap 隣接リストの構築(Set<Path> 経路の集合) {
 
-        List<PathWithDistance> 逆方向の経路の集合 = 経路の集合.stream()
-                .map(PathWithDistance::逆転).toList();
+        List<Path> 逆方向の経路の集合 = 経路の集合.stream()
+                .map(Path::始点と終点の入れ替え).toList();
 
-        Map<Place, List<Place>> 隣接リスト =
-                Stream.concat(経路の集合.stream(), 逆方向の経路の集合.stream())
-                .collect(groupingBy(PathWithDistance::出発地, mapping(PathWithDistance::到着地, toList())));
+        Set<Path> 全ての経路 = Stream.concat(経路の集合.stream(), 逆方向の経路の集合.stream()).collect(toSet());
 
-        Map<Path, Integer> パス間の距離 =
-                Stream.concat(経路の集合.stream(), 逆方向の経路の集合.stream())
-                        .collect(toMap(PathWithDistance::パス, PathWithDistance::距離));
+        Map<Place, List<Place>> 隣接リスト = 全ての経路.stream()
+                .collect(groupingBy(Path::始点, mapping(Path::終点, toList())));
 
-        return new RouteMap(隣接リスト, パス間の距離);
+        return new RouteMap(隣接リスト, 全ての経路);
     }
 }
