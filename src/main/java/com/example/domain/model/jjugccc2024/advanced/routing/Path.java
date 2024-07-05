@@ -1,7 +1,7 @@
 package com.example.domain.model.jjugccc2024.advanced.routing;
 
 /**
- * ある場所から次の場所
+ * 経路
  */
 record Path(Place 始点, Place 終点, int 距離) {
 

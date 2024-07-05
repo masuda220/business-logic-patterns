@@ -39,7 +39,8 @@ class RouteMapTest {
             new Path(渋谷, 新宿, 1)
     );
 
-    RouteMap 隣接リスト = RouteMapFactory.隣接リストの構築(経路の集合);
+    PathList 経路一覧 = new PathList(経路の集合);
+    RouteMap 隣接リスト = RouteMap.隣接リストの構築(経路一覧);
     // 現在の実装は、重み無しの探索　経由地の数で疑似的に距離を表現している
     // 重みありの探索は別の実装（例えばダイクストラ法）が必要
 
@@ -60,8 +61,9 @@ class RouteMapTest {
     @Test
     void 東京からは三鷹がもっとも遠い() {
 //        final ShortestDistanceMap 各地点への最短距離 = 隣接リスト.各地点への最短距離(東京);
-        final ShortestDistanceMap 各地点への最短距離 = ShortestDistanceMap.初期化(東京);
-        各地点への最短距離.幅優先で探索(隣接リスト);
+        final ShortestDistances 各地点への最短距離 =
+                ShortestDistances.初期化(東京, new PathList(経路の集合), 隣接リスト);
+        各地点への最短距離.幅優先で探索();
 
         System.out.println("各地点への最短距離");
         System.out.println(各地点への最短距離);
