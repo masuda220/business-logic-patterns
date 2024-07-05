@@ -61,15 +61,17 @@ class RouteMapTest {
     @Test
     void 東京からは三鷹がもっとも遠い() {
 //        final ShortestDistanceMap 各地点への最短距離 = 隣接リスト.各地点への最短距離(東京);
-        final ShortestDistances 各地点への最短距離 =
-                ShortestDistances.初期化(東京, new PathList(経路の集合), 隣接リスト);
+        final ShortestDistancesBuilder 各地点への最短距離 =
+                ShortestDistancesBuilder.初期化(東京, new PathList(経路の集合), 隣接リスト);
         各地点への最短距離.幅優先で探索();
 
         System.out.println("各地点への最短距離");
         System.out.println(各地点への最短距離);
 
+        ShortestDistances 各地点への最短距離の生成結果 = 各地点への最短距離.探索結果();
         Path 期待値 = new Path(東京, 三鷹, 4);
-        assertEquals(期待値, 各地点への最短距離.出発地から最も遠い地点への距離());
+
+        assertEquals(期待値, 各地点への最短距離の生成結果.出発地から最も遠い地点への距離());
     }
 
 }
