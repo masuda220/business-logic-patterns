@@ -1,27 +1,34 @@
 package com.example.domain.model.jjugccc2024.advanced.routing;
 
-import java.util.Comparator;
-import java.util.Map;
+import com.example.domain.model.jjugccc2024.advanced.routing.place.Place;
+import com.example.domain.model.jjugccc2024.advanced.routing.place.PlaceList;
 
 /**
- * 出発地から各地点までの最短距離
+ * 各地点までの最短距離
  */
 class ShortestDistances {
 
     Place 出発地;
-    Map<Place, Integer> 各地点までの最短距離;
+    Distances 各地点までの最短距離;
 
-    ShortestDistances(Place 出発地, Map<Place, Integer> 各地点までの最短距離) {
+    ShortestDistances(Place 出発地, Distances 各地点までの最短距離) {
         this.出発地 = 出発地;
         this.各地点までの最短距離 = 各地点までの最短距離;
     }
 
-    // todo 抽象化
-    Path 出発地から最も遠い地点への距離() {
-        Map.Entry<Place, Integer> 地点と距離 =
-                各地点までの最短距離.entrySet().stream()
-                        .max(Comparator.comparingInt(Map.Entry::getValue)).orElseThrow();
-        return new Path(出発地, 地点と距離.getKey(), 地点と距離.getValue());
+    int 最も遠い地点までの距離() {
+        return 各地点までの最短距離.最も遠い地点への距離();
     }
 
+    PlaceList 最も遠い地点() {
+        return 各地点までの最短距離.最も遠い地点のリスト();
+    }
+
+    @Override
+    public String toString() {
+        return "ShortestDistances{" +
+                "出発地=" + 出発地 +
+                ", 各地点までの最短距離=" + 各地点までの最短距離 +
+                '}';
+    }
 }
