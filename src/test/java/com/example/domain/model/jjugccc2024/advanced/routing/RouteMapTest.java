@@ -58,7 +58,7 @@ class RouteMapTest {
     @Test
     void 東京からは三鷹がもっとも遠い() {
         final ShortestDistancesBuilder 各地点への最短距離 =
-                ShortestDistancesBuilder.初期化(東京, new PathList(経路の集合), 隣接リスト);
+                new ShortestDistancesBuilder(東京, new PathList(経路の集合), 隣接リスト);
         各地点への最短距離.幅優先で探索();
 
         ShortestDistances 各地点への最短距離の生成結果 = 各地点への最短距離.探索結果();
