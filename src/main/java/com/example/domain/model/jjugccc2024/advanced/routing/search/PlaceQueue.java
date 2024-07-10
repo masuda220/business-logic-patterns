@@ -1,4 +1,6 @@
-package com.example.domain.model.jjugccc2024.advanced.routing.place;
+package com.example.domain.model.jjugccc2024.advanced.routing.search;
+
+import com.example.domain.model.jjugccc2024.advanced.routing.place.Place;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -11,15 +13,15 @@ import java.util.Queue;
 public class PlaceQueue {
     Queue<Place> 探索地点のキュー = new LinkedList<>();
 
-    public void 追加(Place 地点) {
+    void 追加(Place 地点) {
         探索地点のキュー.add(地点);
     }
 
-    public Place 取り出し() {
+    Place 取り出し() {
         return 探索地点のキュー.remove();
     }
 
-    public boolean 空でない() {
+    boolean 空でない() {
         return !探索地点のキュー.isEmpty();
     }
 }

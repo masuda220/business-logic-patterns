@@ -1,6 +1,6 @@
-package com.example.domain.model.jjugccc2024.advanced.routing;
+package com.example.domain.model.jjugccc2024.advanced.routing.search;
 
-import com.example.domain.model.jjugccc2024.advanced.routing.place.Connections;
+import com.example.domain.model.jjugccc2024.advanced.routing.routes.Connections;
 import com.example.domain.model.jjugccc2024.advanced.routing.place.Place;
 import com.example.domain.model.jjugccc2024.advanced.routing.place.PlaceList;
 import com.example.domain.model.jjugccc2024.advanced.routing.routes.Path;
@@ -57,15 +57,15 @@ class RouteMapTest {
 
     @Test
     void 東京からは三鷹がもっとも遠い() {
-        final ShortestDistancesBuilder 各地点への最短距離 =
-                new ShortestDistancesBuilder(東京, new PathList(経路の集合), 隣接リスト);
+        final DistancesBuilder 各地点への最短距離 =
+                new DistancesBuilder(東京, 隣接リスト);
         各地点への最短距離.幅優先で探索();
 
-        ShortestDistances 各地点への最短距離の生成結果 = 各地点への最短距離.探索結果();
+        Distances 各地点への最短距離の生成結果 = 各地点への最短距離.探索結果();
         System.out.println(各地点への最短距離の生成結果);
 
-        int 最も遠い地点までの距離 = 各地点への最短距離の生成結果.最も遠い地点までの距離();
-        PlaceList 最も遠い地点 = 各地点への最短距離の生成結果.最も遠い地点();
+        int 最も遠い地点までの距離 = 各地点への最短距離の生成結果.最も遠い地点への距離();
+        PlaceList 最も遠い地点 = 各地点への最短距離の生成結果.最も遠い地点のリスト();
         assertEquals(4, 最も遠い地点までの距離);
         assertTrue(最も遠い地点.地点を含む(三鷹));
     }

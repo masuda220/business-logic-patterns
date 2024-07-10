@@ -1,13 +1,15 @@
 package com.example.domain.model.jjugccc2024.advanced.routing.routes;
 
-import com.example.domain.model.jjugccc2024.advanced.routing.place.Connections;
 import com.example.domain.model.jjugccc2024.advanced.routing.place.Place;
 import com.example.domain.model.jjugccc2024.advanced.routing.place.PlaceList;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toSet;
 
 /**
  * 路線図
@@ -15,9 +17,11 @@ import static java.util.stream.Collectors.*;
  * 地点と隣接地点リストのマップ
  */
 public class RouteMap {
-    public Map<Place, List<Place>> 隣接リストのマップ;
+    final PathList 経路一覧;
+    final Map<Place, Set<Place>> 隣接リストのマップ;
 
-    RouteMap(Map<Place, List<Place>> 隣接リストのマップ) {
+    RouteMap(PathList 経路一覧, Map<Place, Set<Place>> 隣接リストのマップ) {
+        this.経路一覧 = 経路一覧;
         this.隣接リストのマップ = 隣接リストのマップ;
     }
 
@@ -25,6 +29,9 @@ public class RouteMap {
         return PlaceList.of(隣接リストのマップ.get(地点));
     }
 
+    public int 地点間の距離(Place 起点, Place 終点) {
+        return 経路一覧.地点間の距離(起点, 終点);
+    }
     public Connections 接続数() {
         Map<Place, Integer> 地点ごとの接続数 = 隣接リストのマップ.entrySet().stream()
                 .collect(toMap(Map.Entry::getKey, e -> e.getValue().size()));
@@ -36,11 +43,11 @@ public class RouteMap {
 
         PathList 逆方向の経路の一覧 = 経路リスト.逆方向の経路一覧();
         PathList 全ての経路 = 経路リスト.合成(逆方向の経路の一覧);
-        Map<Place, List<Place>> 隣接リスト =
+        Map<Place, Set<Place>> 隣接リスト =
             全ての経路.経路の集合.stream()
-                    .collect(groupingBy(Path::始点, mapping(Path::終点, toList())));
+                    .collect(groupingBy(Path::始点, mapping(Path::終点, toSet())));
 
-        return new RouteMap(隣接リスト);
+        return new RouteMap(経路リスト, 隣接リスト);
     }
 
     @Override
