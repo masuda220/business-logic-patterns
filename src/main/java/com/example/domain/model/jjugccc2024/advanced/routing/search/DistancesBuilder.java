@@ -36,7 +36,7 @@ class DistancesBuilder {
     }
 
     private PlaceList 未探索の地点の一覧(Place 現在地) {
-        PlaceList 隣接地のリスト = 経路マップ.隣接リスト(現在地);
+        PlaceList 隣接地のリスト = 経路マップ.隣接地点のリスト(現在地);
         PlaceList 除外する地点 = 各地点までの距離.探索済の地点();
         return 隣接地のリスト.除外(除外する地点);
     }

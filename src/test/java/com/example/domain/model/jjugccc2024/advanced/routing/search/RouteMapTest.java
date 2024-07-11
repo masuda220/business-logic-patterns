@@ -1,11 +1,8 @@
 package com.example.domain.model.jjugccc2024.advanced.routing.search;
 
-import com.example.domain.model.jjugccc2024.advanced.routing.routes.Connections;
+import com.example.domain.model.jjugccc2024.advanced.routing.routes.*;
 import com.example.domain.model.jjugccc2024.advanced.routing.place.Place;
 import com.example.domain.model.jjugccc2024.advanced.routing.place.PlaceList;
-import com.example.domain.model.jjugccc2024.advanced.routing.routes.Path;
-import com.example.domain.model.jjugccc2024.advanced.routing.routes.PathList;
-import com.example.domain.model.jjugccc2024.advanced.routing.routes.RouteMap;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -43,13 +40,13 @@ class RouteMapTest {
     );
 
     PathList 経路一覧 = new PathList(経路の集合);
-    RouteMap 隣接リスト = RouteMap.隣接リストの構築(経路一覧);
+    RouteMap 経路図 = RouteMapFactory.経路図の構築(経路一覧);
     // この実装は、重み無しの探索　経由地の数で疑似的に距離を表現している
     // 重みありの探索は別の実装（例えばダイクストラ法）が必要
 
     @Test
-    void 接続数は新宿が一番多い() {
-        Connections 地点別の接続数 = 隣接リスト.接続数();
+    void 地点ごとの接続数は新宿が一番多い() {
+        Connections 地点別の接続数 = 経路図.地点ごとの接続数();
         PlaceList 最大接続数の地点リスト = 地点別の接続数.最大接続数の地点リスト();
 
         assertTrue(最大接続数の地点リスト.地点を含む(新宿) && 最大接続数の地点リスト.地点数() == 1);
@@ -58,7 +55,7 @@ class RouteMapTest {
     @Test
     void 東京からは三鷹がもっとも遠い() {
         final DistancesBuilder 各地点への最短距離 =
-                new DistancesBuilder(東京, 隣接リスト);
+                new DistancesBuilder(東京, 経路図);
         各地点への最短距離.幅優先で探索();
 
         Distances 各地点への最短距離の生成結果 = 各地点への最短距離.探索結果();
