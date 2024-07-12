@@ -21,14 +21,14 @@ public class PathList {
     public int 地点間の距離(Place 現在地, Place 隣接地) {
         Path 見つかった経路 = 経路の集合.stream()
                 .filter(経路 -> 経路.一致(現在地, 隣接地))
-                .findFirst().orElseThrow();
+                .findAny().orElseThrow();
         return 見つかった経路.距離();
     }
 
     PathList 逆方向の経路一覧() {
         Set<Path> 逆方向の経路の集合 = 経路の集合.stream()
                 .map(Path::始点と終点の入れ替え)
-                .collect(Collectors.toSet());
+                .collect(toSet());
         return new PathList(逆方向の経路の集合);
     }
 

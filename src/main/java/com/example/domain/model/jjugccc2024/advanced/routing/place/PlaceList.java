@@ -3,6 +3,8 @@ package com.example.domain.model.jjugccc2024.advanced.routing.place;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toSet;
+
 /**
  * 地点の集合
  */
@@ -32,11 +34,16 @@ public class PlaceList {
     public PlaceList 除外(PlaceList 除外する地点の一覧) {
         Set<Place> result = 地点の一覧.stream()
                 .filter(除外する地点の一覧::地点を含まない)
-                .collect(Collectors.toSet());
+                .collect(toSet());
         return PlaceList.of(result);
     }
 
-    public Set<Place> toSet() {
+    public Set<Place> 地点の一覧() {
         return 地点の一覧;
+    }
+
+    public PlaceList 地点数が多い方(PlaceList 比較対象) {
+        if(地点数() > 比較対象.地点数()) return this;
+        return 比較対象;
     }
 }

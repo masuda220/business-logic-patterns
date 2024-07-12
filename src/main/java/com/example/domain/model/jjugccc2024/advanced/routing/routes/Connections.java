@@ -5,7 +5,8 @@ import com.example.domain.model.jjugccc2024.advanced.routing.place.PlaceList;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toSet;
 
 /**
  * 地点ごとの接続数
@@ -22,13 +23,15 @@ public class Connections {
         Set<Place> 地点のリスト = 地点ごとの隣接リスト.entrySet().stream()
                 .filter(地点と隣接リスト -> 地点と隣接リスト.getValue().size() == 最大接続数)
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
+                .collect(toSet());
         return PlaceList.of(地点のリスト);
     }
 
-     private int 最大接続数() {
+    // TODO PlaceListをreduceする実験結果の評価
+    private int 最大接続数() {
         return 地点ごとの隣接リスト.values().stream()
-                .mapToInt(Set::size)
-                .max().orElseThrow();
+                .map(PlaceList::of) // 前処理
+                .reduce(PlaceList.of(Set.of()), PlaceList::地点数が多い方)// 選択
+                .地点数(); // 結果
     }
 }
