@@ -3,7 +3,7 @@ package com.example.domain.model.jjugccc2024.beginner.range;
 class Amount {
     int 金額;
 
-    static final Amount 上限額 = Amount.of(1_000_000);
+    static final Amount 上限額 = new Amount(1_000_000);
     static final Amount 一円 = Amount.of(1);
 
     private Amount(int 金額) {
