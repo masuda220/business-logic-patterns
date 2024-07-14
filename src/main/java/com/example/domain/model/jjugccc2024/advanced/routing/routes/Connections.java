@@ -24,7 +24,7 @@ public class Connections {
     }
 
     // プリミティブなメソッドを使い、説明はコメントで行なう
-    public PlaceList 最大接続数の地点リスト_コメントバージョン() {
+    public PlaceList 最大接続数を持つ地点リスト_コメントバージョン() {
         int 最大接続数 = 最大接続数();
         return 地点ごとの隣接リスト.entrySet().stream() // 地点と隣接地点リストの集合
                 .filter(地点と接続数 -> 地点と接続数.getValue().size() == 最大接続数) // 隣接地点の数が最大の地点だけ絞り込む
@@ -32,15 +32,15 @@ public class Connections {
                 .collect(collectingAndThen(toSet(), PlaceList::of)); // 取り出した地点を地点リストのまとめる
     }
 
-    // 実装の詳細をメソッドに隠蔽して、説明的に記述
-    public PlaceList 最大接続数の地点リスト() {
+    // 説明メソッド：実装の詳細をメソッドに隠蔽して、メソッド名で説明
+    public PlaceList 最大接続数を持つ地点リスト() {
         return 地点と隣接地点リストの集合()
                 .filter(隣接地点の数が最大の地点だけに絞り込む())
                 .map(地点だけ取り出す())
                 .collect(取り出した地点を地点リストにまとめる());
     }
 
-    // 実装の詳細をメソッドに抽出
+    // 実装の詳細をメソッドに隠蔽
     private Stream<Map.Entry<Place, Set<Place>>> 地点と隣接地点リストの集合() {
         return 地点ごとの隣接リスト.entrySet().stream();
     }
