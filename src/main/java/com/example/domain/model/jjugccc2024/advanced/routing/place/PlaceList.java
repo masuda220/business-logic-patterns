@@ -11,6 +11,8 @@ import static java.util.stream.Collectors.toSet;
 public class PlaceList {
     Set<Place> 地点の一覧;
 
+    public static final PlaceList 空 = new PlaceList(Set.of());
+
     private PlaceList(Set<Place> 地点の一覧) {
         this.地点の一覧 = 地点の一覧;
     }

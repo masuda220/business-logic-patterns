@@ -5,7 +5,12 @@ import com.example.domain.model.jjugccc2024.advanced.routing.place.PlaceList;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toSet;
 
 /**
@@ -18,20 +23,44 @@ public class Connections {
         this.地点ごとの隣接リスト = 地点ごとの隣接リスト;
     }
 
-    public PlaceList 最大接続数の地点リスト() {
+    // プリミティブなメソッドを使い、説明はコメントで行なう
+    public PlaceList 最大接続数の地点リスト_コメントバージョン() {
         int 最大接続数 = 最大接続数();
-        Set<Place> 地点のリスト = 地点ごとの隣接リスト.entrySet().stream()
-                .filter(地点と隣接リスト -> 地点と隣接リスト.getValue().size() == 最大接続数)
-                .map(Map.Entry::getKey)
-                .collect(toSet());
-        return PlaceList.of(地点のリスト);
+        return 地点ごとの隣接リスト.entrySet().stream() // 地点と隣接地点リストの集合
+                .filter(地点と接続数 -> 地点と接続数.getValue().size() == 最大接続数) // 隣接地点の数が最大の地点だけ絞り込む
+                .map(Map.Entry::getKey) // 地点だけ取り出す
+                .collect(collectingAndThen(toSet(), PlaceList::of)); // 取り出した地点を地点リストのまとめる
     }
 
-    // TODO PlaceListをreduceする実験結果の評価
+    // 実装の詳細をメソッドに隠蔽して、説明的に記述
+    public PlaceList 最大接続数の地点リスト() {
+        return 地点と隣接地点リストの集合()
+                .filter(隣接地点の数が最大の地点だけに絞り込む())
+                .map(地点だけ取り出す())
+                .collect(取り出した地点を地点リストにまとめる());
+    }
+
+    // 実装の詳細をメソッドに抽出
+    private Stream<Map.Entry<Place, Set<Place>>> 地点と隣接地点リストの集合() {
+        return 地点ごとの隣接リスト.entrySet().stream();
+    }
+
+    private Predicate<Map.Entry<Place, Set<Place>>> 隣接地点の数が最大の地点だけに絞り込む() {
+        int 最大接続数 = 最大接続数();
+        return 地点と接続数 -> 地点と接続数.getValue().size() == 最大接続数;
+    }
+
     private int 最大接続数() {
         return 地点ごとの隣接リスト.values().stream()
-                .map(PlaceList::of) // 前処理
-                .reduce(PlaceList.of(Set.of()), PlaceList::地点数が多い方)// 選択
-                .地点数(); // 結果
+                .mapToInt(Set::size)
+                .max().orElseThrow();
+    }
+
+    private Function<Map.Entry<Place, Set<Place>>, Place> 地点だけ取り出す() {
+        return Map.Entry::getKey;
+    }
+
+    private Collector<Place, Set<Place>, PlaceList> 取り出した地点を地点リストにまとめる() {
+        return collectingAndThen(toSet(), PlaceList::of);
     }
 }
