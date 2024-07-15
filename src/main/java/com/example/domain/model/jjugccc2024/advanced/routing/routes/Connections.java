@@ -60,7 +60,7 @@ public class Connections {
         return Map.Entry::getKey;
     }
 
-    private Collector<Place, Set<Place>, PlaceList> 取り出した地点を地点リストにまとめる() {
+    private Collector<Place, Object, PlaceList> 取り出した地点を地点リストにまとめる() {
         return collectingAndThen(toSet(), PlaceList::of);
     }
 }

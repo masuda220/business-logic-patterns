@@ -3,9 +3,9 @@ package com.example.domain.model.jjugccc2024.advanced.routing.routes;
 import com.example.domain.model.jjugccc2024.advanced.routing.place.Place;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toSet;
 
 /**
@@ -26,17 +26,13 @@ public class PathList {
     }
 
     PathList 逆方向の経路一覧() {
-        Set<Path> 逆方向の経路の集合 = 経路の集合.stream()
+        return 経路の集合.stream()
                 .map(Path::始点と終点の入れ替え)
-                .collect(toSet());
-        return new PathList(逆方向の経路の集合);
+                .collect(collectingAndThen(toSet(), PathList::new));
     }
 
     PathList 合成(PathList 合成する経路一覧) {
-        Set<Path> 全ての経路 = Stream
-                .concat(経路の集合.stream(), 合成する経路一覧.経路の集合.stream())
-                .collect(toSet());
-        return new PathList(全ての経路);
+        return Stream.concat(経路の集合.stream(), 合成する経路一覧.経路の集合.stream())
+                .collect(collectingAndThen(toSet(), PathList::new));
     }
-
 }

@@ -1,8 +1,8 @@
 package com.example.domain.model.jjugccc2024.advanced.routing.place;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toSet;
 
 /**
@@ -10,8 +10,6 @@ import static java.util.stream.Collectors.toSet;
  */
 public class PlaceList {
     Set<Place> 地点の一覧;
-
-    public static final PlaceList 空 = new PlaceList(Set.of());
 
     private PlaceList(Set<Place> 地点の一覧) {
         this.地点の一覧 = 地点の一覧;
@@ -34,10 +32,9 @@ public class PlaceList {
     }
 
     public PlaceList 除外(PlaceList 除外する地点の一覧) {
-        Set<Place> result = 地点の一覧.stream()
+        return 地点の一覧.stream()
                 .filter(除外する地点の一覧::地点を含まない)
-                .collect(toSet());
-        return PlaceList.of(result);
+                .collect(collectingAndThen(toSet(), PlaceList::of));
     }
 
     public Set<Place> 地点の一覧() {
